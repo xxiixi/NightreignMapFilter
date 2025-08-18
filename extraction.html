@@ -113,6 +113,13 @@
             position: relative;
         }
         
+        .poi-button.village {
+            background: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+            position: relative;
+        }
+        
         .poi-button.other {
             background: #fff3cd;
             border-color: #ffeaa7;
@@ -244,6 +251,10 @@
             color: #721c24;
         }
         
+        .context-menu-item.village {
+            color: #155724;
+        }
+        
         .context-menu-item.other {
             color: #856404;
         }
@@ -272,7 +283,7 @@
                     <p><strong>Click on the POI circles</strong> on the image to classify them:</p>
                     <ul style="margin: 8px 0; padding-left: 20px; font-size: 13px;">
                         <li><strong>Left Click:</strong> Church 🏰</li>
-                        <li><strong>Right Click:</strong> Show menu (Mage Tower 🔮 / Other 📍)</li>  
+                        <li><strong>Right Click:</strong> Show menu (Mage Tower 🔮 / Village 🏘️ / Other 📍)</li>  
                     </ul>
                     <p style="margin: 8px 0; font-size: 13px;">Only the predefined POI locations are clickable (shown as orange circles).</p>
                 </div>
@@ -299,7 +310,7 @@
                 <div class="stats" id="stats">
                     <div>Churches: <span id="churchCount">0</span></div>
                     <div>Mage Towers: <span id="mageCount">0</span></div>
-                    <div>Others: <span id="otherCount">0</span></div>
+                    <div>Villages: <span id="villageCount">0</span></div>
                 </div>
             </div>
         </div>
@@ -583,12 +594,8 @@
                             
                             // Check if seed exists in tool database with any POIs
                             if (poiDatabase && poiDatabase.seeds) {
-                                const seedData = poiDatabase.seeds[seedKeyPadded] || poiDatabase.seeds[i.toString()];
+                                const seedData = poiDatabase.seeds[i.toString()];
                                 isMapped = seedData && seedData.pois && Object.keys(seedData.pois).length > 0;
-                                
-                                if (isMapped) {
-                                    console.log(`Dropdown: Found mapped seed ${seedKeyPadded} with ${Object.keys(seedData.pois).length} POIs`);
-                                }
                             }
                             
                             const statusIndicator = isMapped ? '[✓]' : '[✗]';
@@ -680,9 +687,10 @@
             console.log('Set currentNightlord to:', currentNightlord);
             console.log('Set currentMapType to:', currentMapType);
             
-            // Initialize seed data if not exists
-            if (!poiDatabase.seeds[seedNum]) {
-                poiDatabase.seeds[seedNum] = {
+            // Initialize seed data if not exists (use string key for consistency)
+            const seedKey = seedNum.toString();
+            if (!poiDatabase.seeds[seedKey]) {
+                poiDatabase.seeds[seedKey] = {
                     seedNumber: seedNum,
                     nightlord: nightlord.charAt(0).toUpperCase() + nightlord.slice(1),
                     mapType: mapTypeNames[mapType] || "Default",
@@ -745,7 +753,7 @@
             // Use POI coordinates for the current map type
             const mapTypeName = mapTypeNames[currentMapType] || 'Default';
             const pois = PREDEFINED_POIS[mapTypeName] || [];
-            const seedPOIs = poiDatabase.seeds[currentSeed]?.pois || {};
+            const seedPOIs = poiDatabase.seeds[currentSeed.toString()]?.pois || {};
             
             console.log(`Drawing ${pois.length} POIs for ${mapTypeName} map type`);
             
@@ -764,6 +772,11 @@
                             strokeColor = '#721c24';
                             fillColor = 'rgba(248, 215, 218, 0.3)';
                             label = 'M';
+                            break;
+                        case 'village':
+                            strokeColor = '#155724';
+                            fillColor = 'rgba(212, 237, 218, 0.3)';
+                            label = 'V';
                             break;
                         case 'other':
                             strokeColor = '#856404';
@@ -842,7 +855,7 @@
                 console.log('Clicked POI:', clickedPOI.id, 'Type:', type);
                 
                 // Check if this POI already exists in the current seed
-                const seedPOIs = poiDatabase.seeds[currentSeed].pois;
+                const seedPOIs = poiDatabase.seeds[currentSeed.toString()].pois;
                 const existingPOI = seedPOIs[clickedPOI.id];
                 
                 if (existingPOI) {
@@ -910,12 +923,12 @@
             mageItem.className = 'context-menu-item mage';
             mageItem.innerHTML = `
                 <img src="assets/images/mage-tower.png" style="width: 16px; height: 16px; margin-right: 8px; vertical-align: middle;">
-                🔮 Mage Tower
+                Mage Tower
             `;
             mageItem.onclick = () => {
                 if (pendingPOI) {
                     // Check if this POI already exists in the current seed
-                    const seedPOIs = poiDatabase.seeds[currentSeed].pois;
+                    const seedPOIs = poiDatabase.seeds[currentSeed.toString()].pois;
                     const existingPOI = seedPOIs[pendingPOI.id];
                     
                     if (existingPOI) {
@@ -935,14 +948,17 @@
                 hideContextMenu();
             };
             
-            // Other option
-            const otherItem = document.createElement('div');
-            otherItem.className = 'context-menu-item other';
-            otherItem.innerHTML = '📍 Other POI';
-            otherItem.onclick = () => {
+            // Village option
+            const villageItem = document.createElement('div');
+            villageItem.className = 'context-menu-item village';
+            villageItem.innerHTML = `
+                <img src="assets/images/village.png" style="width: 16px; height: 16px; margin-right: 8px; vertical-align: middle;">
+                Village
+            `;
+            villageItem.onclick = () => {
                 if (pendingPOI) {
                     // Check if this POI already exists in the current seed
-                    const seedPOIs = poiDatabase.seeds[currentSeed].pois;
+                    const seedPOIs = poiDatabase.seeds[currentSeed.toString()].pois;
                     const existingPOI = seedPOIs[pendingPOI.id];
                     
                     if (existingPOI) {
@@ -950,9 +966,9 @@
                         console.log(`Removing existing POI ${pendingPOI.id}`);
                         delete seedPOIs[pendingPOI.id];
                     } else {
-                        // POI doesn't exist, add it as other
-                        console.log(`Adding new POI ${pendingPOI.id} as other`);
-                        addPOI(pendingPOI.x, pendingPOI.y, 'other', pendingPOI.id);
+                        // POI doesn't exist, add it as village
+                        console.log(`Adding new POI ${pendingPOI.id} as village`);
+                        addPOI(pendingPOI.x, pendingPOI.y, 'village', pendingPOI.id);
                     }
                     
                     drawCanvas();
@@ -962,8 +978,9 @@
                 hideContextMenu();
             };
             
+            
             contextMenu.appendChild(mageItem);
-            contextMenu.appendChild(otherItem);
+            contextMenu.appendChild(villageItem);
             document.body.appendChild(contextMenu);
             
             // Ensure menu doesn't go off screen
@@ -985,7 +1002,7 @@
         }
 
         function addPOI(x, y, type, poiId = null) {
-            const seedPOIs = poiDatabase.seeds[currentSeed].pois;
+            const seedPOIs = poiDatabase.seeds[currentSeed.toString()].pois;
             
             // Use provided poiId or find existing POI with same coordinates
             let targetId = poiId;
@@ -1022,7 +1039,7 @@
             
             const mapTypeName = mapTypeNames[currentMapType] || 'Default';
             const pois = PREDEFINED_POIS[mapTypeName] || [];
-            const seedPOIs = poiDatabase.seeds[currentSeed]?.pois || {};
+            const seedPOIs = poiDatabase.seeds[currentSeed.toString()]?.pois || {};
             
             pois.forEach(poi => {
                 const button = document.createElement('div');
@@ -1041,6 +1058,9 @@
                     } else if (extractedPOI.type === 'mage') {
                         iconHtml = '<img src="assets/images/mage-tower.png" class="poi-icon">';
                         typeLabel = '🔮 Mage Tower';
+                    } else if (extractedPOI.type === 'village') {
+                        iconHtml = '<img src="assets/images/village.png" class="poi-icon">';
+                        typeLabel = '🏘️ Village';
                     } else if (extractedPOI.type === 'other') {
                         typeLabel = '📍 Other POI';
                     }
@@ -1088,23 +1108,23 @@
         function updateStats() {
             if (currentSeed === null || currentSeed === undefined) return;
             
-            const seedPOIs = poiDatabase.seeds[currentSeed]?.pois || {};
+            const seedPOIs = poiDatabase.seeds[currentSeed.toString()]?.pois || {};
             const mapTypeName = mapTypeNames[currentMapType] || 'Default';
             const totalPredefined = PREDEFINED_POIS[mapTypeName]?.length || 0;
             
-            let churchCount = 0, mageCount = 0, otherCount = 0;
+            let churchCount = 0, mageCount = 0, villageCount = 0;
             
             Object.values(seedPOIs).forEach(poi => {
                 switch (poi.type) {
                     case 'church': churchCount++; break;
                     case 'mage': mageCount++; break;
-                    case 'other': otherCount++; break;
+                    case 'village': villageCount++; break;
                 }
             });
             
             document.getElementById('churchCount').textContent = churchCount;
             document.getElementById('mageCount').textContent = mageCount;
-            document.getElementById('otherCount').textContent = otherCount;
+            document.getElementById('villageCount').textContent = villageCount;
         }
 
         function nextSeed() {
@@ -1145,7 +1165,7 @@
             if (currentSeed === null || currentSeed === undefined) return;
             
             if (confirm(`Reset all POI data for seed ${currentSeed}?`)) {
-                poiDatabase.seeds[currentSeed].pois = {};
+                poiDatabase.seeds[currentSeed.toString()].pois = {};
                 drawCanvas();
                 updatePOIGrid();
                 updateStats();
@@ -1175,7 +1195,7 @@
                 classifications: {}
             };
             
-            let exportedStats = { church: 0, mage: 0, other: 0, totalSeeds: 0 };
+            let exportedStats = { church: 0, mage: 0, village: 0, totalSeeds: 0 };
             
             // Convert seed data to CV-compatible format
             Object.keys(poiDatabase.seeds).forEach(seedNum => {
@@ -1184,22 +1204,41 @@
                 
                 datasetFormat.classifications[cvKey] = {};
                 
-                let hasValidPOIs = false;
+                // Get the map type for this seed to know which POIs exist
+                const mapTypeName = seed.mapType || 'Default';
+                const allPOIsForMap = PREDEFINED_POIS[mapTypeName] || [];
                 
-                // Convert POI data to CV format: POI{id} -> type mapping
-                Object.values(seed.pois || {}).forEach(poi => {
-                    // Validate that this is a real POI classification
-                    if (poi.type && ['church', 'mage', 'other'].includes(poi.type)) {
-                        hasValidPOIs = true;
-                        
-                        const poiKey = `POI${poi.id}`;
-                        datasetFormat.classifications[cvKey][poiKey] = poi.type;
-                        
-                        exportedStats[poi.type]++;
+                // Export ALL POIs for this seed (classified and unclassified)
+                allPOIsForMap.forEach(predefinedPOI => {
+                    const poiKey = `POI${predefinedPOI.id}`;
+                    
+                    // Check if user has classified this POI
+                    const classifiedPOI = Object.values(seed.pois || {}).find(p => p.id === predefinedPOI.id);
+                    
+                    let exportType;
+                    if (classifiedPOI && classifiedPOI.type) {
+                        // User has classified this POI
+                        if (classifiedPOI.type === 'church' || classifiedPOI.type === 'mage' || classifiedPOI.type === 'village') {
+                            exportType = classifiedPOI.type;
+                        } else {
+                            // Everything that's not church/mage/village becomes 'other'
+                            exportType = 'other';
+                        }
+                    } else {
+                        // POI is unset/unclassified - export as 'other'
+                        exportType = 'other';
+                    }
+                    
+                    datasetFormat.classifications[cvKey][poiKey] = exportType;
+                    
+                    // Only count church/mage/village in stats (not 'other')
+                    if (exportType !== 'other') {
+                        exportedStats[exportType]++;
                     }
                 });
                 
-                if (hasValidPOIs) {
+                // Count this seed if it has any POIs (which it always will since we export all)
+                if (allPOIsForMap.length > 0) {
                     exportedStats.totalSeeds++;
                 }
             });
@@ -1216,7 +1255,7 @@
             
             URL.revokeObjectURL(datasetUrl);
             
-            alert(`Exported dataset/dataset.json\n\nClassifications:\n- ${exportedStats.totalSeeds} seeds with POI data\n- ${exportedStats.church} Churches\n- ${exportedStats.mage} Mage Towers\n- ${exportedStats.other} Other POIs\n\nThis file can be used for:\n- CV loading in main app\n- Session recovery in this tool`);
+            alert(`Exported dataset/dataset.json\n\nClassifications:\n- ${exportedStats.totalSeeds} seeds with POI data\n- ${exportedStats.church} Churches\n- ${exportedStats.mage} Mage Towers\n- ${exportedStats.village} Villages\n\nThis file can be used for:\n- CV loading in main app\n- Session recovery in this tool`);
         }
 
         function loadExistingData(event) {
@@ -1357,6 +1396,9 @@
                     if (saveData.poiDatabase) {
                         poiDatabase = saveData.poiDatabase;
                         console.log('Loaded saved POI database from localStorage');
+                        
+                        // Refresh dropdown with completion indicators now that data is loaded
+                        setupSeedSelector();
                         
                         // Restore current seed if it was saved
                         if (saveData.currentSeed !== null && saveData.currentSeed !== undefined && saveData.currentNightlord) {
