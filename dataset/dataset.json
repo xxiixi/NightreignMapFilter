@@ -1,6 +1,6 @@
 {
   "version": "2025-08-18-predefined",
-  "extractedBy": "predefined-poi-extraction-tool",
+  "extractedBy": "extraction.html",
   "extractionDate": "2025-08-18T10:34:10.846Z",
   "lastUpdated": "2025-08-18T14:36:42.970Z",
   "description": "POI classifications for Nightreign seed recognition",
@@ -9,7 +9,7 @@
   "currentMapType": "default",
   "poiDatabase": {
     "version": "2025-08-18-predefined",
-    "extractedBy": "predefined-poi-extraction-tool",
+    "extractedBy": "extraction.html",
     "extractionDate": "2025-08-18T10:34:10.846Z",
     "seeds": {
       "0": {

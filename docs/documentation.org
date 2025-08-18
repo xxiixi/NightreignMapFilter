@@ -127,7 +127,7 @@ Create empty dataset entries for the POI extraction tool:
 
 ** Data Collection Process
 1. *Generate Templates*: Create empty seed entries for all maps
-2. *Extract POIs*: Use ~predefined-poi-extraction-tool.html~ to classify POIs
+2. *Extract POIs*: Use ~extraction.html~ to classify POIs
 3. *Export Data*: Export classifications from extraction tool
 4. *Integrate*: Import classifications into main application
 
@@ -176,7 +176,7 @@ function validateMapAssets(mapId) {
 5. Test seed recognition accuracy
 
 ** Data Management
-- Use ~predefined-poi-extraction-tool.html~ for POI classification
+- Use ~extraction.html~ for POI classification
 - Store extraction data in ~dataset/dataset.json~
 - Export/import functionality maintains data consistency
 - Regular backups recommended for dataset files
@@ -203,7 +203,7 @@ nightreign-seed-recogniser/
 │   └── pattern/
 │       └── *.jpg                  # Seed pattern images (000-319)
 ├── index.html                     # Main application
-├── predefined-poi-extraction-tool.html  # POI classification tool
+├── extraction.html                # POI classification tool
 ├── data.js                        # Core data definitions
 ├── script.js                      # Main application logic
 ├── styles.css                     # Application styling
