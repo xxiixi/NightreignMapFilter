@@ -1,0 +1,4646 @@
+{
+  "version": "2025-08-18-predefined",
+  "extractedBy": "predefined-poi-extraction-tool",
+  "extractionDate": "2025-08-18T10:34:10.846Z",
+  "lastUpdated": "2025-08-18T14:36:42.970Z",
+  "description": "POI classifications for Nightreign seed recognition",
+  "currentSeed": 56,
+  "currentNightlord": "adel",
+  "currentMapType": "default",
+  "poiDatabase": {
+    "version": "2025-08-18-predefined",
+    "extractedBy": "predefined-poi-extraction-tool",
+    "extractionDate": "2025-08-18T10:34:10.846Z",
+    "seeds": {
+      "0": {
+        "seedNumber": 0,
+        "nightlord": "Gladius",
+        "mapType": "Default",
+        "pois": {
+          "1": {
+            "id": 1,
+            "coordinates": {
+              "x": 155,
+              "y": 551
+            },
+            "type": "church"
+          },
+          "2": {
+            "id": 2,
+            "coordinates": {
+              "x": 350,
+              "y": 545
+            },
+            "type": "mage"
+          },
+          "5": {
+            "id": 5,
+            "coordinates": {
+              "x": 165,
+              "y": 284
+            },
+            "type": "church"
+          },
+          "10": {
+            "id": 10,
+            "coordinates": {
+              "x": 595,
+              "y": 278
+            },
+            "type": "church"
+          },
+          "11": {
+            "id": 11,
+            "coordinates": {
+              "x": 410,
+              "y": 180
+            },
+            "type": "mage"
+          }
+        }
+      },
+      "1": {
+        "seedNumber": 1,
+        "nightlord": "Gladius",
+        "mapType": "Default",
+        "pois": {
+          "2": {
+            "id": 2,
+            "coordinates": {
+              "x": 350,
+              "y": 545
+            },
+            "type": "church"
+          },
+          "5": {
+            "id": 5,
+            "coordinates": {
+              "x": 165,
+              "y": 284
+            },
+            "type": "mage"
+          },
+          "7": {
+            "id": 7,
+            "coordinates": {
+              "x": 420,
+              "y": 495
+            },
+            "type": "mage"
+          },
+          "9": {
+            "id": 9,
+            "coordinates": {
+              "x": 530,
+              "y": 285
+            },
+            "type": "church"
+          },
+          "11": {
+            "id": 11,
+            "coordinates": {
+              "x": 410,
+              "y": 180
+            },
+            "type": "church"
+          }
+        }
+      },
+      "2": {
+        "seedNumber": 2,
+        "nightlord": "Gladius",
+        "mapType": "Default",
+        "pois": {
+          "2": {
+            "id": 2,
+            "coordinates": {
+              "x": 350,
+              "y": 545
+            },
+            "type": "mage"
+          },
+          "6": {
+            "id": 6,
+            "coordinates": {
+              "x": 436,
+              "y": 620
+            },
+            "type": "church"
+          },
+          "9": {
+            "id": 9,
+            "coordinates": {
+              "x": 530,
+              "y": 285
+            },
+            "type": "church"
+          },
+          "11": {
+            "id": 11,
+            "coordinates": {
+              "x": 410,
+              "y": 180
+            },
+            "type": "church"
+          }
+        }
+      },
+      "3": {
+        "seedNumber": 3,
+        "nightlord": "Gladius",
+        "mapType": "Default",
+        "pois": {
+          "1": {
+            "id": 1,
+            "coordinates": {
+              "x": 155,
+              "y": 551
+            },
+            "type": "mage"
+          },
+          "2": {
+            "id": 2,
+            "coordinates": {
+              "x": 350,
+              "y": 545
+            },
+            "type": "church"
+          },
+          "4": {
+            "id": 4,
+            "coordinates": {
+              "x": 280,
+              "y": 308
+            },
+            "type": "church"
+          },
+          "5": {
+            "id": 5,
+            "coordinates": {
+              "x": 165,
+              "y": 284
+            },
+            "type": "mage"
+          },
+          "7": {
+            "id": 7,
+            "coordinates": {
+              "x": 420,
+              "y": 495
+            },
+            "type": "other"
+          },
+          "10": {
+            "id": 10,
+            "coordinates": {
+              "x": 595,
+              "y": 278
+            },
+            "type": "church"
+          }
+        }
+      },
+      "4": {
+        "seedNumber": 4,
+        "nightlord": "Gladius",
+        "mapType": "Default",
+        "pois": {
+          "1": {
+            "id": 1,
+            "coordinates": {
+              "x": 155,
+              "y": 551
+            },
+            "type": "mage"
+          },
+          "2": {
+            "id": 2,
+            "coordinates": {
+              "x": 350,
+              "y": 545
+            },
+            "type": "mage"
+          },
+          "3": {
+            "id": 3,
+            "coordinates": {
+              "x": 155,
+              "y": 436
+            },
+            "type": "church"
+          },
+          "4": {
+            "id": 4,
+            "coordinates": {
+              "x": 280,
+              "y": 308
+            },
+            "type": "church"
+          },
+          "9": {
+            "id": 9,
+            "coordinates": {
+              "x": 530,
+              "y": 285
+            },
+            "type": "other"
+          },
+          "11": {
+            "id": 11,
+            "coordinates": {
+              "x": 410,
+              "y": 180
+            },
+            "type": "church"
+          }
+        }
+      },
+      "5": {
+        "seedNumber": 5,
+        "nightlord": "Gladius",
+        "mapType": "Default",
+        "pois": {
+          "1": {
+            "id": 1,
+            "coordinates": {
+              "x": 155,
+              "y": 551
+            },
+            "type": "mage"
+          },
+          "2": {
+            "id": 2,
+            "coordinates": {
+              "x": 350,
+              "y": 545
+            },
+            "type": "mage"
+          },
+          "3": {
+            "id": 3,
+            "coordinates": {
+              "x": 155,
+              "y": 436
+            },
+            "type": "church"
+          },
+          "6": {
+            "id": 6,
+            "coordinates": {
+              "x": 436,
+              "y": 620
+            },
+            "type": "church"
+          },
+          "8": {
+            "id": 8,
+            "coordinates": {
+              "x": 620,
+              "y": 455
+            },
+            "type": "church"
+          },
+          "9": {
+            "id": 9,
+            "coordinates": {
+              "x": 530,
+              "y": 285
+            },
+            "type": "mage"
+          }
+        }
+      },
+      "6": {
+        "seedNumber": 6,
+        "nightlord": "Gladius",
+        "mapType": "Default",
+        "pois": {
+          "1": {
+            "id": 1,
+            "coordinates": {
+              "x": 155,
+              "y": 551
+            },
+            "type": "church"
+          },
+          "7": {
+            "id": 7,
+            "coordinates": {
+              "x": 420,
+              "y": 495
+            },
+            "type": "church"
+          },
+          "9": {
+            "id": 9,
+            "coordinates": {
+              "x": 530,
+              "y": 285
+            },
+            "type": "mage"
+          },
+          "10": {
+            "id": 10,
+            "coordinates": {
+              "x": 595,
+              "y": 278
+            },
+            "type": "church"
+          }
+        }
+      },
+      "7": {
+        "seedNumber": 7,
+        "nightlord": "Gladius",
+        "mapType": "Default",
+        "pois": {
+          "1": {
+            "id": 1,
+            "coordinates": {
+              "x": 155,
+              "y": 551
+            },
+            "type": "church"
+          },
+          "2": {
+            "id": 2,
+            "coordinates": {
+              "x": 350,
+              "y": 545
+            },
+            "type": "other"
+          },
+          "3": {
+            "id": 3,
+            "coordinates": {
+              "x": 155,
+              "y": 436
+            },
+            "type": "mage"
+          },
+          "5": {
+            "id": 5,
+            "coordinates": {
+              "x": 165,
+              "y": 284
+            },
+            "type": "mage"
+          },
+          "7": {
+            "id": 7,
+            "coordinates": {
+              "x": 420,
+              "y": 495
+            },
+            "type": "church"
+          },
+          "10": {
+            "id": 10,
+            "coordinates": {
+              "x": 595,
+              "y": 278
+            },
+            "type": "church"
+          }
+        }
+      },
+      "8": {
+        "seedNumber": 8,
+        "nightlord": "Gladius",
+        "mapType": "Default",
+        "pois": {
+          "1": {
+            "id": 1,
+            "coordinates": {
+              "x": 155,
+              "y": 551
+            },
+            "type": "church"
+          },
+          "3": {
+            "id": 3,
+            "coordinates": {
+              "x": 155,
+              "y": 436
+            },
+            "type": "church"
+          },
+          "4": {
+            "id": 4,
+            "coordinates": {
+              "x": 280,
+              "y": 308
+            },
+            "type": "other"
+          },
+          "5": {
+            "id": 5,
+            "coordinates": {
+              "x": 165,
+              "y": 284
+            },
+            "type": "mage"
+          },
+          "6": {
+            "id": 6,
+            "coordinates": {
+              "x": 436,
+              "y": 620
+            },
+            "type": "church"
+          },
+          "8": {
+            "id": 8,
+            "coordinates": {
+              "x": 620,
+              "y": 455
+            },
+            "type": "mage"
+          },
+          "9": {
+            "id": 9,
+            "coordinates": {
+              "x": 530,
+              "y": 285
+            },
+            "type": "church"
+          }
+        }
+      },
+      "9": {
+        "seedNumber": 9,
+        "nightlord": "Gladius",
+        "mapType": "Default",
+        "pois": {
+          "1": {
+            "id": 1,
+            "coordinates": {
+              "x": 155,
+              "y": 551
+            },
+            "type": "church"
+          },
+          "2": {
+            "id": 2,
+            "coordinates": {
+              "x": 350,
+              "y": 545
+            },
+            "type": "church"
+          },
+          "4": {
+            "id": 4,
+            "coordinates": {
+              "x": 280,
+              "y": 308
+            },
+            "type": "church"
+          },
+          "7": {
+            "id": 7,
+            "coordinates": {
+              "x": 420,
+              "y": 495
+            },
+            "type": "church"
+          },
+          "11": {
+            "id": 11,
+            "coordinates": {
+              "x": 410,
+              "y": 180
+            },
+            "type": "mage"
+          }
+        }
+      },
+      "10": {
+        "seedNumber": 10,
+        "nightlord": "Gladius",
+        "mapType": "Default",
+        "pois": {
+          "1": {
+            "id": 1,
+            "coordinates": {
+              "x": 155,
+              "y": 551
+            },
+            "type": "church"
+          },
+          "3": {
+            "id": 3,
+            "coordinates": {
+              "x": 155,
+              "y": 436
+            },
+            "type": "other"
+          },
+          "5": {
+            "id": 5,
+            "coordinates": {
+              "x": 165,
+              "y": 284
+            },
+            "type": "church"
+          },
+          "6": {
+            "id": 6,
+            "coordinates": {
+              "x": 436,
+              "y": 620
+            },
+            "type": "church"
+          },
+          "8": {
+            "id": 8,
+            "coordinates": {
+              "x": 620,
+              "y": 455
+            },
+            "type": "mage"
+          },
+          "10": {
+            "id": 10,
+            "coordinates": {
+              "x": 595,
+              "y": 278
+            },
+            "type": "church"
+          }
+        }
+      },
+      "11": {
+        "seedNumber": 11,
+        "nightlord": "Gladius",
+        "mapType": "Default",
+        "pois": {
+          "2": {
+            "id": 2,
+            "coordinates": {
+              "x": 350,
+              "y": 545
+            },
+            "type": "church"
+          },
+          "4": {
+            "id": 4,
+            "coordinates": {
+              "x": 280,
+              "y": 308
+            },
+            "type": "mage"
+          },
+          "6": {
+            "id": 6,
+            "coordinates": {
+              "x": 436,
+              "y": 620
+            },
+            "type": "mage"
+          },
+          "7": {
+            "id": 7,
+            "coordinates": {
+              "x": 420,
+              "y": 495
+            },
+            "type": "church"
+          },
+          "9": {
+            "id": 9,
+            "coordinates": {
+              "x": 530,
+              "y": 285
+            },
+            "type": "mage"
+          },
+          "10": {
+            "id": 10,
+            "coordinates": {
+              "x": 595,
+              "y": 278
+            },
+            "type": "church"
+          }
+        }
+      },
+      "12": {
+        "seedNumber": 12,
+        "nightlord": "Gladius",
+        "mapType": "Default",
+        "pois": {
+          "1": {
+            "id": 1,
+            "coordinates": {
+              "x": 155,
+              "y": 551
+            },
+            "type": "church"
+          },
+          "4": {
+            "id": 4,
+            "coordinates": {
+              "x": 280,
+              "y": 308
+            },
+            "type": "church"
+          },
+          "6": {
+            "id": 6,
+            "coordinates": {
+              "x": 436,
+              "y": 620
+            },
+            "type": "mage"
+          },
+          "7": {
+            "id": 7,
+            "coordinates": {
+              "x": 420,
+              "y": 495
+            },
+            "type": "mage"
+          },
+          "10": {
+            "id": 10,
+            "coordinates": {
+              "x": 595,
+              "y": 278
+            },
+            "type": "church"
+          },
+          "11": {
+            "id": 11,
+            "coordinates": {
+              "x": 410,
+              "y": 180
+            },
+            "type": "mage"
+          }
+        }
+      },
+      "13": {
+        "seedNumber": 13,
+        "nightlord": "Gladius",
+        "mapType": "Default",
+        "pois": {
+          "4": {
+            "id": 4,
+            "coordinates": {
+              "x": 280,
+              "y": 308
+            },
+            "type": "church"
+          },
+          "5": {
+            "id": 5,
+            "coordinates": {
+              "x": 165,
+              "y": 284
+            },
+            "type": "other"
+          },
+          "6": {
+            "id": 6,
+            "coordinates": {
+              "x": 436,
+              "y": 620
+            },
+            "type": "church"
+          },
+          "7": {
+            "id": 7,
+            "coordinates": {
+              "x": 420,
+              "y": 495
+            },
+            "type": "mage"
+          },
+          "10": {
+            "id": 10,
+            "coordinates": {
+              "x": 595,
+              "y": 278
+            },
+            "type": "church"
+          }
+        }
+      },
+      "14": {
+        "seedNumber": 14,
+        "nightlord": "Gladius",
+        "mapType": "Default",
+        "pois": {
+          "2": {
+            "id": 2,
+            "coordinates": {
+              "x": 350,
+              "y": 545
+            },
+            "type": "church"
+          },
+          "5": {
+            "id": 5,
+            "coordinates": {
+              "x": 165,
+              "y": 284
+            },
+            "type": "church"
+          },
+          "7": {
+            "id": 7,
+            "coordinates": {
+              "x": 420,
+              "y": 495
+            },
+            "type": "church"
+          },
+          "11": {
+            "id": 11,
+            "coordinates": {
+              "x": 410,
+              "y": 180
+            },
+            "type": "mage"
+          }
+        }
+      },
+      "15": {
+        "seedNumber": 15,
+        "nightlord": "Gladius",
+        "mapType": "Default",
+        "pois": {
+          "2": {
+            "id": 2,
+            "coordinates": {
+              "x": 350,
+              "y": 545
+            },
+            "type": "mage"
+          },
+          "3": {
+            "id": 3,
+            "coordinates": {
+              "x": 155,
+              "y": 436
+            },
+            "type": "mage"
+          },
+          "5": {
+            "id": 5,
+            "coordinates": {
+              "x": 165,
+              "y": 284
+            },
+            "type": "church"
+          },
+          "6": {
+            "id": 6,
+            "coordinates": {
+              "x": 436,
+              "y": 620
+            },
+            "type": "mage"
+          },
+          "7": {
+            "id": 7,
+            "coordinates": {
+              "x": 420,
+              "y": 495
+            },
+            "type": "church"
+          },
+          "8": {
+            "id": 8,
+            "coordinates": {
+              "x": 620,
+              "y": 455
+            },
+            "type": "church"
+          }
+        }
+      },
+      "16": {
+        "seedNumber": 16,
+        "nightlord": "Gladius",
+        "mapType": "Default",
+        "pois": {
+          "2": {
+            "id": 2,
+            "coordinates": {
+              "x": 350,
+              "y": 545
+            },
+            "type": "mage"
+          },
+          "4": {
+            "id": 4,
+            "coordinates": {
+              "x": 280,
+              "y": 308
+            },
+            "type": "church"
+          },
+          "5": {
+            "id": 5,
+            "coordinates": {
+              "x": 165,
+              "y": 284
+            },
+            "type": "mage"
+          },
+          "6": {
+            "id": 6,
+            "coordinates": {
+              "x": 436,
+              "y": 620
+            },
+            "type": "church"
+          },
+          "10": {
+            "id": 10,
+            "coordinates": {
+              "x": 595,
+              "y": 278
+            },
+            "type": "church"
+          }
+        }
+      },
+      "17": {
+        "seedNumber": 17,
+        "nightlord": "Gladius",
+        "mapType": "Default",
+        "pois": {
+          "2": {
+            "id": 2,
+            "coordinates": {
+              "x": 350,
+              "y": 545
+            },
+            "type": "mage"
+          },
+          "3": {
+            "id": 3,
+            "coordinates": {
+              "x": 155,
+              "y": 436
+            },
+            "type": "church"
+          },
+          "6": {
+            "id": 6,
+            "coordinates": {
+              "x": 436,
+              "y": 620
+            },
+            "type": "church"
+          },
+          "7": {
+            "id": 7,
+            "coordinates": {
+              "x": 420,
+              "y": 495
+            },
+            "type": "church"
+          },
+          "11": {
+            "id": 11,
+            "coordinates": {
+              "x": 410,
+              "y": 180
+            },
+            "type": "mage"
+          }
+        }
+      },
+      "18": {
+        "seedNumber": 18,
+        "nightlord": "Gladius",
+        "mapType": "Default",
+        "pois": {
+          "5": {
+            "id": 5,
+            "coordinates": {
+              "x": 165,
+              "y": 284
+            },
+            "type": "mage"
+          },
+          "7": {
+            "id": 7,
+            "coordinates": {
+              "x": 420,
+              "y": 495
+            },
+            "type": "church"
+          },
+          "8": {
+            "id": 8,
+            "coordinates": {
+              "x": 620,
+              "y": 455
+            },
+            "type": "church"
+          },
+          "11": {
+            "id": 11,
+            "coordinates": {
+              "x": 410,
+              "y": 180
+            },
+            "type": "church"
+          }
+        }
+      },
+      "19": {
+        "seedNumber": 19,
+        "nightlord": "Gladius",
+        "mapType": "Default",
+        "pois": {
+          "4": {
+            "id": 4,
+            "coordinates": {
+              "x": 280,
+              "y": 308
+            },
+            "type": "church"
+          },
+          "6": {
+            "id": 6,
+            "coordinates": {
+              "x": 436,
+              "y": 620
+            },
+            "type": "church"
+          },
+          "7": {
+            "id": 7,
+            "coordinates": {
+              "x": 420,
+              "y": 495
+            },
+            "type": "mage"
+          },
+          "8": {
+            "id": 8,
+            "coordinates": {
+              "x": 620,
+              "y": 455
+            },
+            "type": "mage"
+          },
+          "9": {
+            "id": 9,
+            "coordinates": {
+              "x": 530,
+              "y": 285
+            },
+            "type": "church"
+          }
+        }
+      },
+      "20": {
+        "seedNumber": 20,
+        "nightlord": "Gladius",
+        "mapType": "Mountaintop",
+        "pois": {
+          "3": {
+            "id": 3,
+            "coordinates": {
+              "x": 155,
+              "y": 440
+            },
+            "type": "church"
+          },
+          "6": {
+            "id": 6,
+            "coordinates": {
+              "x": 436,
+              "y": 620
+            },
+            "type": "church"
+          },
+          "8": {
+            "id": 8,
+            "coordinates": {
+              "x": 620,
+              "y": 460
+            },
+            "type": "church"
+          },
+          "9": {
+            "id": 9,
+            "coordinates": {
+              "x": 530,
+              "y": 285
+            },
+            "type": "church"
+          }
+        }
+      },
+      "21": {
+        "seedNumber": 21,
+        "nightlord": "Gladius",
+        "mapType": "Mountaintop",
+        "pois": {
+          "1": {
+            "id": 1,
+            "coordinates": {
+              "x": 155,
+              "y": 551
+            },
+            "type": "church"
+          },
+          "3": {
+            "id": 3,
+            "coordinates": {
+              "x": 155,
+              "y": 440
+            },
+            "type": "mage"
+          },
+          "7": {
+            "id": 7,
+            "coordinates": {
+              "x": 420,
+              "y": 495
+            },
+            "type": "mage"
+          },
+          "9": {
+            "id": 9,
+            "coordinates": {
+              "x": 530,
+              "y": 285
+            },
+            "type": "church"
+          },
+          "11": {
+            "id": 11,
+            "coordinates": {
+              "x": 410,
+              "y": 180
+            },
+            "type": "church"
+          }
+        }
+      },
+      "22": {
+        "seedNumber": 22,
+        "nightlord": "Gladius",
+        "mapType": "Mountaintop",
+        "pois": {
+          "1": {
+            "id": 1,
+            "coordinates": {
+              "x": 155,
+              "y": 551
+            },
+            "type": "church"
+          },
+          "6": {
+            "id": 6,
+            "coordinates": {
+              "x": 436,
+              "y": 620
+            },
+            "type": "church"
+          },
+          "8": {
+            "id": 8,
+            "coordinates": {
+              "x": 620,
+              "y": 460
+            },
+            "type": "mage"
+          },
+          "9": {
+            "id": 9,
+            "coordinates": {
+              "x": 530,
+              "y": 285
+            },
+            "type": "church"
+          },
+          "11": {
+            "id": 11,
+            "coordinates": {
+              "x": 410,
+              "y": 180
+            },
+            "type": "mage"
+          }
+        }
+      },
+      "23": {
+        "seedNumber": 23,
+        "nightlord": "Gladius",
+        "mapType": "Mountaintop",
+        "pois": {
+          "1": {
+            "id": 1,
+            "coordinates": {
+              "x": 155,
+              "y": 551
+            },
+            "type": "church"
+          },
+          "6": {
+            "id": 6,
+            "coordinates": {
+              "x": 436,
+              "y": 620
+            },
+            "type": "church"
+          },
+          "10": {
+            "id": 10,
+            "coordinates": {
+              "x": 595,
+              "y": 278
+            },
+            "type": "church"
+          },
+          "11": {
+            "id": 11,
+            "coordinates": {
+              "x": 410,
+              "y": 180
+            },
+            "type": "other"
+          }
+        }
+      },
+      "24": {
+        "seedNumber": 24,
+        "nightlord": "Gladius",
+        "mapType": "Mountaintop",
+        "pois": {
+          "2": {
+            "id": 2,
+            "coordinates": {
+              "x": 345,
+              "y": 547
+            },
+            "type": "other"
+          },
+          "6": {
+            "id": 6,
+            "coordinates": {
+              "x": 436,
+              "y": 620
+            },
+            "type": "church"
+          },
+          "7": {
+            "id": 7,
+            "coordinates": {
+              "x": 420,
+              "y": 495
+            },
+            "type": "church"
+          },
+          "10": {
+            "id": 10,
+            "coordinates": {
+              "x": 595,
+              "y": 278
+            },
+            "type": "church"
+          },
+          "11": {
+            "id": 11,
+            "coordinates": {
+              "x": 410,
+              "y": 180
+            },
+            "type": "mage"
+          }
+        }
+      },
+      "25": {
+        "seedNumber": 25,
+        "nightlord": "Gladius",
+        "mapType": "Crater",
+        "pois": {
+          "2": {
+            "id": 2,
+            "coordinates": {
+              "x": 348,
+              "y": 545
+            },
+            "type": "church"
+          },
+          "3": {
+            "id": 3,
+            "coordinates": {
+              "x": 155,
+              "y": 440
+            },
+            "type": "other"
+          },
+          "7": {
+            "id": 7,
+            "coordinates": {
+              "x": 420,
+              "y": 495
+            },
+            "type": "church"
+          },
+          "9": {
+            "id": 9,
+            "coordinates": {
+              "x": 530,
+              "y": 295
+            },
+            "type": "mage"
+          },
+          "10": {
+            "id": 10,
+            "coordinates": {
+              "x": 595,
+              "y": 278
+            },
+            "type": "church"
+          }
+        }
+      },
+      "26": {
+        "seedNumber": 26,
+        "nightlord": "Gladius",
+        "mapType": "Crater",
+        "pois": {
+          "2": {
+            "id": 2,
+            "coordinates": {
+              "x": 348,
+              "y": 545
+            },
+            "type": "mage"
+          },
+          "3": {
+            "id": 3,
+            "coordinates": {
+              "x": 155,
+              "y": 440
+            },
+            "type": "church"
+          },
+          "7": {
+            "id": 7,
+            "coordinates": {
+              "x": 420,
+              "y": 495
+            },
+            "type": "church"
+          },
+          "8": {
+            "id": 8,
+            "coordinates": {
+              "x": 620,
+              "y": 455
+            },
+            "type": "church"
+          }
+        }
+      },
+      "27": {
+        "seedNumber": 27,
+        "nightlord": "Gladius",
+        "mapType": "Crater",
+        "pois": {
+          "1": {
+            "id": 1,
+            "coordinates": {
+              "x": 155,
+              "y": 551
+            },
+            "type": "church"
+          },
+          "2": {
+            "id": 2,
+            "coordinates": {
+              "x": 348,
+              "y": 545
+            },
+            "type": "mage"
+          },
+          "5": {
+            "id": 5,
+            "coordinates": {
+              "x": 165,
+              "y": 284
+            },
+            "type": "church"
+          },
+          "6": {
+            "id": 6,
+            "coordinates": {
+              "x": 436,
+              "y": 630
+            },
+            "type": "church"
+          },
+          "8": {
+            "id": 8,
+            "coordinates": {
+              "x": 620,
+              "y": 455
+            },
+            "type": "other"
+          },
+          "9": {
+            "id": 9,
+            "coordinates": {
+              "x": 530,
+              "y": 295
+            },
+            "type": "mage"
+          }
+        }
+      },
+      "28": {
+        "seedNumber": 28,
+        "nightlord": "Gladius",
+        "mapType": "Crater",
+        "pois": {
+          "2": {
+            "id": 2,
+            "coordinates": {
+              "x": 348,
+              "y": 545
+            },
+            "type": "other"
+          },
+          "3": {
+            "id": 3,
+            "coordinates": {
+              "x": 155,
+              "y": 440
+            },
+            "type": "mage"
+          },
+          "6": {
+            "id": 6,
+            "coordinates": {
+              "x": 436,
+              "y": 630
+            },
+            "type": "church"
+          },
+          "7": {
+            "id": 7,
+            "coordinates": {
+              "x": 420,
+              "y": 495
+            },
+            "type": "church"
+          },
+          "8": {
+            "id": 8,
+            "coordinates": {
+              "x": 620,
+              "y": 455
+            },
+            "type": "church"
+          }
+        }
+      },
+      "29": {
+        "seedNumber": 29,
+        "nightlord": "Gladius",
+        "mapType": "Crater",
+        "pois": {
+          "1": {
+            "id": 1,
+            "coordinates": {
+              "x": 155,
+              "y": 551
+            },
+            "type": "church"
+          },
+          "6": {
+            "id": 6,
+            "coordinates": {
+              "x": 436,
+              "y": 630
+            },
+            "type": "mage"
+          },
+          "7": {
+            "id": 7,
+            "coordinates": {
+              "x": 420,
+              "y": 495
+            },
+            "type": "church"
+          },
+          "10": {
+            "id": 10,
+            "coordinates": {
+              "x": 595,
+              "y": 278
+            },
+            "type": "church"
+          }
+        }
+      },
+      "30": {
+        "seedNumber": 30,
+        "nightlord": "Gladius",
+        "mapType": "Rotted Woods",
+        "pois": {
+          "2": {
+            "id": 2,
+            "coordinates": {
+              "x": 350,
+              "y": 545
+            },
+            "type": "church"
+          },
+          "3": {
+            "id": 3,
+            "coordinates": {
+              "x": 155,
+              "y": 442
+            },
+            "type": "mage"
+          },
+          "4": {
+            "id": 4,
+            "coordinates": {
+              "x": 275,
+              "y": 315
+            },
+            "type": "church"
+          },
+          "5": {
+            "id": 5,
+            "coordinates": {
+              "x": 165,
+              "y": 284
+            },
+            "type": "mage"
+          },
+          "11": {
+            "id": 11,
+            "coordinates": {
+              "x": 410,
+              "y": 180
+            },
+            "type": "church"
+          }
+        }
+      },
+      "31": {
+        "seedNumber": 31,
+        "nightlord": "Gladius",
+        "mapType": "Rotted Woods",
+        "pois": {
+          "1": {
+            "id": 1,
+            "coordinates": {
+              "x": 153,
+              "y": 557
+            },
+            "type": "church"
+          },
+          "2": {
+            "id": 2,
+            "coordinates": {
+              "x": 350,
+              "y": 545
+            },
+            "type": "church"
+          },
+          "4": {
+            "id": 4,
+            "coordinates": {
+              "x": 275,
+              "y": 315
+            },
+            "type": "church"
+          },
+          "5": {
+            "id": 5,
+            "coordinates": {
+              "x": 165,
+              "y": 284
+            },
+            "type": "church"
+          },
+          "9": {
+            "id": 9,
+            "coordinates": {
+              "x": 530,
+              "y": 285
+            },
+            "type": "other"
+          },
+          "11": {
+            "id": 11,
+            "coordinates": {
+              "x": 410,
+              "y": 180
+            },
+            "type": "mage"
+          }
+        }
+      },
+      "32": {
+        "seedNumber": 32,
+        "nightlord": "Gladius",
+        "mapType": "Rotted Woods",
+        "pois": {
+          "1": {
+            "id": 1,
+            "coordinates": {
+              "x": 153,
+              "y": 557
+            },
+            "type": "church"
+          },
+          "3": {
+            "id": 3,
+            "coordinates": {
+              "x": 155,
+              "y": 442
+            },
+            "type": "mage"
+          },
+          "4": {
+            "id": 4,
+            "coordinates": {
+              "x": 275,
+              "y": 315
+            },
+            "type": "church"
+          },
+          "11": {
+            "id": 11,
+            "coordinates": {
+              "x": 410,
+              "y": 180
+            },
+            "type": "church"
+          }
+        }
+      },
+      "33": {
+        "seedNumber": 33,
+        "nightlord": "Gladius",
+        "mapType": "Rotted Woods",
+        "pois": {
+          "1": {
+            "id": 1,
+            "coordinates": {
+              "x": 153,
+              "y": 557
+            },
+            "type": "church"
+          },
+          "2": {
+            "id": 2,
+            "coordinates": {
+              "x": 350,
+              "y": 545
+            },
+            "type": "church"
+          },
+          "5": {
+            "id": 5,
+            "coordinates": {
+              "x": 165,
+              "y": 284
+            },
+            "type": "mage"
+          },
+          "10": {
+            "id": 10,
+            "coordinates": {
+              "x": 597,
+              "y": 285
+            },
+            "type": "mage"
+          },
+          "11": {
+            "id": 11,
+            "coordinates": {
+              "x": 410,
+              "y": 180
+            },
+            "type": "church"
+          }
+        }
+      },
+      "34": {
+        "seedNumber": 34,
+        "nightlord": "Gladius",
+        "mapType": "Rotted Woods",
+        "pois": {
+          "1": {
+            "id": 1,
+            "coordinates": {
+              "x": 153,
+              "y": 557
+            },
+            "type": "mage"
+          },
+          "4": {
+            "id": 4,
+            "coordinates": {
+              "x": 275,
+              "y": 315
+            },
+            "type": "mage"
+          },
+          "5": {
+            "id": 5,
+            "coordinates": {
+              "x": 165,
+              "y": 284
+            },
+            "type": "church"
+          },
+          "9": {
+            "id": 9,
+            "coordinates": {
+              "x": 530,
+              "y": 285
+            },
+            "type": "church"
+          },
+          "10": {
+            "id": 10,
+            "coordinates": {
+              "x": 597,
+              "y": 285
+            },
+            "type": "other"
+          },
+          "11": {
+            "id": 11,
+            "coordinates": {
+              "x": 410,
+              "y": 180
+            },
+            "type": "church"
+          }
+        }
+      },
+      "35": {
+        "seedNumber": 35,
+        "nightlord": "Gladius",
+        "mapType": "Noklateo",
+        "pois": {
+          "5": {
+            "id": 5,
+            "coordinates": {
+              "x": 165,
+              "y": 284
+            },
+            "type": "church"
+          },
+          "6": {
+            "id": 6,
+            "coordinates": {
+              "x": 436,
+              "y": 620
+            },
+            "type": "church"
+          },
+          "9": {
+            "id": 9,
+            "coordinates": {
+              "x": 530,
+              "y": 287
+            },
+            "type": "other"
+          },
+          "10": {
+            "id": 10,
+            "coordinates": {
+              "x": 595,
+              "y": 278
+            },
+            "type": "church"
+          },
+          "11": {
+            "id": 11,
+            "coordinates": {
+              "x": 410,
+              "y": 182
+            },
+            "type": "mage"
+          }
+        }
+      },
+      "36": {
+        "seedNumber": 36,
+        "nightlord": "Gladius",
+        "mapType": "Noklateo",
+        "pois": {
+          "4": {
+            "id": 4,
+            "coordinates": {
+              "x": 278,
+              "y": 308
+            },
+            "type": "mage"
+          },
+          "5": {
+            "id": 5,
+            "coordinates": {
+              "x": 165,
+              "y": 284
+            },
+            "type": "church"
+          },
+          "7": {
+            "id": 7,
+            "coordinates": {
+              "x": 420,
+              "y": 495
+            },
+            "type": "church"
+          },
+          "8": {
+            "id": 8,
+            "coordinates": {
+              "x": 620,
+              "y": 455
+            },
+            "type": "church"
+          },
+          "9": {
+            "id": 9,
+            "coordinates": {
+              "x": 530,
+              "y": 287
+            },
+            "type": "other"
+          }
+        }
+      },
+      "37": {
+        "seedNumber": 37,
+        "nightlord": "Gladius",
+        "mapType": "Noklateo",
+        "pois": {
+          "5": {
+            "id": 5,
+            "coordinates": {
+              "x": 165,
+              "y": 284
+            },
+            "type": "church"
+          },
+          "6": {
+            "id": 6,
+            "coordinates": {
+              "x": 436,
+              "y": 620
+            },
+            "type": "church"
+          },
+          "8": {
+            "id": 8,
+            "coordinates": {
+              "x": 620,
+              "y": 455
+            },
+            "type": "mage"
+          },
+          "10": {
+            "id": 10,
+            "coordinates": {
+              "x": 595,
+              "y": 278
+            },
+            "type": "church"
+          }
+        }
+      },
+      "38": {
+        "seedNumber": 38,
+        "nightlord": "Gladius",
+        "mapType": "Noklateo",
+        "pois": {
+          "5": {
+            "id": 5,
+            "coordinates": {
+              "x": 165,
+              "y": 284
+            },
+            "type": "church"
+          },
+          "6": {
+            "id": 6,
+            "coordinates": {
+              "x": 436,
+              "y": 620
+            },
+            "type": "mage"
+          },
+          "7": {
+            "id": 7,
+            "coordinates": {
+              "x": 420,
+              "y": 495
+            },
+            "type": "church"
+          },
+          "9": {
+            "id": 9,
+            "coordinates": {
+              "x": 530,
+              "y": 287
+            },
+            "type": "other"
+          },
+          "10": {
+            "id": 10,
+            "coordinates": {
+              "x": 595,
+              "y": 278
+            },
+            "type": "church"
+          }
+        }
+      },
+      "39": {
+        "seedNumber": 39,
+        "nightlord": "Gladius",
+        "mapType": "Noklateo",
+        "pois": {
+          "4": {
+            "id": 4,
+            "coordinates": {
+              "x": 278,
+              "y": 308
+            },
+            "type": "church"
+          },
+          "6": {
+            "id": 6,
+            "coordinates": {
+              "x": 436,
+              "y": 620
+            },
+            "type": "church"
+          },
+          "8": {
+            "id": 8,
+            "coordinates": {
+              "x": 620,
+              "y": 455
+            },
+            "type": "church"
+          },
+          "9": {
+            "id": 9,
+            "coordinates": {
+              "x": 530,
+              "y": 287
+            },
+            "type": "mage"
+          },
+          "10": {
+            "id": 10,
+            "coordinates": {
+              "x": 595,
+              "y": 278
+            },
+            "type": "other"
+          }
+        }
+      },
+      "40": {
+        "seedNumber": 40,
+        "nightlord": "Adel",
+        "mapType": "Default",
+        "pois": {
+          "1": {
+            "id": 1,
+            "coordinates": {
+              "x": 155,
+              "y": 551
+            },
+            "type": "church"
+          },
+          "2": {
+            "id": 2,
+            "coordinates": {
+              "x": 350,
+              "y": 545
+            },
+            "type": "mage"
+          },
+          "3": {
+            "id": 3,
+            "coordinates": {
+              "x": 155,
+              "y": 436
+            },
+            "type": "mage"
+          },
+          "7": {
+            "id": 7,
+            "coordinates": {
+              "x": 420,
+              "y": 495
+            },
+            "type": "mage"
+          },
+          "9": {
+            "id": 9,
+            "coordinates": {
+              "x": 530,
+              "y": 285
+            },
+            "type": "church"
+          },
+          "11": {
+            "id": 11,
+            "coordinates": {
+              "x": 410,
+              "y": 180
+            },
+            "type": "church"
+          }
+        }
+      },
+      "41": {
+        "seedNumber": 41,
+        "nightlord": "Adel",
+        "mapType": "Default",
+        "pois": {
+          "2": {
+            "id": 2,
+            "coordinates": {
+              "x": 350,
+              "y": 545
+            },
+            "type": "church"
+          },
+          "4": {
+            "id": 4,
+            "coordinates": {
+              "x": 280,
+              "y": 308
+            },
+            "type": "church"
+          },
+          "6": {
+            "id": 6,
+            "coordinates": {
+              "x": 436,
+              "y": 620
+            },
+            "type": "mage"
+          },
+          "7": {
+            "id": 7,
+            "coordinates": {
+              "x": 420,
+              "y": 495
+            },
+            "type": "mage"
+          },
+          "10": {
+            "id": 10,
+            "coordinates": {
+              "x": 595,
+              "y": 278
+            },
+            "type": "church"
+          },
+          "11": {
+            "id": 11,
+            "coordinates": {
+              "x": 410,
+              "y": 180
+            },
+            "type": "mage"
+          }
+        }
+      },
+      "42": {
+        "seedNumber": 42,
+        "nightlord": "Adel",
+        "mapType": "Default",
+        "pois": {
+          "1": {
+            "id": 1,
+            "coordinates": {
+              "x": 155,
+              "y": 551
+            },
+            "type": "church"
+          },
+          "2": {
+            "id": 2,
+            "coordinates": {
+              "x": 350,
+              "y": 545
+            },
+            "type": "church"
+          },
+          "5": {
+            "id": 5,
+            "coordinates": {
+              "x": 165,
+              "y": 284
+            },
+            "type": "mage"
+          },
+          "7": {
+            "id": 7,
+            "coordinates": {
+              "x": 420,
+              "y": 495
+            },
+            "type": "mage"
+          },
+          "8": {
+            "id": 8,
+            "coordinates": {
+              "x": 620,
+              "y": 455
+            },
+            "type": "mage"
+          },
+          "9": {
+            "id": 9,
+            "coordinates": {
+              "x": 530,
+              "y": 285
+            },
+            "type": "church"
+          }
+        }
+      },
+      "43": {
+        "seedNumber": 43,
+        "nightlord": "Adel",
+        "mapType": "Default",
+        "pois": {
+          "5": {
+            "id": 5,
+            "coordinates": {
+              "x": 165,
+              "y": 284
+            },
+            "type": "church"
+          },
+          "6": {
+            "id": 6,
+            "coordinates": {
+              "x": 436,
+              "y": 620
+            },
+            "type": "church"
+          },
+          "7": {
+            "id": 7,
+            "coordinates": {
+              "x": 420,
+              "y": 495
+            },
+            "type": "church"
+          },
+          "11": {
+            "id": 11,
+            "coordinates": {
+              "x": 410,
+              "y": 180
+            },
+            "type": "mage"
+          }
+        }
+      },
+      "44": {
+        "seedNumber": 44,
+        "nightlord": "Adel",
+        "mapType": "Default",
+        "pois": {
+          "1": {
+            "id": 1,
+            "coordinates": {
+              "x": 155,
+              "y": 551
+            },
+            "type": "church"
+          },
+          "4": {
+            "id": 4,
+            "coordinates": {
+              "x": 280,
+              "y": 308
+            },
+            "type": "church"
+          },
+          "8": {
+            "id": 8,
+            "coordinates": {
+              "x": 620,
+              "y": 455
+            },
+            "type": "church"
+          },
+          "10": {
+            "id": 10,
+            "coordinates": {
+              "x": 595,
+              "y": 278
+            },
+            "type": "mage"
+          }
+        }
+      },
+      "45": {
+        "seedNumber": 45,
+        "nightlord": "Adel",
+        "mapType": "Default",
+        "pois": {
+          "2": {
+            "id": 2,
+            "coordinates": {
+              "x": 350,
+              "y": 545
+            },
+            "type": "mage"
+          },
+          "3": {
+            "id": 3,
+            "coordinates": {
+              "x": 155,
+              "y": 436
+            },
+            "type": "church"
+          },
+          "7": {
+            "id": 7,
+            "coordinates": {
+              "x": 420,
+              "y": 495
+            },
+            "type": "church"
+          },
+          "9": {
+            "id": 9,
+            "coordinates": {
+              "x": 530,
+              "y": 285
+            },
+            "type": "mage"
+          },
+          "10": {
+            "id": 10,
+            "coordinates": {
+              "x": 595,
+              "y": 278
+            },
+            "type": "church"
+          }
+        }
+      },
+      "46": {
+        "seedNumber": 46,
+        "nightlord": "Adel",
+        "mapType": "Default",
+        "pois": {
+          "2": {
+            "id": 2,
+            "coordinates": {
+              "x": 350,
+              "y": 545
+            },
+            "type": "church"
+          },
+          "3": {
+            "id": 3,
+            "coordinates": {
+              "x": 155,
+              "y": 436
+            },
+            "type": "church"
+          },
+          "4": {
+            "id": 4,
+            "coordinates": {
+              "x": 280,
+              "y": 308
+            },
+            "type": "mage"
+          },
+          "7": {
+            "id": 7,
+            "coordinates": {
+              "x": 420,
+              "y": 495
+            },
+            "type": "church"
+          },
+          "8": {
+            "id": 8,
+            "coordinates": {
+              "x": 620,
+              "y": 455
+            },
+            "type": "other"
+          }
+        }
+      },
+      "47": {
+        "seedNumber": 47,
+        "nightlord": "Adel",
+        "mapType": "Default",
+        "pois": {
+          "2": {
+            "id": 2,
+            "coordinates": {
+              "x": 350,
+              "y": 545
+            },
+            "type": "church"
+          },
+          "3": {
+            "id": 3,
+            "coordinates": {
+              "x": 155,
+              "y": 436
+            },
+            "type": "church"
+          },
+          "4": {
+            "id": 4,
+            "coordinates": {
+              "x": 280,
+              "y": 308
+            },
+            "type": "mage"
+          },
+          "7": {
+            "id": 7,
+            "coordinates": {
+              "x": 420,
+              "y": 495
+            },
+            "type": "other"
+          },
+          "9": {
+            "id": 9,
+            "coordinates": {
+              "x": 530,
+              "y": 285
+            },
+            "type": "church"
+          }
+        }
+      },
+      "48": {
+        "seedNumber": 48,
+        "nightlord": "Adel",
+        "mapType": "Default",
+        "pois": {
+          "2": {
+            "id": 2,
+            "coordinates": {
+              "x": 350,
+              "y": 545
+            },
+            "type": "mage"
+          },
+          "3": {
+            "id": 3,
+            "coordinates": {
+              "x": 155,
+              "y": 436
+            },
+            "type": "mage"
+          },
+          "5": {
+            "id": 5,
+            "coordinates": {
+              "x": 165,
+              "y": 284
+            },
+            "type": "church"
+          },
+          "8": {
+            "id": 8,
+            "coordinates": {
+              "x": 620,
+              "y": 455
+            },
+            "type": "church"
+          },
+          "11": {
+            "id": 11,
+            "coordinates": {
+              "x": 410,
+              "y": 180
+            },
+            "type": "church"
+          }
+        }
+      },
+      "49": {
+        "seedNumber": 49,
+        "nightlord": "Adel",
+        "mapType": "Default",
+        "pois": {
+          "1": {
+            "id": 1,
+            "coordinates": {
+              "x": 155,
+              "y": 551
+            },
+            "type": "church"
+          },
+          "4": {
+            "id": 4,
+            "coordinates": {
+              "x": 280,
+              "y": 308
+            },
+            "type": "mage"
+          },
+          "5": {
+            "id": 5,
+            "coordinates": {
+              "x": 165,
+              "y": 284
+            },
+            "type": "church"
+          },
+          "7": {
+            "id": 7,
+            "coordinates": {
+              "x": 420,
+              "y": 495
+            },
+            "type": "church"
+          },
+          "8": {
+            "id": 8,
+            "coordinates": {
+              "x": 620,
+              "y": 455
+            },
+            "type": "mage"
+          },
+          "9": {
+            "id": 9,
+            "coordinates": {
+              "x": 530,
+              "y": 285
+            },
+            "type": "other"
+          },
+          "10": {
+            "id": 10,
+            "coordinates": {
+              "x": 595,
+              "y": 278
+            },
+            "type": "mage"
+          },
+          "11": {
+            "id": 11,
+            "coordinates": {
+              "x": 410,
+              "y": 180
+            },
+            "type": "church"
+          }
+        }
+      },
+      "50": {
+        "seedNumber": 50,
+        "nightlord": "Adel",
+        "mapType": "Default",
+        "pois": {
+          "1": {
+            "id": 1,
+            "coordinates": {
+              "x": 155,
+              "y": 551
+            },
+            "type": "church"
+          },
+          "5": {
+            "id": 5,
+            "coordinates": {
+              "x": 165,
+              "y": 284
+            },
+            "type": "mage"
+          },
+          "6": {
+            "id": 6,
+            "coordinates": {
+              "x": 436,
+              "y": 620
+            },
+            "type": "church"
+          },
+          "7": {
+            "id": 7,
+            "coordinates": {
+              "x": 420,
+              "y": 495
+            },
+            "type": "other"
+          },
+          "9": {
+            "id": 9,
+            "coordinates": {
+              "x": 530,
+              "y": 285
+            },
+            "type": "church"
+          }
+        }
+      },
+      "51": {
+        "seedNumber": 51,
+        "nightlord": "Adel",
+        "mapType": "Default",
+        "pois": {
+          "1": {
+            "id": 1,
+            "coordinates": {
+              "x": 155,
+              "y": 551
+            },
+            "type": "church"
+          },
+          "3": {
+            "id": 3,
+            "coordinates": {
+              "x": 155,
+              "y": 436
+            },
+            "type": "mage"
+          },
+          "6": {
+            "id": 6,
+            "coordinates": {
+              "x": 436,
+              "y": 620
+            },
+            "type": "church"
+          },
+          "8": {
+            "id": 8,
+            "coordinates": {
+              "x": 620,
+              "y": 455
+            },
+            "type": "mage"
+          },
+          "9": {
+            "id": 9,
+            "coordinates": {
+              "x": 530,
+              "y": 285
+            },
+            "type": "other"
+          },
+          "10": {
+            "id": 10,
+            "coordinates": {
+              "x": 595,
+              "y": 278
+            },
+            "type": "church"
+          }
+        }
+      },
+      "52": {
+        "seedNumber": 52,
+        "nightlord": "Adel",
+        "mapType": "Default",
+        "pois": {
+          "5": {
+            "id": 5,
+            "coordinates": {
+              "x": 165,
+              "y": 284
+            },
+            "type": "mage"
+          },
+          "6": {
+            "id": 6,
+            "coordinates": {
+              "x": 436,
+              "y": 620
+            },
+            "type": "church"
+          },
+          "7": {
+            "id": 7,
+            "coordinates": {
+              "x": 420,
+              "y": 495
+            },
+            "type": "church"
+          },
+          "9": {
+            "id": 9,
+            "coordinates": {
+              "x": 530,
+              "y": 285
+            },
+            "type": "mage"
+          },
+          "10": {
+            "id": 10,
+            "coordinates": {
+              "x": 595,
+              "y": 278
+            },
+            "type": "church"
+          }
+        }
+      },
+      "53": {
+        "seedNumber": 53,
+        "nightlord": "Adel",
+        "mapType": "Default",
+        "pois": {
+          "1": {
+            "id": 1,
+            "coordinates": {
+              "x": 155,
+              "y": 551
+            },
+            "type": "church"
+          },
+          "3": {
+            "id": 3,
+            "coordinates": {
+              "x": 155,
+              "y": 436
+            },
+            "type": "church"
+          },
+          "5": {
+            "id": 5,
+            "coordinates": {
+              "x": 165,
+              "y": 284
+            },
+            "type": "church"
+          },
+          "7": {
+            "id": 7,
+            "coordinates": {
+              "x": 420,
+              "y": 495
+            },
+            "type": "church"
+          },
+          "8": {
+            "id": 8,
+            "coordinates": {
+              "x": 620,
+              "y": 455
+            },
+            "type": "mage"
+          }
+        }
+      },
+      "54": {
+        "seedNumber": 54,
+        "nightlord": "Adel",
+        "mapType": "Default",
+        "pois": {
+          "2": {
+            "id": 2,
+            "coordinates": {
+              "x": 350,
+              "y": 545
+            },
+            "type": "church"
+          },
+          "3": {
+            "id": 3,
+            "coordinates": {
+              "x": 155,
+              "y": 436
+            },
+            "type": "church"
+          },
+          "5": {
+            "id": 5,
+            "coordinates": {
+              "x": 165,
+              "y": 284
+            },
+            "type": "mage"
+          },
+          "6": {
+            "id": 6,
+            "coordinates": {
+              "x": 436,
+              "y": 620
+            },
+            "type": "other"
+          },
+          "8": {
+            "id": 8,
+            "coordinates": {
+              "x": 620,
+              "y": 455
+            },
+            "type": "church"
+          },
+          "11": {
+            "id": 11,
+            "coordinates": {
+              "x": 410,
+              "y": 180
+            },
+            "type": "church"
+          }
+        }
+      },
+      "55": {
+        "seedNumber": 55,
+        "nightlord": "Adel",
+        "mapType": "Default",
+        "pois": {
+          "1": {
+            "id": 1,
+            "coordinates": {
+              "x": 155,
+              "y": 551
+            },
+            "type": "other"
+          },
+          "2": {
+            "id": 2,
+            "coordinates": {
+              "x": 350,
+              "y": 545
+            },
+            "type": "church"
+          },
+          "3": {
+            "id": 3,
+            "coordinates": {
+              "x": 155,
+              "y": 436
+            },
+            "type": "church"
+          },
+          "4": {
+            "id": 4,
+            "coordinates": {
+              "x": 280,
+              "y": 308
+            },
+            "type": "church"
+          },
+          "5": {
+            "id": 5,
+            "coordinates": {
+              "x": 165,
+              "y": 284
+            },
+            "type": "mage"
+          },
+          "8": {
+            "id": 8,
+            "coordinates": {
+              "x": 620,
+              "y": 455
+            },
+            "type": "mage"
+          },
+          "10": {
+            "id": 10,
+            "coordinates": {
+              "x": 595,
+              "y": 278
+            },
+            "type": "mage"
+          }
+        }
+      },
+      "56": {
+        "seedNumber": 56,
+        "nightlord": "Adel",
+        "mapType": "Default",
+        "pois": {
+          "4": {
+            "id": 4,
+            "coordinates": {
+              "x": 280,
+              "y": 308
+            },
+            "type": "mage"
+          },
+          "5": {
+            "id": 5,
+            "coordinates": {
+              "x": 165,
+              "y": 284
+            },
+            "type": "church"
+          },
+          "6": {
+            "id": 6,
+            "coordinates": {
+              "x": 436,
+              "y": 620
+            },
+            "type": "mage"
+          },
+          "9": {
+            "id": 9,
+            "coordinates": {
+              "x": 530,
+              "y": 285
+            },
+            "type": "church"
+          },
+          "10": {
+            "id": 10,
+            "coordinates": {
+              "x": 595,
+              "y": 278
+            },
+            "type": "other"
+          },
+          "11": {
+            "id": 11,
+            "coordinates": {
+              "x": 410,
+              "y": 180
+            },
+            "type": "church"
+          }
+        }
+      },
+      "57": {
+        "seedNumber": 57,
+        "nightlord": "Adel",
+        "mapType": "Default",
+        "pois": {}
+      },
+      "58": {
+        "seedNumber": 58,
+        "nightlord": "Adel",
+        "mapType": "Default",
+        "pois": {}
+      },
+      "59": {
+        "seedNumber": 59,
+        "nightlord": "Adel",
+        "mapType": "Default",
+        "pois": {}
+      },
+      "60": {
+        "seedNumber": 60,
+        "nightlord": "Adel",
+        "mapType": "Mountaintop",
+        "pois": {
+          "3": {
+            "id": 3,
+            "coordinates": {
+              "x": 155,
+              "y": 440
+            },
+            "type": "church"
+          },
+          "7": {
+            "id": 7,
+            "coordinates": {
+              "x": 420,
+              "y": 495
+            },
+            "type": "church"
+          },
+          "10": {
+            "id": 10,
+            "coordinates": {
+              "x": 595,
+              "y": 278
+            },
+            "type": "mage"
+          },
+          "11": {
+            "id": 11,
+            "coordinates": {
+              "x": 410,
+              "y": 180
+            },
+            "type": "church"
+          }
+        }
+      },
+      "61": {
+        "seedNumber": 61,
+        "nightlord": "Adel",
+        "mapType": "Mountaintop",
+        "pois": {
+          "3": {
+            "id": 3,
+            "coordinates": {
+              "x": 155,
+              "y": 440
+            },
+            "type": "church"
+          },
+          "6": {
+            "id": 6,
+            "coordinates": {
+              "x": 436,
+              "y": 620
+            },
+            "type": "church"
+          },
+          "7": {
+            "id": 7,
+            "coordinates": {
+              "x": 420,
+              "y": 495
+            },
+            "type": "other"
+          },
+          "9": {
+            "id": 9,
+            "coordinates": {
+              "x": 530,
+              "y": 285
+            },
+            "type": "church"
+          }
+        }
+      },
+      "62": {
+        "seedNumber": 62,
+        "nightlord": "Adel",
+        "mapType": "Mountaintop",
+        "pois": {
+          "2": {
+            "id": 2,
+            "coordinates": {
+              "x": 345,
+              "y": 547
+            },
+            "type": "church"
+          },
+          "3": {
+            "id": 3,
+            "coordinates": {
+              "x": 155,
+              "y": 440
+            },
+            "type": "church"
+          },
+          "6": {
+            "id": 6,
+            "coordinates": {
+              "x": 436,
+              "y": 620
+            },
+            "type": "other"
+          },
+          "8": {
+            "id": 8,
+            "coordinates": {
+              "x": 620,
+              "y": 460
+            },
+            "type": "church"
+          },
+          "11": {
+            "id": 11,
+            "coordinates": {
+              "x": 410,
+              "y": 180
+            },
+            "type": "mage"
+          }
+        }
+      },
+      "63": {
+        "seedNumber": 63,
+        "nightlord": "Adel",
+        "mapType": "Mountaintop",
+        "pois": {
+          "1": {
+            "id": 1,
+            "coordinates": {
+              "x": 155,
+              "y": 551
+            },
+            "type": "church"
+          },
+          "2": {
+            "id": 2,
+            "coordinates": {
+              "x": 345,
+              "y": 547
+            },
+            "type": "church"
+          },
+          "8": {
+            "id": 8,
+            "coordinates": {
+              "x": 620,
+              "y": 460
+            },
+            "type": "mage"
+          },
+          "9": {
+            "id": 9,
+            "coordinates": {
+              "x": 530,
+              "y": 285
+            },
+            "type": "church"
+          },
+          "11": {
+            "id": 11,
+            "coordinates": {
+              "x": 410,
+              "y": 180
+            },
+            "type": "mage"
+          }
+        }
+      },
+      "64": {
+        "seedNumber": 64,
+        "nightlord": "Adel",
+        "mapType": "Mountaintop",
+        "pois": {
+          "1": {
+            "id": 1,
+            "coordinates": {
+              "x": 155,
+              "y": 551
+            },
+            "type": "church"
+          },
+          "6": {
+            "id": 6,
+            "coordinates": {
+              "x": 436,
+              "y": 620
+            },
+            "type": "church"
+          },
+          "8": {
+            "id": 8,
+            "coordinates": {
+              "x": 620,
+              "y": 460
+            },
+            "type": "church"
+          },
+          "10": {
+            "id": 10,
+            "coordinates": {
+              "x": 595,
+              "y": 278
+            },
+            "type": "church"
+          },
+          "11": {
+            "id": 11,
+            "coordinates": {
+              "x": 410,
+              "y": 180
+            },
+            "type": "mage"
+          }
+        }
+      },
+      "65": {
+        "seedNumber": 65,
+        "nightlord": "Adel",
+        "mapType": "Crater",
+        "pois": {
+          "2": {
+            "id": 2,
+            "coordinates": {
+              "x": 348,
+              "y": 545
+            },
+            "type": "church"
+          },
+          "3": {
+            "id": 3,
+            "coordinates": {
+              "x": 155,
+              "y": 440
+            },
+            "type": "other"
+          },
+          "5": {
+            "id": 5,
+            "coordinates": {
+              "x": 165,
+              "y": 284
+            },
+            "type": "church"
+          },
+          "10": {
+            "id": 10,
+            "coordinates": {
+              "x": 595,
+              "y": 278
+            },
+            "type": "mage"
+          }
+        }
+      },
+      "66": {
+        "seedNumber": 66,
+        "nightlord": "Adel",
+        "mapType": "Crater",
+        "pois": {
+          "2": {
+            "id": 2,
+            "coordinates": {
+              "x": 348,
+              "y": 545
+            },
+            "type": "mage"
+          },
+          "5": {
+            "id": 5,
+            "coordinates": {
+              "x": 165,
+              "y": 284
+            },
+            "type": "church"
+          },
+          "7": {
+            "id": 7,
+            "coordinates": {
+              "x": 420,
+              "y": 495
+            },
+            "type": "church"
+          },
+          "10": {
+            "id": 10,
+            "coordinates": {
+              "x": 595,
+              "y": 278
+            },
+            "type": "church"
+          }
+        }
+      },
+      "67": {
+        "seedNumber": 67,
+        "nightlord": "Adel",
+        "mapType": "Crater",
+        "pois": {
+          "2": {
+            "id": 2,
+            "coordinates": {
+              "x": 348,
+              "y": 545
+            },
+            "type": "church"
+          },
+          "5": {
+            "id": 5,
+            "coordinates": {
+              "x": 165,
+              "y": 284
+            },
+            "type": "church"
+          },
+          "8": {
+            "id": 8,
+            "coordinates": {
+              "x": 620,
+              "y": 455
+            },
+            "type": "church"
+          },
+          "9": {
+            "id": 9,
+            "coordinates": {
+              "x": 530,
+              "y": 295
+            },
+            "type": "mage"
+          }
+        }
+      },
+      "68": {
+        "seedNumber": 68,
+        "nightlord": "Adel",
+        "mapType": "Crater",
+        "pois": {
+          "2": {
+            "id": 2,
+            "coordinates": {
+              "x": 348,
+              "y": 545
+            },
+            "type": "church"
+          },
+          "3": {
+            "id": 3,
+            "coordinates": {
+              "x": 155,
+              "y": 440
+            },
+            "type": "church"
+          },
+          "6": {
+            "id": 6,
+            "coordinates": {
+              "x": 436,
+              "y": 630
+            },
+            "type": "other"
+          },
+          "8": {
+            "id": 8,
+            "coordinates": {
+              "x": 620,
+              "y": 455
+            },
+            "type": "mage"
+          },
+          "10": {
+            "id": 10,
+            "coordinates": {
+              "x": 595,
+              "y": 278
+            },
+            "type": "church"
+          }
+        }
+      },
+      "69": {
+        "seedNumber": 69,
+        "nightlord": "Adel",
+        "mapType": "Crater",
+        "pois": {
+          "5": {
+            "id": 5,
+            "coordinates": {
+              "x": 165,
+              "y": 284
+            },
+            "type": "mage"
+          },
+          "6": {
+            "id": 6,
+            "coordinates": {
+              "x": 436,
+              "y": 630
+            },
+            "type": "church"
+          },
+          "7": {
+            "id": 7,
+            "coordinates": {
+              "x": 420,
+              "y": 495
+            },
+            "type": "church"
+          },
+          "8": {
+            "id": 8,
+            "coordinates": {
+              "x": 620,
+              "y": 455
+            },
+            "type": "mage"
+          },
+          "10": {
+            "id": 10,
+            "coordinates": {
+              "x": 595,
+              "y": 278
+            },
+            "type": "church"
+          }
+        }
+      },
+      "70": {
+        "seedNumber": 70,
+        "nightlord": "Adel",
+        "mapType": "Rotted Woods",
+        "pois": {
+          "3": {
+            "id": 3,
+            "coordinates": {
+              "x": 155,
+              "y": 442
+            },
+            "type": "mage"
+          },
+          "5": {
+            "id": 5,
+            "coordinates": {
+              "x": 165,
+              "y": 284
+            },
+            "type": "church"
+          },
+          "9": {
+            "id": 9,
+            "coordinates": {
+              "x": 530,
+              "y": 285
+            },
+            "type": "church"
+          },
+          "11": {
+            "id": 11,
+            "coordinates": {
+              "x": 410,
+              "y": 180
+            },
+            "type": "church"
+          }
+        }
+      },
+      "71": {
+        "seedNumber": 71,
+        "nightlord": "Adel",
+        "mapType": "Rotted Woods",
+        "pois": {
+          "1": {
+            "id": 1,
+            "coordinates": {
+              "x": 153,
+              "y": 557
+            },
+            "type": "church"
+          },
+          "3": {
+            "id": 3,
+            "coordinates": {
+              "x": 155,
+              "y": 442
+            },
+            "type": "mage"
+          },
+          "4": {
+            "id": 4,
+            "coordinates": {
+              "x": 275,
+              "y": 315
+            },
+            "type": "church"
+          },
+          "10": {
+            "id": 10,
+            "coordinates": {
+              "x": 597,
+              "y": 285
+            },
+            "type": "church"
+          }
+        }
+      },
+      "72": {
+        "seedNumber": 72,
+        "nightlord": "Adel",
+        "mapType": "Rotted Woods",
+        "pois": {
+          "2": {
+            "id": 2,
+            "coordinates": {
+              "x": 350,
+              "y": 545
+            },
+            "type": "other"
+          },
+          "4": {
+            "id": 4,
+            "coordinates": {
+              "x": 275,
+              "y": 315
+            },
+            "type": "church"
+          },
+          "5": {
+            "id": 5,
+            "coordinates": {
+              "x": 165,
+              "y": 284
+            },
+            "type": "mage"
+          },
+          "9": {
+            "id": 9,
+            "coordinates": {
+              "x": 530,
+              "y": 285
+            },
+            "type": "church"
+          },
+          "11": {
+            "id": 11,
+            "coordinates": {
+              "x": 410,
+              "y": 180
+            },
+            "type": "church"
+          }
+        }
+      },
+      "73": {
+        "seedNumber": 73,
+        "nightlord": "Adel",
+        "mapType": "Rotted Woods",
+        "pois": {
+          "2": {
+            "id": 2,
+            "coordinates": {
+              "x": 350,
+              "y": 545
+            },
+            "type": "church"
+          },
+          "3": {
+            "id": 3,
+            "coordinates": {
+              "x": 155,
+              "y": 442
+            },
+            "type": "mage"
+          },
+          "4": {
+            "id": 4,
+            "coordinates": {
+              "x": 275,
+              "y": 315
+            },
+            "type": "church"
+          },
+          "11": {
+            "id": 11,
+            "coordinates": {
+              "x": 410,
+              "y": 180
+            },
+            "type": "church"
+          }
+        }
+      },
+      "74": {
+        "seedNumber": 74,
+        "nightlord": "Adel",
+        "mapType": "Rotted Woods",
+        "pois": {
+          "1": {
+            "id": 1,
+            "coordinates": {
+              "x": 153,
+              "y": 557
+            },
+            "type": "mage"
+          },
+          "4": {
+            "id": 4,
+            "coordinates": {
+              "x": 275,
+              "y": 315
+            },
+            "type": "church"
+          },
+          "9": {
+            "id": 9,
+            "coordinates": {
+              "x": 530,
+              "y": 285
+            },
+            "type": "mage"
+          },
+          "10": {
+            "id": 10,
+            "coordinates": {
+              "x": 597,
+              "y": 285
+            },
+            "type": "church"
+          },
+          "11": {
+            "id": 11,
+            "coordinates": {
+              "x": 410,
+              "y": 180
+            },
+            "type": "church"
+          }
+        }
+      },
+      "75": {
+        "seedNumber": 75,
+        "nightlord": "Adel",
+        "mapType": "Noklateo",
+        "pois": {
+          "4": {
+            "id": 4,
+            "coordinates": {
+              "x": 278,
+              "y": 308
+            },
+            "type": "church"
+          },
+          "6": {
+            "id": 6,
+            "coordinates": {
+              "x": 436,
+              "y": 620
+            },
+            "type": "church"
+          },
+          "7": {
+            "id": 7,
+            "coordinates": {
+              "x": 420,
+              "y": 495
+            },
+            "type": "mage"
+          },
+          "8": {
+            "id": 8,
+            "coordinates": {
+              "x": 620,
+              "y": 455
+            },
+            "type": "other"
+          },
+          "9": {
+            "id": 9,
+            "coordinates": {
+              "x": 530,
+              "y": 287
+            },
+            "type": "church"
+          },
+          "10": {
+            "id": 10,
+            "coordinates": {
+              "x": 595,
+              "y": 278
+            },
+            "type": "mage"
+          },
+          "11": {
+            "id": 11,
+            "coordinates": {
+              "x": 410,
+              "y": 182
+            },
+            "type": "church"
+          }
+        }
+      },
+      "76": {
+        "seedNumber": 76,
+        "nightlord": "Adel",
+        "mapType": "Noklateo",
+        "pois": {
+          "5": {
+            "id": 5,
+            "coordinates": {
+              "x": 165,
+              "y": 284
+            },
+            "type": "church"
+          },
+          "6": {
+            "id": 6,
+            "coordinates": {
+              "x": 436,
+              "y": 620
+            },
+            "type": "mage"
+          },
+          "7": {
+            "id": 7,
+            "coordinates": {
+              "x": 420,
+              "y": 495
+            },
+            "type": "church"
+          },
+          "10": {
+            "id": 10,
+            "coordinates": {
+              "x": 595,
+              "y": 278
+            },
+            "type": "church"
+          }
+        }
+      },
+      "77": {
+        "seedNumber": 77,
+        "nightlord": "Adel",
+        "mapType": "Noklateo",
+        "pois": {
+          "4": {
+            "id": 4,
+            "coordinates": {
+              "x": 278,
+              "y": 308
+            },
+            "type": "church"
+          },
+          "6": {
+            "id": 6,
+            "coordinates": {
+              "x": 436,
+              "y": 620
+            },
+            "type": "mage"
+          },
+          "8": {
+            "id": 8,
+            "coordinates": {
+              "x": 620,
+              "y": 455
+            },
+            "type": "other"
+          },
+          "10": {
+            "id": 10,
+            "coordinates": {
+              "x": 595,
+              "y": 278
+            },
+            "type": "church"
+          },
+          "11": {
+            "id": 11,
+            "coordinates": {
+              "x": 410,
+              "y": 182
+            },
+            "type": "church"
+          }
+        }
+      },
+      "78": {
+        "seedNumber": 78,
+        "nightlord": "Adel",
+        "mapType": "Noklateo",
+        "pois": {
+          "5": {
+            "id": 5,
+            "coordinates": {
+              "x": 165,
+              "y": 284
+            },
+            "type": "church"
+          },
+          "9": {
+            "id": 9,
+            "coordinates": {
+              "x": 530,
+              "y": 287
+            },
+            "type": "church"
+          },
+          "10": {
+            "id": 10,
+            "coordinates": {
+              "x": 595,
+              "y": 278
+            },
+            "type": "mage"
+          },
+          "11": {
+            "id": 11,
+            "coordinates": {
+              "x": 410,
+              "y": 182
+            },
+            "type": "church"
+          }
+        }
+      },
+      "79": {
+        "seedNumber": 79,
+        "nightlord": "Adel",
+        "mapType": "Noklateo",
+        "pois": {
+          "5": {
+            "id": 5,
+            "coordinates": {
+              "x": 165,
+              "y": 284
+            },
+            "type": "church"
+          },
+          "7": {
+            "id": 7,
+            "coordinates": {
+              "x": 420,
+              "y": 495
+            },
+            "type": "mage"
+          },
+          "10": {
+            "id": 10,
+            "coordinates": {
+              "x": 595,
+              "y": 278
+            },
+            "type": "church"
+          },
+          "11": {
+            "id": 11,
+            "coordinates": {
+              "x": 410,
+              "y": 182
+            },
+            "type": "church"
+          }
+        }
+      },
+      "80": {
+        "seedNumber": 80,
+        "nightlord": "Gnoster",
+        "mapType": "Default",
+        "pois": {
+          "2": {
+            "id": 2,
+            "coordinates": {
+              "x": 350,
+              "y": 545
+            },
+            "type": "mage"
+          },
+          "3": {
+            "id": 3,
+            "coordinates": {
+              "x": 155,
+              "y": 436
+            },
+            "type": "mage"
+          },
+          "4": {
+            "id": 4,
+            "coordinates": {
+              "x": 280,
+              "y": 308
+            },
+            "type": "mage"
+          },
+          "5": {
+            "id": 5,
+            "coordinates": {
+              "x": 165,
+              "y": 284
+            },
+            "type": "church"
+          },
+          "6": {
+            "id": 6,
+            "coordinates": {
+              "x": 436,
+              "y": 620
+            },
+            "type": "church"
+          },
+          "8": {
+            "id": 8,
+            "coordinates": {
+              "x": 620,
+              "y": 455
+            },
+            "type": "church"
+          }
+        }
+      },
+      "81": {
+        "seedNumber": 81,
+        "nightlord": "Gnoster",
+        "mapType": "Default",
+        "pois": {
+          "4": {
+            "id": 4,
+            "coordinates": {
+              "x": 280,
+              "y": 308
+            },
+            "type": "church"
+          },
+          "5": {
+            "id": 5,
+            "coordinates": {
+              "x": 165,
+              "y": 284
+            },
+            "type": "church"
+          },
+          "6": {
+            "id": 6,
+            "coordinates": {
+              "x": 436,
+              "y": 620
+            },
+            "type": "church"
+          },
+          "10": {
+            "id": 10,
+            "coordinates": {
+              "x": 595,
+              "y": 278
+            },
+            "type": "church"
+          },
+          "11": {
+            "id": 11,
+            "coordinates": {
+              "x": 410,
+              "y": 180
+            },
+            "type": "mage"
+          }
+        }
+      },
+      "82": {
+        "seedNumber": 82,
+        "nightlord": "Gnoster",
+        "mapType": "Default",
+        "pois": {
+          "3": {
+            "id": 3,
+            "coordinates": {
+              "x": 155,
+              "y": 436
+            },
+            "type": "church"
+          },
+          "4": {
+            "id": 4,
+            "coordinates": {
+              "x": 280,
+              "y": 308
+            },
+            "type": "other"
+          },
+          "6": {
+            "id": 6,
+            "coordinates": {
+              "x": 436,
+              "y": 620
+            },
+            "type": "church"
+          },
+          "8": {
+            "id": 8,
+            "coordinates": {
+              "x": 620,
+              "y": 455
+            },
+            "type": "mage"
+          },
+          "10": {
+            "id": 10,
+            "coordinates": {
+              "x": 595,
+              "y": 278
+            },
+            "type": "church"
+          },
+          "11": {
+            "id": 11,
+            "coordinates": {
+              "x": 410,
+              "y": 180
+            },
+            "type": "church"
+          }
+        }
+      },
+      "83": {
+        "seedNumber": 83,
+        "nightlord": "Gnoster",
+        "mapType": "Default",
+        "pois": {
+          "1": {
+            "id": 1,
+            "coordinates": {
+              "x": 155,
+              "y": 551
+            },
+            "type": "church"
+          },
+          "2": {
+            "id": 2,
+            "coordinates": {
+              "x": 350,
+              "y": 545
+            },
+            "type": "mage"
+          },
+          "5": {
+            "id": 5,
+            "coordinates": {
+              "x": 165,
+              "y": 284
+            },
+            "type": "mage"
+          },
+          "6": {
+            "id": 6,
+            "coordinates": {
+              "x": 436,
+              "y": 620
+            },
+            "type": "mage"
+          },
+          "8": {
+            "id": 8,
+            "coordinates": {
+              "x": 620,
+              "y": 455
+            },
+            "type": "other"
+          },
+          "9": {
+            "id": 9,
+            "coordinates": {
+              "x": 530,
+              "y": 285
+            },
+            "type": "church"
+          },
+          "11": {
+            "id": 11,
+            "coordinates": {
+              "x": 410,
+              "y": 180
+            },
+            "type": "church"
+          }
+        }
+      },
+      "84": {
+        "seedNumber": 84,
+        "nightlord": "Gnoster",
+        "mapType": "Default",
+        "pois": {
+          "2": {
+            "id": 2,
+            "coordinates": {
+              "x": 350,
+              "y": 545
+            },
+            "type": "church"
+          },
+          "3": {
+            "id": 3,
+            "coordinates": {
+              "x": 155,
+              "y": 436
+            },
+            "type": "mage"
+          },
+          "4": {
+            "id": 4,
+            "coordinates": {
+              "x": 280,
+              "y": 308
+            },
+            "type": "church"
+          },
+          "6": {
+            "id": 6,
+            "coordinates": {
+              "x": 436,
+              "y": 620
+            },
+            "type": "other"
+          },
+          "10": {
+            "id": 10,
+            "coordinates": {
+              "x": 595,
+              "y": 278
+            },
+            "type": "church"
+          }
+        }
+      },
+      "85": {
+        "seedNumber": 85,
+        "nightlord": "Gnoster",
+        "mapType": "Default",
+        "pois": {
+          "2": {
+            "id": 2,
+            "coordinates": {
+              "x": 350,
+              "y": 545
+            },
+            "type": "church"
+          },
+          "3": {
+            "id": 3,
+            "coordinates": {
+              "x": 155,
+              "y": 436
+            },
+            "type": "mage"
+          },
+          "4": {
+            "id": 4,
+            "coordinates": {
+              "x": 280,
+              "y": 308
+            },
+            "type": "church"
+          },
+          "7": {
+            "id": 7,
+            "coordinates": {
+              "x": 420,
+              "y": 495
+            },
+            "type": "mage"
+          },
+          "10": {
+            "id": 10,
+            "coordinates": {
+              "x": 595,
+              "y": 278
+            },
+            "type": "church"
+          }
+        }
+      },
+      "86": {
+        "seedNumber": 86,
+        "nightlord": "Gnoster",
+        "mapType": "Default",
+        "pois": {
+          "2": {
+            "id": 2,
+            "coordinates": {
+              "x": 350,
+              "y": 545
+            },
+            "type": "church"
+          },
+          "3": {
+            "id": 3,
+            "coordinates": {
+              "x": 155,
+              "y": 436
+            },
+            "type": "church"
+          },
+          "4": {
+            "id": 4,
+            "coordinates": {
+              "x": 280,
+              "y": 308
+            },
+            "type": "church"
+          },
+          "9": {
+            "id": 9,
+            "coordinates": {
+              "x": 530,
+              "y": 285
+            },
+            "type": "mage"
+          },
+          "11": {
+            "id": 11,
+            "coordinates": {
+              "x": 410,
+              "y": 180
+            },
+            "type": "other"
+          }
+        }
+      },
+      "87": {
+        "seedNumber": 87,
+        "nightlord": "Gnoster",
+        "mapType": "Default",
+        "pois": {}
+      }
+    }
+  },
+  "classifications": {
+    "000": {
+      "POI1": "church",
+      "POI2": "mage",
+      "POI5": "church",
+      "POI10": "church",
+      "POI11": "mage"
+    },
+    "001": {
+      "POI2": "church",
+      "POI5": "mage",
+      "POI7": "mage",
+      "POI9": "church",
+      "POI11": "church"
+    },
+    "002": {
+      "POI2": "mage",
+      "POI6": "church",
+      "POI9": "church",
+      "POI11": "church"
+    },
+    "003": {
+      "POI1": "mage",
+      "POI2": "church",
+      "POI4": "church",
+      "POI5": "mage",
+      "POI7": "other",
+      "POI10": "church"
+    },
+    "004": {
+      "POI1": "mage",
+      "POI2": "mage",
+      "POI3": "church",
+      "POI4": "church",
+      "POI9": "other",
+      "POI11": "church"
+    },
+    "005": {
+      "POI1": "mage",
+      "POI2": "mage",
+      "POI3": "church",
+      "POI6": "church",
+      "POI8": "church",
+      "POI9": "mage"
+    },
+    "006": {
+      "POI1": "church",
+      "POI7": "church",
+      "POI9": "mage",
+      "POI10": "church"
+    },
+    "007": {
+      "POI1": "church",
+      "POI2": "other",
+      "POI3": "mage",
+      "POI5": "mage",
+      "POI7": "church",
+      "POI10": "church"
+    },
+    "008": {
+      "POI1": "church",
+      "POI3": "church",
+      "POI4": "other",
+      "POI5": "mage",
+      "POI6": "church",
+      "POI8": "mage",
+      "POI9": "church"
+    },
+    "009": {
+      "POI1": "church",
+      "POI2": "church",
+      "POI4": "church",
+      "POI7": "church",
+      "POI11": "mage"
+    },
+    "010": {
+      "POI1": "church",
+      "POI3": "other",
+      "POI5": "church",
+      "POI6": "church",
+      "POI8": "mage",
+      "POI10": "church"
+    },
+    "011": {
+      "POI2": "church",
+      "POI4": "mage",
+      "POI6": "mage",
+      "POI7": "church",
+      "POI9": "mage",
+      "POI10": "church"
+    },
+    "012": {
+      "POI1": "church",
+      "POI4": "church",
+      "POI6": "mage",
+      "POI7": "mage",
+      "POI10": "church",
+      "POI11": "mage"
+    },
+    "013": {
+      "POI4": "church",
+      "POI5": "other",
+      "POI6": "church",
+      "POI7": "mage",
+      "POI10": "church"
+    },
+    "014": {
+      "POI2": "church",
+      "POI5": "church",
+      "POI7": "church",
+      "POI11": "mage"
+    },
+    "015": {
+      "POI2": "mage",
+      "POI3": "mage",
+      "POI5": "church",
+      "POI6": "mage",
+      "POI7": "church",
+      "POI8": "church"
+    },
+    "016": {
+      "POI2": "mage",
+      "POI4": "church",
+      "POI5": "mage",
+      "POI6": "church",
+      "POI10": "church"
+    },
+    "017": {
+      "POI2": "mage",
+      "POI3": "church",
+      "POI6": "church",
+      "POI7": "church",
+      "POI11": "mage"
+    },
+    "018": {
+      "POI5": "mage",
+      "POI7": "church",
+      "POI8": "church",
+      "POI11": "church"
+    },
+    "019": {
+      "POI4": "church",
+      "POI6": "church",
+      "POI7": "mage",
+      "POI8": "mage",
+      "POI9": "church"
+    },
+    "020": {
+      "POI3": "church",
+      "POI6": "church",
+      "POI8": "church",
+      "POI9": "church"
+    },
+    "021": {
+      "POI1": "church",
+      "POI3": "mage",
+      "POI7": "mage",
+      "POI9": "church",
+      "POI11": "church"
+    },
+    "022": {
+      "POI1": "church",
+      "POI6": "church",
+      "POI8": "mage",
+      "POI9": "church",
+      "POI11": "mage"
+    },
+    "023": {
+      "POI1": "church",
+      "POI6": "church",
+      "POI10": "church",
+      "POI11": "other"
+    },
+    "024": {
+      "POI2": "other",
+      "POI6": "church",
+      "POI7": "church",
+      "POI10": "church",
+      "POI11": "mage"
+    },
+    "025": {
+      "POI2": "church",
+      "POI3": "other",
+      "POI7": "church",
+      "POI9": "mage",
+      "POI10": "church"
+    },
+    "026": {
+      "POI2": "mage",
+      "POI3": "church",
+      "POI7": "church",
+      "POI8": "church"
+    },
+    "027": {
+      "POI1": "church",
+      "POI2": "mage",
+      "POI5": "church",
+      "POI6": "church",
+      "POI8": "other",
+      "POI9": "mage"
+    },
+    "028": {
+      "POI2": "other",
+      "POI3": "mage",
+      "POI6": "church",
+      "POI7": "church",
+      "POI8": "church"
+    },
+    "029": {
+      "POI1": "church",
+      "POI6": "mage",
+      "POI7": "church",
+      "POI10": "church"
+    },
+    "030": {
+      "POI2": "church",
+      "POI3": "mage",
+      "POI4": "church",
+      "POI5": "mage",
+      "POI11": "church"
+    },
+    "031": {
+      "POI1": "church",
+      "POI2": "church",
+      "POI4": "church",
+      "POI5": "church",
+      "POI9": "other",
+      "POI11": "mage"
+    },
+    "032": {
+      "POI1": "church",
+      "POI3": "mage",
+      "POI4": "church",
+      "POI11": "church"
+    },
+    "033": {
+      "POI1": "church",
+      "POI2": "church",
+      "POI5": "mage",
+      "POI10": "mage",
+      "POI11": "church"
+    },
+    "034": {
+      "POI1": "mage",
+      "POI4": "mage",
+      "POI5": "church",
+      "POI9": "church",
+      "POI10": "other",
+      "POI11": "church"
+    },
+    "035": {
+      "POI5": "church",
+      "POI6": "church",
+      "POI9": "other",
+      "POI10": "church",
+      "POI11": "mage"
+    },
+    "036": {
+      "POI4": "mage",
+      "POI5": "church",
+      "POI7": "church",
+      "POI8": "church",
+      "POI9": "other"
+    },
+    "037": {
+      "POI5": "church",
+      "POI6": "church",
+      "POI8": "mage",
+      "POI10": "church"
+    },
+    "038": {
+      "POI5": "church",
+      "POI6": "mage",
+      "POI7": "church",
+      "POI9": "other",
+      "POI10": "church"
+    },
+    "039": {
+      "POI4": "church",
+      "POI6": "church",
+      "POI8": "church",
+      "POI9": "mage",
+      "POI10": "other"
+    },
+    "040": {
+      "POI1": "church",
+      "POI2": "mage",
+      "POI3": "mage",
+      "POI7": "mage",
+      "POI9": "church",
+      "POI11": "church"
+    },
+    "041": {
+      "POI2": "church",
+      "POI4": "church",
+      "POI6": "mage",
+      "POI7": "mage",
+      "POI10": "church",
+      "POI11": "mage"
+    },
+    "042": {
+      "POI1": "church",
+      "POI2": "church",
+      "POI5": "mage",
+      "POI7": "mage",
+      "POI8": "mage",
+      "POI9": "church"
+    },
+    "043": {
+      "POI5": "church",
+      "POI6": "church",
+      "POI7": "church",
+      "POI11": "mage"
+    },
+    "044": {
+      "POI1": "church",
+      "POI4": "church",
+      "POI8": "church",
+      "POI10": "mage"
+    },
+    "045": {
+      "POI2": "mage",
+      "POI3": "church",
+      "POI7": "church",
+      "POI9": "mage",
+      "POI10": "church"
+    },
+    "046": {
+      "POI2": "church",
+      "POI3": "church",
+      "POI4": "mage",
+      "POI7": "church",
+      "POI8": "other"
+    },
+    "047": {
+      "POI2": "church",
+      "POI3": "church",
+      "POI4": "mage",
+      "POI7": "other",
+      "POI9": "church"
+    },
+    "048": {
+      "POI2": "mage",
+      "POI3": "mage",
+      "POI5": "church",
+      "POI8": "church",
+      "POI11": "church"
+    },
+    "049": {
+      "POI1": "church",
+      "POI4": "mage",
+      "POI5": "church",
+      "POI7": "church",
+      "POI8": "mage",
+      "POI9": "other",
+      "POI10": "mage",
+      "POI11": "church"
+    },
+    "050": {
+      "POI1": "church",
+      "POI5": "mage",
+      "POI6": "church",
+      "POI7": "other",
+      "POI9": "church"
+    },
+    "051": {
+      "POI1": "church",
+      "POI3": "mage",
+      "POI6": "church",
+      "POI8": "mage",
+      "POI9": "other",
+      "POI10": "church"
+    },
+    "052": {
+      "POI5": "mage",
+      "POI6": "church",
+      "POI7": "church",
+      "POI9": "mage",
+      "POI10": "church"
+    },
+    "053": {
+      "POI1": "church",
+      "POI3": "church",
+      "POI5": "church",
+      "POI7": "church",
+      "POI8": "mage"
+    },
+    "054": {
+      "POI2": "church",
+      "POI3": "church",
+      "POI5": "mage",
+      "POI6": "other",
+      "POI8": "church",
+      "POI11": "church"
+    },
+    "055": {
+      "POI1": "other",
+      "POI2": "church",
+      "POI3": "church",
+      "POI4": "church",
+      "POI5": "mage",
+      "POI8": "mage",
+      "POI10": "mage"
+    },
+    "056": {
+      "POI4": "mage",
+      "POI5": "church",
+      "POI6": "mage",
+      "POI9": "church",
+      "POI10": "other",
+      "POI11": "church"
+    },
+    "057": {},
+    "058": {},
+    "059": {},
+    "060": {
+      "POI3": "church",
+      "POI7": "church",
+      "POI10": "mage",
+      "POI11": "church"
+    },
+    "061": {
+      "POI3": "church",
+      "POI6": "church",
+      "POI7": "other",
+      "POI9": "church"
+    },
+    "062": {
+      "POI2": "church",
+      "POI3": "church",
+      "POI6": "other",
+      "POI8": "church",
+      "POI11": "mage"
+    },
+    "063": {
+      "POI1": "church",
+      "POI2": "church",
+      "POI8": "mage",
+      "POI9": "church",
+      "POI11": "mage"
+    },
+    "064": {
+      "POI1": "church",
+      "POI6": "church",
+      "POI8": "church",
+      "POI10": "church",
+      "POI11": "mage"
+    },
+    "065": {
+      "POI2": "church",
+      "POI3": "other",
+      "POI5": "church",
+      "POI10": "mage"
+    },
+    "066": {
+      "POI2": "mage",
+      "POI5": "church",
+      "POI7": "church",
+      "POI10": "church"
+    },
+    "067": {
+      "POI2": "church",
+      "POI5": "church",
+      "POI8": "church",
+      "POI9": "mage"
+    },
+    "068": {
+      "POI2": "church",
+      "POI3": "church",
+      "POI6": "other",
+      "POI8": "mage",
+      "POI10": "church"
+    },
+    "069": {
+      "POI5": "mage",
+      "POI6": "church",
+      "POI7": "church",
+      "POI8": "mage",
+      "POI10": "church"
+    },
+    "070": {
+      "POI3": "mage",
+      "POI5": "church",
+      "POI9": "church",
+      "POI11": "church"
+    },
+    "071": {
+      "POI1": "church",
+      "POI3": "mage",
+      "POI4": "church",
+      "POI10": "church"
+    },
+    "072": {
+      "POI2": "other",
+      "POI4": "church",
+      "POI5": "mage",
+      "POI9": "church",
+      "POI11": "church"
+    },
+    "073": {
+      "POI2": "church",
+      "POI3": "mage",
+      "POI4": "church",
+      "POI11": "church"
+    },
+    "074": {
+      "POI1": "mage",
+      "POI4": "church",
+      "POI9": "mage",
+      "POI10": "church",
+      "POI11": "church"
+    },
+    "075": {
+      "POI4": "church",
+      "POI6": "church",
+      "POI7": "mage",
+      "POI8": "other",
+      "POI9": "church",
+      "POI10": "mage",
+      "POI11": "church"
+    },
+    "076": {
+      "POI5": "church",
+      "POI6": "mage",
+      "POI7": "church",
+      "POI10": "church"
+    },
+    "077": {
+      "POI4": "church",
+      "POI6": "mage",
+      "POI8": "other",
+      "POI10": "church",
+      "POI11": "church"
+    },
+    "078": {
+      "POI5": "church",
+      "POI9": "church",
+      "POI10": "mage",
+      "POI11": "church"
+    },
+    "079": {
+      "POI5": "church",
+      "POI7": "mage",
+      "POI10": "church",
+      "POI11": "church"
+    },
+    "080": {
+      "POI2": "mage",
+      "POI3": "mage",
+      "POI4": "mage",
+      "POI5": "church",
+      "POI6": "church",
+      "POI8": "church"
+    },
+    "081": {
+      "POI4": "church",
+      "POI5": "church",
+      "POI6": "church",
+      "POI10": "church",
+      "POI11": "mage"
+    },
+    "082": {
+      "POI3": "church",
+      "POI4": "other",
+      "POI6": "church",
+      "POI8": "mage",
+      "POI10": "church",
+      "POI11": "church"
+    },
+    "083": {
+      "POI1": "church",
+      "POI2": "mage",
+      "POI5": "mage",
+      "POI6": "mage",
+      "POI8": "other",
+      "POI9": "church",
+      "POI11": "church"
+    },
+    "084": {
+      "POI2": "church",
+      "POI3": "mage",
+      "POI4": "church",
+      "POI6": "other",
+      "POI10": "church"
+    },
+    "085": {
+      "POI2": "church",
+      "POI3": "mage",
+      "POI4": "church",
+      "POI7": "mage",
+      "POI10": "church"
+    },
+    "086": {
+      "POI2": "church",
+      "POI3": "church",
+      "POI4": "church",
+      "POI9": "mage",
+      "POI11": "other"
+    },
+    "087": {}
+  }
+}

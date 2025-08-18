@@ -1,0 +1,17 @@
+{
+    "name": "Elden Ring: Nightreign Map Seed Recogniser",
+    "short_name": "Nightreign Seeds",
+    "description": "Interactive tool to identify Nightreign map seeds based on point-of-interest locations",
+    "version": "2.0.0",
+    "icons": [
+        {
+            "src": "https://trc-playground.hu/GameZ/NightreignSeeds/church-map-icon-nightreign-wiki-guide.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        }
+    ],
+    "start_url": "./index.html",
+    "display": "standalone",
+    "theme_color": "#1a1a2e",
+    "background_color": "#1a1a2e"
+}

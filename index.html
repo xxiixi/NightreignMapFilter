@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elden Ring: Nightreign Map Seed Recogniser</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1a1a2e">
+    <meta name="description" content="Interactive tool to identify Elden Ring Nightreign map seeds based on point-of-interest locations">
+    <meta name="keywords" content="Elden Ring, Nightreign, map, seed, recogniser, POI, gaming, tool">
+    <link rel="icon" href="favicon.ico">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="title">
+                <i class="fas fa-map"></i>
+                Elden Ring: Nightreign Map Seed Recogniser
+            </h1>
+            <div class="subtitle">
+                <p class="version">Version 1.0 | Nightreign version 1.01.3</p>
+                <span id="cv-status" style="font-size: 11px; color: #6c757d; margin-left: 15px;"></span>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div id="loading-section" class="section" style="display: block;">
+                <div class="loading-indicator">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Initializing map data, please wait...</p>
+                </div>
+            </div>
+
+            <div id="selection-section" class="section" style="display: none;">
+                <div class="selection-grid">
+                    <div class="selection-card">
+                        <h3>Choose Your Nightlord</h3>
+                        <p class="current-selection">Currently chosen: <span id="chosen-nightlord">NONE</span></p>
+                        <div class="button-grid">
+                            <button class="nightlord-btn" data-nightlord="Gladius">Gladius</button>
+                            <button class="nightlord-btn" data-nightlord="Adel">Adel</button>
+                            <button class="nightlord-btn" data-nightlord="Gnoster">Gnoster</button>
+                            <button class="nightlord-btn" data-nightlord="Maris">Maris</button>
+                            <button class="nightlord-btn" data-nightlord="Libra">Libra</button>
+                            <button class="nightlord-btn" data-nightlord="Fulghor">Fulghor</button>
+                            <button class="nightlord-btn" data-nightlord="Caligo">Caligo</button>
+                            <button class="nightlord-btn" data-nightlord="Heolstor">Heolstor</button>
+                        </div>
+                    </div>
+
+                    <div class="selection-card">
+                        <h3>Choose Your Map / Shifting Earth</h3>
+                        <p class="current-selection">Currently chosen: <span id="chosen-map">NONE</span></p>
+                        <div class="button-grid">
+                            <button class="map-btn" data-map="Default">Default</button>
+                            <button class="map-btn" data-map="Mountaintop">Mountaintop</button>
+                            <button class="map-btn" data-map="Crater">Crater</button>
+                            <button class="map-btn" data-map="Rotted Woods">Rotted Woods</button>
+                            <button class="map-btn" data-map="Noklateo">Noklateo</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="interaction-section" class="section" style="display: none;">
+                <div class="instructions-card">
+                    <h3><i class="fas fa-info-circle"></i> How to Use</h3>
+                    <div class="instruction-grid">
+                        <div class="instruction-item">
+                            <i class="fas fa-mouse-pointer"></i>
+                            <span><strong>Left click</strong> on orange dots to place Church</span>
+                        </div>
+                        <div class="instruction-item">
+                            <i class="fas fa-hand-pointer"></i>
+                            <span><strong>Right click</strong> to choose Sorcerer's Rise or Other POI</span>
+                        </div>
+                    </div>
+                    <div class="button-row">
+                        <button id="reset-map-btn" class="reset-btn">
+                            <i class="fas fa-undo"></i>
+                            Reset Map & Remove All Markers
+                        </button>
+                        
+                        <div class="cv-loader" style="margin-left: 20px;">
+                            <label for="cv-data-input" class="cv-btn">
+                                <i class="fas fa-robot"></i>
+                                Load CV Classifications
+                            </label>
+                            <input type="file" id="cv-data-input" accept=".json" style="display: none;">
+                        </div>
+                        <button id="help-btn" class="help-btn">
+                            <i class="fas fa-question-circle"></i>
+                            Help & Tips
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="results-section" class="section" style="display: none;">
+                <div class="results-grid">
+                    <div class="seed-counter">
+                        <h3>Possible Map Seeds</h3>
+                        <div class="seed-count" id="seed-count">0</div>
+                    </div>
+
+                    <div class="map-container">
+                        <canvas id="map-canvas" width="768" height="768"></canvas>
+                        <div id="seed-image-container" style="display: none;"></div>
+                        <div id="selection-overlay" class="selection-overlay">
+                            <div class="overlay-message">
+                                <i class="fas fa-map-marked-alt"></i>
+                                <p>Select Nightlord and Map above to begin</p>
+                                <small>Choose your settings to start seed recognition</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Help Modal -->
+    <div id="help-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-question-circle"></i> Help & Tips</h3>
+                <button class="close-btn" id="close-help">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="help-section">
+                    <h4><i class="fas fa-gamepad"></i> How to Use This Tool</h4>
+                    <p>This tool helps you identify your Nightreign map seed by comparing the locations of Churches and Sorcerer's Rises on your map.</p>
+                    
+                    <h4><i class="fas fa-list-ol"></i> Step by Step Guide</h4>
+                    <ol>
+                        <li>Select your <strong>Nightlord</strong> from the available options</li>
+                        <li>Choose your <strong>Map/Shifting Earth</strong> type</li>
+                        <li>Look at the highlighted orange dots on the map - these are potential POI locations</li>
+                        <li>Click on the dots to mark what you see in your actual game:
+                            <ul>
+                                <li><strong>Left click</strong> = Church</li>
+                                <li><strong>Right click</strong> = Choose Sorcerer's Rise or Other POI</li>
+                            </ul>
+                        </li>
+                        <li>As you mark locations, the possible seeds will be filtered</li>
+                        <li>When only one seed matches, you'll see the full seed details and map image</li>
+                    </ol>
+
+                    <h4><i class="fas fa-lightbulb"></i> Tips for Best Results</h4>
+                    <ul>
+                        <li>Mark as many POIs as you can see clearly in your game</li>
+                        <li>Use right-click menu to distinguish between Sorcerer's Rises and other structures</li>
+                        <li>If you get no results, try resetting and being more precise with your clicks</li>
+                        <li>The seed image shows the exact layout for verification</li>
+                        <li>Select both Nightlord and Map before marking POIs</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Context Menu for Right Click -->
+    <div id="poi-context-menu" class="context-menu" style="display: none;">
+        <div class="context-menu-item" data-type="mage">
+            <img src="assets/images/mage-tower.png" style="width: 16px; height: 16px; margin-right: 8px; vertical-align: middle;">
+            Sorcerer's Rise
+        </div>
+        <div class="context-menu-item" data-type="other">
+            <i class="fas fa-question-circle"></i>
+            Other POI
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

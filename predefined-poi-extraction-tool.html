@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nightreign POI Extraction Tool - Predefined Areas</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            margin: 0; 
+            padding: 20px; 
+            background: #f8f9fa;
+            user-select: none;
+        }
+        
+        .container { max-width: 1400px; margin: 0 auto; }
+        
+        .header {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .seed-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .seed-selector {
+            padding: 8px 12px;
+            border: 2px solid #dee2e6;
+            border-radius: 6px;
+            font-size: 14px;
+            min-width: 300px;
+        }
+        
+        .main-content {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+        
+        .canvas-container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+            position: relative;
+        }
+        
+        #imageCanvas {
+            border: 2px solid #dee2e6;
+            border-radius: 4px;
+            cursor: crosshair;
+            max-width: 100%;
+        }
+        
+        .poi-panel {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            min-width: 300px;
+            max-width: 400px;
+        }
+        
+        .poi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .poi-button {
+            padding: 10px;
+            border: 2px solid #dee2e6;
+            border-radius: 6px;
+            background: #f8f9fa;
+            cursor: pointer;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+        
+        .poi-button:hover {
+            background: #e9ecef;
+            border-color: #007bff;
+        }
+        
+        .poi-button.church {
+            background: #d1ecf1;
+            border-color: #bee5eb;
+            color: #0c5460;
+            position: relative;
+        }
+        
+        .poi-button.mage {
+            background: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
+            position: relative;
+        }
+        
+        .poi-button.other {
+            background: #fff3cd;
+            border-color: #ffeaa7;
+            color: #856404;
+            position: relative;
+        }
+        
+        .poi-icon {
+            width: 16px;
+            height: 16px;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 4px;
+        }
+        
+        
+        .seed-mapped {
+            color: #28a745 !important;
+            font-weight: bold;
+        }
+        
+        .seed-unmapped {
+            color: #dc3545 !important;
+            font-weight: bold;
+        }
+        
+        .controls {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #dee2e6;
+        }
+        
+        .button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            transition: all 0.2s ease;
+        }
+        
+        .button.primary {
+            background: #007bff;
+            color: white;
+        }
+        
+        .button.primary:hover {
+            background: #0056b3;
+        }
+        
+        .button.secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .button.secondary:hover {
+            background: #545b62;
+        }
+        
+        .instructions {
+            background: #e7f3ff;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            border-left: 4px solid #007bff;
+        }
+        
+        .instructions h4 {
+            margin: 0 0 8px 0;
+            color: #0056b3;
+        }
+        
+        .poi-coordinates {
+            font-size: 10px;
+            color: #6c757d;
+            margin-top: 2px;
+        }
+        
+        .poi-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #007bff;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .stats {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #495057;
+        }
+        
+        .context-menu {
+            position: absolute;
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1000;
+            min-width: 120px;
+        }
+        
+        .context-menu-item {
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 14px;
+            border-bottom: 1px solid #f1f3f4;
+        }
+        
+        .context-menu-item:last-child {
+            border-bottom: none;
+        }
+        
+        .context-menu-item:hover {
+            background: #f8f9fa;
+        }
+        
+        .context-menu-item.mage {
+            color: #721c24;
+        }
+        
+        .context-menu-item.other {
+            color: #856404;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="seed-info">
+                <h2>POI Extraction - Predefined Areas</h2>
+                <select id="seedSelector" class="seed-selector">
+                    <option value="">Select a seed to extract POIs...</option>
+                </select>
+                <span id="seedInfo" style="color: #6c757d;"></span>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="canvas-container">
+                <canvas id="imageCanvas" width="768" height="768"></canvas>
+            </div>
+            
+            <div class="poi-panel">
+                <div class="instructions">
+                    <h4>Instructions:</h4>
+                    <p><strong>Click on the POI circles</strong> on the image to classify them:</p>
+                    <ul style="margin: 8px 0; padding-left: 20px; font-size: 13px;">
+                        <li><strong>Left Click:</strong> Church 🏰</li>
+                        <li><strong>Right Click:</strong> Show menu (Mage Tower 🔮 / Other 📍)</li>  
+                    </ul>
+                    <p style="margin: 8px 0; font-size: 13px;">Only the predefined POI locations are clickable (shown as orange circles).</p>
+                </div>
+                
+                <h4>POI Status:</h4>
+                <div id="poiGrid" class="poi-grid"></div>
+                
+                <div id="mappingStats" style="margin: 15px 0; padding: 10px; background: #f8f9fa; border-radius: 6px; font-size: 12px; color: #495057;"></div>
+                
+                <div class="controls">
+                    <button id="prevBtn" class="button secondary">◀ Previous Seed (B)</button>
+                    <button id="nextBtn" class="button primary">Next Seed (Space/Enter) ▶</button>
+                    <button id="resetBtn" class="button secondary">Reset Current Seed</button>
+                    <button id="saveBtn" class="button primary">Save Progress</button>
+                    <button id="exportBtn" class="button primary">Export Data</button>
+                    <button id="loadBtn" class="button secondary">Load Existing Data</button>
+                </div>
+                
+                <div style="margin-top: 10px; font-size: 12px; color: #6c757d; text-align: center;">
+                    <div id="autoSaveStatus">Auto-save: Ready</div>
+                    <div id="progressStatus"></div>
+                </div>
+                
+                <div class="stats" id="stats">
+                    <div>Churches: <span id="churchCount">0</span></div>
+                    <div>Mage Towers: <span id="mageCount">0</span></div>
+                    <div>Others: <span id="otherCount">0</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <input type="file" id="fileInput" accept=".json" style="display: none;">
+
+    <script>
+        // Predefined POI coordinates by map type (from data.js)
+        const PREDEFINED_POIS = {
+            'Default': [
+                { id: 1, x: 155, y: 551 },
+                { id: 2, x: 350, y: 545 },
+                { id: 3, x: 155, y: 436 },
+                { id: 4, x: 280, y: 308 },
+                { id: 5, x: 165, y: 284 },
+                { id: 6, x: 436, y: 620 },
+                { id: 7, x: 420, y: 495 },
+                { id: 8, x: 620, y: 455 },
+                { id: 9, x: 530, y: 285 },
+                { id: 10, x: 595, y: 278 },
+                { id: 11, x: 410, y: 180 }
+            ],
+            'Crater': [
+                { id: 1, x: 155, y: 551 },
+                { id: 2, x: 348, y: 545 },
+                { id: 3, x: 155, y: 440 },
+                { id: 5, x: 165, y: 284 },
+                { id: 6, x: 436, y: 630 },
+                { id: 7, x: 420, y: 495 },
+                { id: 8, x: 620, y: 455 },
+                { id: 9, x: 530, y: 295 },
+                { id: 10, x: 595, y: 278 }
+            ],
+            'Rotted Woods': [
+                { id: 1, x: 153, y: 557 },
+                { id: 2, x: 350, y: 545 },
+                { id: 3, x: 155, y: 442 },
+                { id: 4, x: 275, y: 315 },
+                { id: 5, x: 165, y: 284 },
+                { id: 9, x: 530, y: 285 },
+                { id: 10, x: 597, y: 285 },
+                { id: 11, x: 410, y: 180 }
+            ],
+            'Mountaintop': [
+                { id: 1, x: 155, y: 551 },
+                { id: 2, x: 345, y: 547 },
+                { id: 3, x: 155, y: 440 },
+                { id: 6, x: 436, y: 620 },
+                { id: 7, x: 420, y: 495 },
+                { id: 8, x: 620, y: 460 },
+                { id: 9, x: 530, y: 285 },
+                { id: 10, x: 595, y: 278 },
+                { id: 11, x: 410, y: 180 }
+            ],
+            'Noklateo': [
+                { id: 4, x: 278, y: 308 },
+                { id: 5, x: 165, y: 284 },
+                { id: 6, x: 436, y: 620 },
+                { id: 7, x: 420, y: 495 },
+                { id: 8, x: 620, y: 455 },
+                { id: 9, x: 530, y: 287 },
+                { id: 10, x: 595, y: 278 },
+                { id: 11, x: 410, y: 182 }
+            ]
+        };
+
+        // All nightlords with their seed ranges and shifting earth distribution
+        const seedData = {
+            gladius: { 
+                name: "Gladius", 
+                range: [0, 39],
+                default: [0, 19],      // Seeds 0-19: Default map
+                mountaintop: [20, 24], // Seeds 20-24: Mountaintop
+                crater: [25, 29],      // Seeds 25-29: Crater  
+                rottedWoods: [30, 34], // Seeds 30-34: Rotted Woods
+                noklateo: [35, 39]     // Seeds 35-39: Noklateo
+            },
+            adel: { 
+                name: "Adel", 
+                range: [40, 79],
+                default: [40, 59],
+                mountaintop: [60, 64],
+                crater: [65, 69],
+                rottedWoods: [70, 74],
+                noklateo: [75, 79]
+            },
+            gnoster: { 
+                name: "Gnoster", 
+                range: [80, 119],
+                default: [80, 99],
+                mountaintop: [100, 104],
+                crater: [105, 109],
+                rottedWoods: [110, 114],
+                noklateo: [115, 119]
+            },
+            maris: { 
+                name: "Maris", 
+                range: [120, 159],
+                default: [120, 139],
+                mountaintop: [140, 144],
+                crater: [145, 149],
+                rottedWoods: [150, 154],
+                noklateo: [155, 159]
+            },
+            libra: { 
+                name: "Libra", 
+                range: [160, 199],
+                default: [160, 179],
+                mountaintop: [180, 184],
+                crater: [185, 189],
+                rottedWoods: [190, 194],
+                noklateo: [195, 199]
+            },
+            fulghor: { 
+                name: "Fulghor", 
+                range: [200, 239],
+                default: [200, 219],
+                mountaintop: [220, 224],
+                crater: [225, 229],
+                rottedWoods: [230, 234],
+                noklateo: [235, 239]
+            },
+            caligo: { 
+                name: "Caligo", 
+                range: [240, 279],
+                default: [240, 259],
+                mountaintop: [260, 264],
+                crater: [265, 269],
+                rottedWoods: [270, 274],
+                noklateo: [275, 279]
+            },
+            heolstor: { 
+                name: "Heolstor", 
+                range: [280, 319],
+                default: [280, 299],
+                mountaintop: [300, 304],
+                crater: [305, 309],
+                rottedWoods: [310, 314],
+                noklateo: [315, 319]
+            }
+        };
+        
+        // Map type names for display
+        const mapTypeNames = {
+            'default': 'Default',
+            'mountaintop': 'Mountaintop',
+            'crater': 'Crater', 
+            'rottedWoods': 'Rotted Woods',
+            'noklateo': 'Noklateo'
+        };
+
+        // POI extraction data
+        let poiDatabase = {
+            version: "2025-08-18-predefined",
+            extractedBy: "predefined-poi-extraction-tool",
+            extractionDate: new Date().toISOString(),
+            seeds: {}
+        };
+
+        let currentSeed = null;
+        let currentNightlord = null;
+        let currentMapType = null;
+        let canvas, ctx;
+        let currentImage = null;
+        let poiCounter = 1;
+        let contextMenu = null;
+        let pendingPOI = null;
+
+        function isSeedMapped(seedKey) {
+            // Simple check: does this seed exist in the tool database with any POIs?
+            if (!poiDatabase || !poiDatabase.seeds) {
+                return false;
+            }
+            
+            const seedData = poiDatabase.seeds[seedKey];
+            return seedData && seedData.pois && Object.keys(seedData.pois).length > 0;
+        }
+
+        function updateMappingStats() {
+            // Count only seeds that exist in the tool database with POIs
+            let mappedSeeds = 0;
+            
+            if (poiDatabase && poiDatabase.seeds) {
+                Object.values(poiDatabase.seeds).forEach(seedData => {
+                    if (seedData.pois && Object.keys(seedData.pois).length > 0) {
+                        mappedSeeds++;
+                    }
+                });
+            }
+            
+            // Total possible seeds (across all nightlords and maps)
+            let totalPossibleSeeds = 0;
+            Object.entries(seedData).forEach(([nightlord, data]) => {
+                Object.keys(mapTypeNames).forEach(mapKey => {
+                    if (data[mapKey]) {
+                        totalPossibleSeeds += (data[mapKey][1] - data[mapKey][0] + 1);
+                    }
+                });
+            });
+            
+            const unmappedSeeds = totalPossibleSeeds - mappedSeeds;
+            const percentage = totalPossibleSeeds > 0 ? ((mappedSeeds / totalPossibleSeeds) * 100).toFixed(1) : 0;
+            
+            console.log(`Tool statistics: ${mappedSeeds} seeds with POIs, ${totalPossibleSeeds} total possible seeds`);
+            
+            const statsElement = document.getElementById('mappingStats');
+            if (statsElement) {
+                statsElement.innerHTML = `
+                    <strong>📊 Tool Progress:</strong><br>
+                    <span style="color: #28a745;">[✓] Extracted: ${mappedSeeds} seeds</span><br>
+                    <span style="color: #dc3545;">[✗] Remaining: ${unmappedSeeds} seeds</span><br>
+                    📈 Progress: ${percentage}% complete
+                `;
+            }
+        }
+
+        async function autoLoadDataset() {
+            // Check if we already have data (from saved progress)
+            const hasExistingData = poiDatabase && poiDatabase.seeds && Object.keys(poiDatabase.seeds).length > 0;
+            if (hasExistingData) {
+                console.log('Existing tool data found, skipping auto-load');
+                return;
+            }
+            
+            console.log('No existing tool data found, starting with new database');
+            console.log('Note: The tool maintains its own POI database separate from the main application');
+        }
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', async function() {
+            canvas = document.getElementById('imageCanvas');
+            ctx = canvas.getContext('2d');
+            
+            setupSeedSelector();
+            setupEventListeners();
+            loadSavedProgress();
+            
+            // Auto-load dataset.json if no existing data
+            await autoLoadDataset();
+            
+            updatePOIGrid();
+            updateProgressStatus();
+            updateMappingStats();
+        });
+
+        function setupSeedSelector() {
+            const selector = document.getElementById('seedSelector');
+            
+            // Save current selection to restore it after refresh
+            const currentSelection = selector.value;
+            
+            // Clear existing options except the first one
+            while (selector.children.length > 1) {
+                selector.removeChild(selector.lastChild);
+            }
+            
+            console.log('Setting up seed selector...');
+            if (poiDatabase && poiDatabase.seeds) {
+                console.log('Available seeds in tool database:', Object.keys(poiDatabase.seeds));
+            }
+            
+            Object.entries(seedData).forEach(([nightlord, data]) => {
+                // Create main nightlord group
+                const nightlordGroup = document.createElement('optgroup');
+                nightlordGroup.label = `${data.name} (Seeds ${data.range[0]}-${data.range[1]})`;
+                
+                // Add subgroups for each map type
+                ['default', 'mountaintop', 'crater', 'rottedWoods', 'noklateo'].forEach(mapKey => {
+                    if (data[mapKey]) {
+                        const mapGroup = document.createElement('optgroup');
+                        mapGroup.label = `  └─ ${mapTypeNames[mapKey]} (${data[mapKey][0]}-${data[mapKey][1]})`;
+                        
+                        for (let i = data[mapKey][0]; i <= data[mapKey][1]; i++) {
+                            const option = document.createElement('option');
+                            option.value = `${nightlord}-${i}-${mapKey}`;
+                            
+                            // Check if this seed has been mapped using the same logic as statistics
+                            const seedKeyPadded = i.toString().padStart(3, '0');
+                            let isMapped = false;
+                            
+                            // Check if seed exists in tool database with any POIs
+                            if (poiDatabase && poiDatabase.seeds) {
+                                const seedData = poiDatabase.seeds[seedKeyPadded] || poiDatabase.seeds[i.toString()];
+                                isMapped = seedData && seedData.pois && Object.keys(seedData.pois).length > 0;
+                                
+                                if (isMapped) {
+                                    console.log(`Dropdown: Found mapped seed ${seedKeyPadded} with ${Object.keys(seedData.pois).length} POIs`);
+                                }
+                            }
+                            
+                            const statusIndicator = isMapped ? '[✓]' : '[✗]';
+                            
+                            option.textContent = `    ${statusIndicator} ${data.name} ${mapTypeNames[mapKey]} - Seed ${i.toString().padStart(3, '0')}`;
+                            
+                            // Add CSS class for styling
+                            option.className = isMapped ? 'seed-mapped' : 'seed-unmapped';
+                            mapGroup.appendChild(option);
+                        }
+                        
+                        selector.appendChild(mapGroup);
+                    }
+                });
+            });
+            
+            // Update stats after populating the selector
+            updateMappingStats();
+            
+            // Restore the previous selection if it exists
+            if (currentSelection && currentSelection !== '') {
+                selector.value = currentSelection;
+                console.log('Restored seed selector to:', currentSelection);
+            }
+        }
+
+        function setupEventListeners() {
+            document.getElementById('seedSelector').addEventListener('change', function(e) {
+                if (e.target.value) {
+                    const [nightlord, seedNum, mapType] = e.target.value.split('-');
+                    loadSeed(nightlord, parseInt(seedNum), mapType);
+                }
+            });
+
+            // Canvas click events for POI classification
+            console.log('Setting up canvas event listeners on canvas:', canvas);
+            
+            canvas.addEventListener('click', function(e) {
+                console.log('Canvas click event fired');
+                console.log('Current seed:', currentSeed);
+                console.log('Current nightlord:', currentNightlord);
+                handlePOIClick(e, 'church');
+            });
+
+            canvas.addEventListener('contextmenu', function(e) {
+                console.log('Canvas contextmenu event fired');
+                e.preventDefault();
+                handlePOIRightClick(e);
+            });
+
+            // Hide context menu when clicking elsewhere
+            document.addEventListener('click', function(e) {
+                if (contextMenu && !contextMenu.contains(e.target)) {
+                    hideContextMenu();
+                }
+            });
+
+            // Keyboard shortcuts
+            document.addEventListener('keydown', function(e) {
+                if (e.code === 'Space' || e.code === 'Enter') {
+                    e.preventDefault();
+                    nextSeed();
+                } else if (e.code === 'KeyB') {
+                    e.preventDefault();
+                    previousSeed();
+                }
+            });
+
+            // Control buttons
+            document.getElementById('prevBtn').addEventListener('click', previousSeed);
+            document.getElementById('nextBtn').addEventListener('click', nextSeed);
+            document.getElementById('resetBtn').addEventListener('click', resetCurrentSeed);
+            document.getElementById('saveBtn').addEventListener('click', saveProgress);
+            document.getElementById('exportBtn').addEventListener('click', exportData);
+            document.getElementById('loadBtn').addEventListener('click', () => {
+                document.getElementById('fileInput').click();
+            });
+            
+            document.getElementById('fileInput').addEventListener('change', loadExistingData);
+        }
+
+        function loadSeed(nightlord, seedNum, mapType) {
+            console.log('Loading seed:', nightlord, seedNum, mapType);
+            currentNightlord = nightlord;
+            currentSeed = seedNum;
+            currentMapType = mapType;
+            
+            console.log('Set currentSeed to:', currentSeed);
+            console.log('Set currentNightlord to:', currentNightlord);
+            console.log('Set currentMapType to:', currentMapType);
+            
+            // Initialize seed data if not exists
+            if (!poiDatabase.seeds[seedNum]) {
+                poiDatabase.seeds[seedNum] = {
+                    seedNumber: seedNum,
+                    nightlord: nightlord.charAt(0).toUpperCase() + nightlord.slice(1),
+                    mapType: mapTypeNames[mapType] || "Default",
+                    pois: {}
+                };
+            }
+            
+            updateSeedInfo();
+            loadSeedImage(seedNum);
+            updatePOIGrid();
+        }
+
+        function loadSeedImage(seedNum) {
+            const paddedNum = seedNum.toString().padStart(3, '0');
+            const imageUrl = `assets/pattern/${paddedNum}.jpg`;
+            
+            currentImage = new Image();
+            currentImage.onload = function() {
+                drawCanvas();
+            };
+            currentImage.onerror = function() {
+                console.error(`Failed to load image: ${imageUrl}`);
+                // Draw placeholder with POI locations
+                drawCanvas();
+            };
+            currentImage.src = imageUrl;
+        }
+
+        function drawCanvas() {
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            if (currentImage && currentImage.complete && currentImage.naturalWidth > 0) {
+                // Draw the seed image
+                ctx.drawImage(currentImage, 0, 0, canvas.width, canvas.height);
+            } else {
+                // Draw placeholder background
+                const gradient = ctx.createRadialGradient(canvas.width/2, canvas.height/2, 0, canvas.width/2, canvas.height/2, canvas.width/2);
+                gradient.addColorStop(0, '#34495e');
+                gradient.addColorStop(0.7, '#2c3e50');
+                gradient.addColorStop(1, '#1a1a2e');
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // Add text
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 24px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(`Seed ${currentSeed}`, canvas.width / 2, canvas.height / 2 - 50);
+                ctx.font = '16px Arial';
+                ctx.fillText('(Image not available - use predefined POI locations)', canvas.width / 2, canvas.height / 2 + 50);
+            }
+            
+            // Draw predefined POI locations
+            drawPredefinedPOIs();
+        }
+
+        function drawPredefinedPOIs() {
+            // Use POI coordinates for the current map type
+            const mapTypeName = mapTypeNames[currentMapType] || 'Default';
+            const pois = PREDEFINED_POIS[mapTypeName] || [];
+            const seedPOIs = poiDatabase.seeds[currentSeed]?.pois || {};
+            
+            console.log(`Drawing ${pois.length} POIs for ${mapTypeName} map type`);
+            
+            pois.forEach(poi => {
+                const extractedPOI = Object.values(seedPOIs).find(p => p.id === poi.id);
+                let strokeColor, label, fillColor;
+                
+                if (extractedPOI) {
+                    switch (extractedPOI.type) {
+                        case 'church':
+                            strokeColor = '#0c5460';
+                            fillColor = 'rgba(209, 236, 241, 0.3)';
+                            label = 'C';
+                            break;
+                        case 'mage':
+                            strokeColor = '#721c24';
+                            fillColor = 'rgba(248, 215, 218, 0.3)';
+                            label = 'M';
+                            break;
+                        case 'other':
+                            strokeColor = '#856404';
+                            fillColor = 'rgba(255, 243, 205, 0.3)';
+                            label = 'O';
+                            break;
+                        default:
+                            strokeColor = '#ff8c00';
+                            fillColor = 'rgba(255, 140, 0, 0.2)';
+                            label = poi.id.toString();
+                    }
+                } else {
+                    // Unclassified POI - show subtle outline only
+                    strokeColor = '#ff8c00';
+                    fillColor = 'rgba(255, 140, 0, 0.1)';
+                    label = poi.id.toString();
+                }
+                
+                // Draw subtle clickable area
+                ctx.beginPath();
+                ctx.arc(poi.x, poi.y, 25, 0, 2 * Math.PI);
+                ctx.fillStyle = fillColor;
+                ctx.fill();
+                ctx.strokeStyle = strokeColor;
+                ctx.lineWidth = 2;
+                ctx.setLineDash([5, 3]);
+                ctx.stroke();
+                ctx.setLineDash([]); // Reset line dash
+                
+                // Draw small label in corner
+                ctx.fillStyle = strokeColor;
+                ctx.font = 'bold 12px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                // Position label at top-right of circle
+                ctx.fillText(label, poi.x + 18, poi.y - 18);
+                
+                // Add small background circle for label visibility
+                ctx.beginPath();
+                ctx.arc(poi.x + 18, poi.y - 18, 8, 0, 2 * Math.PI);
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+                ctx.fill();
+                ctx.strokeStyle = strokeColor;
+                ctx.lineWidth = 1;
+                ctx.stroke();
+                
+                // Redraw label on top
+                ctx.fillStyle = strokeColor;
+                ctx.fillText(label, poi.x + 18, poi.y - 18);
+            });
+        }
+
+        function handlePOIClick(event, type) {
+            if (currentSeed === null || currentSeed === undefined) return;
+            
+            console.log('Click detected:', event.type, type);
+            
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            const clickX = (event.clientX - rect.left) * scaleX;
+            const clickY = (event.clientY - rect.top) * scaleY;
+            
+            console.log('Click position:', clickX, clickY);
+            
+            // Find which predefined POI was clicked (use current map type)
+            const mapTypeName = mapTypeNames[currentMapType] || 'Default';
+            const pois = PREDEFINED_POIS[mapTypeName] || [];
+            const clickedPOI = pois.find(poi => {
+                const distance = Math.sqrt(Math.pow(clickX - poi.x, 2) + Math.pow(clickY - poi.y, 2));
+                console.log(`Distance to POI ${poi.id} at (${poi.x}, ${poi.y}): ${distance}`);
+                return distance <= 40; // Increased click tolerance
+            });
+            
+            if (clickedPOI) {
+                console.log('Clicked POI:', clickedPOI.id, 'Type:', type);
+                
+                // Check if this POI already exists in the current seed
+                const seedPOIs = poiDatabase.seeds[currentSeed].pois;
+                const existingPOI = seedPOIs[clickedPOI.id];
+                
+                if (existingPOI) {
+                    // POI already exists, remove it
+                    console.log(`Removing existing POI ${clickedPOI.id}`);
+                    delete seedPOIs[clickedPOI.id];
+                } else {
+                    // POI doesn't exist, add it
+                    console.log(`Adding new POI ${clickedPOI.id} as ${type}`);
+                    // Use the exact predefined coordinates, not the click coordinates
+                    addPOI(clickedPOI.x, clickedPOI.y, type, clickedPOI.id);
+                }
+                
+                drawCanvas();
+                updatePOIGrid();
+                updateStats();
+                updateMappingStats();
+                setupSeedSelector(); // Refresh indicators
+            } else {
+                console.log('No POI found near click position');
+            }
+        }
+
+        function handlePOIRightClick(event) {
+            if (currentSeed === null || currentSeed === undefined) return;
+            
+            console.log('Right click detected');
+            
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            const clickX = (event.clientX - rect.left) * scaleX;
+            const clickY = (event.clientY - rect.top) * scaleY;
+            
+            console.log('Right click position:', clickX, clickY);
+            
+            // Find which predefined POI was clicked (use current map type)
+            const mapTypeName = mapTypeNames[currentMapType] || 'Default';
+            const pois = PREDEFINED_POIS[mapTypeName] || [];
+            const clickedPOI = pois.find(poi => {
+                const distance = Math.sqrt(Math.pow(clickX - poi.x, 2) + Math.pow(clickY - poi.y, 2));
+                console.log(`Right click distance to POI ${poi.id} at (${poi.x}, ${poi.y}): ${distance}`);
+                return distance <= 40; // Increased click tolerance
+            });
+            
+            if (clickedPOI) {
+                console.log('Right clicked POI:', clickedPOI.id);
+                pendingPOI = clickedPOI;
+                showContextMenu(event.clientX, event.clientY);
+            } else {
+                console.log('No POI found near right click position');
+            }
+        }
+
+        function showContextMenu(x, y) {
+            hideContextMenu(); // Hide any existing menu
+            
+            contextMenu = document.createElement('div');
+            contextMenu.className = 'context-menu';
+            contextMenu.style.left = x + 'px';
+            contextMenu.style.top = y + 'px';
+            
+            // Mage Tower option with icon
+            const mageItem = document.createElement('div');
+            mageItem.className = 'context-menu-item mage';
+            mageItem.innerHTML = `
+                <img src="assets/images/mage-tower.png" style="width: 16px; height: 16px; margin-right: 8px; vertical-align: middle;">
+                🔮 Mage Tower
+            `;
+            mageItem.onclick = () => {
+                if (pendingPOI) {
+                    // Check if this POI already exists in the current seed
+                    const seedPOIs = poiDatabase.seeds[currentSeed].pois;
+                    const existingPOI = seedPOIs[pendingPOI.id];
+                    
+                    if (existingPOI) {
+                        // POI already exists, remove it
+                        console.log(`Removing existing POI ${pendingPOI.id}`);
+                        delete seedPOIs[pendingPOI.id];
+                    } else {
+                        // POI doesn't exist, add it as mage
+                        console.log(`Adding new POI ${pendingPOI.id} as mage`);
+                        addPOI(pendingPOI.x, pendingPOI.y, 'mage', pendingPOI.id);
+                    }
+                    
+                    drawCanvas();
+                    updatePOIGrid();
+                    updateStats();
+                }
+                hideContextMenu();
+            };
+            
+            // Other option
+            const otherItem = document.createElement('div');
+            otherItem.className = 'context-menu-item other';
+            otherItem.innerHTML = '📍 Other POI';
+            otherItem.onclick = () => {
+                if (pendingPOI) {
+                    // Check if this POI already exists in the current seed
+                    const seedPOIs = poiDatabase.seeds[currentSeed].pois;
+                    const existingPOI = seedPOIs[pendingPOI.id];
+                    
+                    if (existingPOI) {
+                        // POI already exists, remove it
+                        console.log(`Removing existing POI ${pendingPOI.id}`);
+                        delete seedPOIs[pendingPOI.id];
+                    } else {
+                        // POI doesn't exist, add it as other
+                        console.log(`Adding new POI ${pendingPOI.id} as other`);
+                        addPOI(pendingPOI.x, pendingPOI.y, 'other', pendingPOI.id);
+                    }
+                    
+                    drawCanvas();
+                    updatePOIGrid();
+                    updateStats();
+                }
+                hideContextMenu();
+            };
+            
+            contextMenu.appendChild(mageItem);
+            contextMenu.appendChild(otherItem);
+            document.body.appendChild(contextMenu);
+            
+            // Ensure menu doesn't go off screen
+            const menuRect = contextMenu.getBoundingClientRect();
+            if (menuRect.right > window.innerWidth) {
+                contextMenu.style.left = (x - menuRect.width) + 'px';
+            }
+            if (menuRect.bottom > window.innerHeight) {
+                contextMenu.style.top = (y - menuRect.height) + 'px';
+            }
+        }
+
+        function hideContextMenu() {
+            if (contextMenu) {
+                document.body.removeChild(contextMenu);
+                contextMenu = null;
+                pendingPOI = null;
+            }
+        }
+
+        function addPOI(x, y, type, poiId = null) {
+            const seedPOIs = poiDatabase.seeds[currentSeed].pois;
+            
+            // Use provided poiId or find existing POI with same coordinates
+            let targetId = poiId;
+            if (!targetId) {
+                const existingPOI = Object.values(seedPOIs).find(poi => 
+                    Math.abs(poi.coordinates.x - x) < 5 && Math.abs(poi.coordinates.y - y) < 5
+                );
+                targetId = existingPOI ? existingPOI.id : poiCounter++;
+            }
+            
+            seedPOIs[targetId] = {
+                id: targetId,
+                coordinates: { x, y },
+                type: type
+            };
+            
+            console.log(`Added/Updated POI ${targetId}: (${x}, ${y}) ${type}`);
+            
+            // Auto-save progress
+            autoSave();
+        }
+
+        function updateSeedInfo() {
+            const mapTypeName = mapTypeNames[currentMapType] || 'Default';
+            document.getElementById('seedInfo').textContent = 
+                `${currentNightlord.charAt(0).toUpperCase() + currentNightlord.slice(1)} - Seed ${currentSeed.toString().padStart(3, '0')} - ${mapTypeName} Map`;
+        }
+
+        function updatePOIGrid() {
+            const grid = document.getElementById('poiGrid');
+            grid.innerHTML = '';
+            
+            if (!currentSeed) return;
+            
+            const mapTypeName = mapTypeNames[currentMapType] || 'Default';
+            const pois = PREDEFINED_POIS[mapTypeName] || [];
+            const seedPOIs = poiDatabase.seeds[currentSeed]?.pois || {};
+            
+            pois.forEach(poi => {
+                const button = document.createElement('div');
+                button.className = 'poi-button';
+                
+                const extractedPOI = Object.values(seedPOIs).find(p => p.id === poi.id);
+                
+                if (extractedPOI) {
+                    button.className += ` ${extractedPOI.type}`;
+                    let iconHtml = '';
+                    let typeLabel = extractedPOI.type;
+                    
+                    if (extractedPOI.type === 'church') {
+                        iconHtml = '<img src="assets/images/church.png" class="poi-icon">';
+                        typeLabel = '🏰 Church';
+                    } else if (extractedPOI.type === 'mage') {
+                        iconHtml = '<img src="assets/images/mage-tower.png" class="poi-icon">';
+                        typeLabel = '🔮 Mage Tower';
+                    } else if (extractedPOI.type === 'other') {
+                        typeLabel = '📍 Other POI';
+                    }
+                    
+                    button.innerHTML = `
+                        <div>POI ${poi.id}</div>
+                        <div style="font-size: 10px; margin-top: 2px;">${iconHtml}${typeLabel}</div>
+                        <div class="poi-coordinates">(${poi.x}, ${poi.y})</div>
+                    `;
+                } else {
+                    button.innerHTML = `
+                        <div>POI ${poi.id}</div>
+                        <div style="font-size: 10px; margin-top: 2px;">❓ unset</div>
+                        <div class="poi-coordinates">(${poi.x}, ${poi.y})</div>
+                    `;
+                }
+                
+                button.addEventListener('click', () => {
+                    // Highlight this POI on the canvas temporarily
+                    highlightPOI(poi);
+                });
+                
+                grid.appendChild(button);
+            });
+            
+            updateStats();
+        }
+
+        function highlightPOI(poi) {
+            drawCanvas();
+            
+            // Draw highlight
+            ctx.beginPath();
+            ctx.arc(poi.x, poi.y, 30, 0, 2 * Math.PI);
+            ctx.strokeStyle = '#007bff';
+            ctx.lineWidth = 4;
+            ctx.stroke();
+            
+            // Remove highlight after 1 second
+            setTimeout(() => {
+                drawCanvas();
+            }, 1000);
+        }
+
+        function updateStats() {
+            if (currentSeed === null || currentSeed === undefined) return;
+            
+            const seedPOIs = poiDatabase.seeds[currentSeed]?.pois || {};
+            const mapTypeName = mapTypeNames[currentMapType] || 'Default';
+            const totalPredefined = PREDEFINED_POIS[mapTypeName]?.length || 0;
+            
+            let churchCount = 0, mageCount = 0, otherCount = 0;
+            
+            Object.values(seedPOIs).forEach(poi => {
+                switch (poi.type) {
+                    case 'church': churchCount++; break;
+                    case 'mage': mageCount++; break;
+                    case 'other': otherCount++; break;
+                }
+            });
+            
+            document.getElementById('churchCount').textContent = churchCount;
+            document.getElementById('mageCount').textContent = mageCount;
+            document.getElementById('otherCount').textContent = otherCount;
+        }
+
+        function nextSeed() {
+            if (currentSeed === null || currentSeed === undefined) return;
+            
+            const selector = document.getElementById('seedSelector');
+            const currentIndex = selector.selectedIndex;
+            
+            if (currentIndex > 0 && currentIndex < selector.options.length - 1) {
+                selector.selectedIndex = currentIndex + 1;
+                const newValue = selector.options[currentIndex + 1].value;
+                const [nightlord, seedNum, mapType] = newValue.split('-');
+                loadSeed(nightlord, parseInt(seedNum), mapType);
+            } else {
+                // At the end, could loop back to first or show completion message
+                alert('You have reached the last seed!');
+            }
+        }
+
+        function previousSeed() {
+            if (currentSeed === null || currentSeed === undefined) return;
+            
+            const selector = document.getElementById('seedSelector');
+            const currentIndex = selector.selectedIndex;
+            
+            if (currentIndex > 1) { // Skip the "Select a seed" option at index 0
+                selector.selectedIndex = currentIndex - 1;
+                const newValue = selector.options[currentIndex - 1].value;
+                const [nightlord, seedNum, mapType] = newValue.split('-');
+                loadSeed(nightlord, parseInt(seedNum), mapType);
+            } else {
+                // At the beginning
+                alert('You are already at the first seed!');
+            }
+        }
+
+        function resetCurrentSeed() {
+            if (currentSeed === null || currentSeed === undefined) return;
+            
+            if (confirm(`Reset all POI data for seed ${currentSeed}?`)) {
+                poiDatabase.seeds[currentSeed].pois = {};
+                drawCanvas();
+                updatePOIGrid();
+                updateStats();
+                updateMappingStats();
+                setupSeedSelector(); // Refresh indicators
+            }
+        }
+
+        function exportData() {
+            // Create unified dataset format that works for both CV loading and session recovery
+            const datasetFormat = {
+                version: poiDatabase.version,
+                extractedBy: poiDatabase.extractedBy,
+                extractionDate: poiDatabase.extractionDate,
+                lastUpdated: new Date().toISOString(),
+                description: "POI classifications for Nightreign seed recognition",
+                
+                // Session data for recovery
+                currentSeed: currentSeed,
+                currentNightlord: currentNightlord,
+                currentMapType: currentMapType,
+                
+                // Full database for session recovery
+                poiDatabase: poiDatabase,
+                
+                // CV-compatible classifications for main app
+                classifications: {}
+            };
+            
+            let exportedStats = { church: 0, mage: 0, other: 0, totalSeeds: 0 };
+            
+            // Convert seed data to CV-compatible format
+            Object.keys(poiDatabase.seeds).forEach(seedNum => {
+                const seed = poiDatabase.seeds[seedNum];
+                const cvKey = seedNum.toString().padStart(3, '0'); // CV format expects "017" not "17"
+                
+                datasetFormat.classifications[cvKey] = {};
+                
+                let hasValidPOIs = false;
+                
+                // Convert POI data to CV format: POI{id} -> type mapping
+                Object.values(seed.pois || {}).forEach(poi => {
+                    // Validate that this is a real POI classification
+                    if (poi.type && ['church', 'mage', 'other'].includes(poi.type)) {
+                        hasValidPOIs = true;
+                        
+                        const poiKey = `POI${poi.id}`;
+                        datasetFormat.classifications[cvKey][poiKey] = poi.type;
+                        
+                        exportedStats[poi.type]++;
+                    }
+                });
+                
+                if (hasValidPOIs) {
+                    exportedStats.totalSeeds++;
+                }
+            });
+            
+            // Export to dataset/dataset.json
+            const datasetStr = JSON.stringify(datasetFormat, null, 2);
+            const datasetBlob = new Blob([datasetStr], { type: 'application/json' });
+            const datasetUrl = URL.createObjectURL(datasetBlob);
+            
+            const datasetExport = document.createElement('a');
+            datasetExport.href = datasetUrl;
+            datasetExport.download = `dataset/dataset.json`;
+            datasetExport.click();
+            
+            URL.revokeObjectURL(datasetUrl);
+            
+            alert(`Exported dataset/dataset.json\n\nClassifications:\n- ${exportedStats.totalSeeds} seeds with POI data\n- ${exportedStats.church} Churches\n- ${exportedStats.mage} Mage Towers\n- ${exportedStats.other} Other POIs\n\nThis file can be used for:\n- CV loading in main app\n- Session recovery in this tool`);
+        }
+
+        function loadExistingData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    
+                    // Check file format and extract data accordingly
+                    let databaseToLoad = null;
+                    let seedToRestore = null;
+                    let nightlordToRestore = null;
+                    let mapTypeToRestore = null;
+                    
+                    if (data.poiDatabase && data.poiDatabase.seeds) {
+                        // This is the unified dataset.json format or progress file format
+                        databaseToLoad = data.poiDatabase;
+                        seedToRestore = data.currentSeed;
+                        nightlordToRestore = data.currentNightlord;
+                        mapTypeToRestore = data.currentMapType;
+                        console.log('Loaded unified dataset/progress format');
+                    } else if (data.seeds) {
+                        // This is a direct database format
+                        databaseToLoad = data;
+                        console.log('Loaded database format');
+                    } else if (data.classifications && !data.poiDatabase) {
+                        // This is a CV-only format - can't use for session recovery
+                        alert('CV-only format detected. This can be used in the main app but not for session recovery in this tool.');
+                        return;
+                    } else {
+                        alert('Invalid file format. Please use a POI database, progress file, or dataset.json.');
+                        return;
+                    }
+                    
+                    // Load the database
+                    poiDatabase = databaseToLoad;
+                    console.log(`Loaded POI database with ${Object.keys(poiDatabase.seeds).length} seeds`);
+                    
+                    // If this was a progress file, restore the session state
+                    if (seedToRestore !== null && nightlordToRestore && mapTypeToRestore) {
+                        const selector = document.getElementById('seedSelector');
+                        const targetValue = `${nightlordToRestore}-${seedToRestore}-${mapTypeToRestore}`;
+                        
+                        // Find and select the saved seed
+                        for (let i = 0; i < selector.options.length; i++) {
+                            if (selector.options[i].value === targetValue) {
+                                selector.selectedIndex = i;
+                                loadSeed(nightlordToRestore, seedToRestore, mapTypeToRestore);
+                                console.log(`Restored session to seed ${seedToRestore} (${nightlordToRestore}, ${mapTypeToRestore})`);
+                                break;
+                            }
+                        }
+                    } else if (currentSeed) {
+                        // Just refresh current view if no session to restore
+                        drawCanvas();
+                        updatePOIGrid();
+                        updateStats();
+                    }
+                    
+                    alert(`Successfully loaded POI data!\n${Object.keys(poiDatabase.seeds).length} seeds in database.`);
+                    
+                    // Refresh the seed selector with updated mapping indicators
+                    setupSeedSelector();
+                    
+                } catch (error) {
+                    console.error('Load error:', error);
+                    alert('Error loading file: ' + error.message);
+                }
+            };
+            reader.readAsText(file);
+            
+            // Reset file input
+            event.target.value = '';
+        }
+
+        // Auto-save functionality
+        function autoSave() {
+            try {
+                const saveData = {
+                    poiDatabase: poiDatabase,
+                    currentSeed: currentSeed,
+                    currentNightlord: currentNightlord,
+                    currentMapType: currentMapType,
+                    lastSaved: new Date().toISOString()
+                };
+                localStorage.setItem('nightreign-poi-extraction-progress', JSON.stringify(saveData));
+                
+                document.getElementById('autoSaveStatus').textContent = 'Auto-save: ✅ Saved';
+                setTimeout(() => {
+                    document.getElementById('autoSaveStatus').textContent = 'Auto-save: Ready';
+                }, 2000);
+            } catch (error) {
+                console.error('Auto-save failed:', error);
+                document.getElementById('autoSaveStatus').textContent = 'Auto-save: ❌ Failed';
+            }
+        }
+
+        function saveProgress() {
+            try {
+                const saveData = {
+                    poiDatabase: poiDatabase,
+                    currentSeed: currentSeed,
+                    currentNightlord: currentNightlord,
+                    currentMapType: currentMapType,
+                    lastSaved: new Date().toISOString()
+                };
+                
+                const dataStr = JSON.stringify(saveData, null, 2);
+                const blob = new Blob([dataStr], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `nightreign-poi-extraction-progress-${new Date().toISOString().split('T')[0]}.json`;
+                a.click();
+                
+                URL.revokeObjectURL(url);
+                
+                // Also save to localStorage
+                localStorage.setItem('nightreign-poi-extraction-progress', JSON.stringify(saveData));
+                
+                alert('Progress saved to file and localStorage!');
+            } catch (error) {
+                console.error('Save failed:', error);
+                alert('Save failed: ' + error.message);
+            }
+        }
+
+        function loadSavedProgress() {
+            try {
+                const saved = localStorage.getItem('nightreign-poi-extraction-progress');
+                if (saved) {
+                    const saveData = JSON.parse(saved);
+                    
+                    if (saveData.poiDatabase) {
+                        poiDatabase = saveData.poiDatabase;
+                        console.log('Loaded saved POI database from localStorage');
+                        
+                        // Restore current seed if it was saved
+                        if (saveData.currentSeed !== null && saveData.currentSeed !== undefined && saveData.currentNightlord) {
+                            const selector = document.getElementById('seedSelector');
+                            const currentMapType = saveData.currentMapType || 'default';
+                            const targetValue = `${saveData.currentNightlord}-${saveData.currentSeed}-${currentMapType}`;
+                            
+                            // Find and select the saved seed
+                            for (let i = 0; i < selector.options.length; i++) {
+                                if (selector.options[i].value === targetValue) {
+                                    selector.selectedIndex = i;
+                                    loadSeed(saveData.currentNightlord, saveData.currentSeed, currentMapType);
+                                    break;
+                                }
+                            }
+                        }
+                        
+                        const lastSaved = new Date(saveData.lastSaved).toLocaleString();
+                        document.getElementById('autoSaveStatus').textContent = `Last saved: ${lastSaved}`;
+                    }
+                }
+            } catch (error) {
+                console.error('Failed to load saved progress:', error);
+            }
+        }
+
+        function updateProgressStatus() {
+            const totalSeeds = Object.keys(seedData).reduce((total, nightlord) => {
+                const data = seedData[nightlord];
+                return total + (data.range[1] - data.range[0] + 1);
+            }, 0);
+            
+            const completedSeeds = Object.keys(poiDatabase.seeds).filter(seedNum => {
+                const seed = poiDatabase.seeds[seedNum];
+                const poiCount = Object.keys(seed.pois || {}).length;
+                return poiCount > 0; // Consider seed "started" if it has any POIs
+            }).length;
+            
+            const fullyCompletedSeeds = Object.keys(poiDatabase.seeds).filter(seedNum => {
+                const seed = poiDatabase.seeds[seedNum];
+                const poiCount = Object.keys(seed.pois || {}).length;
+                return poiCount >= 5; // Consider seed "completed" if it has 5+ POIs
+            }).length;
+            
+            document.getElementById('progressStatus').innerHTML = `
+                Progress: ${completedSeeds}/${totalSeeds} started, ${fullyCompletedSeeds} completed
+            `;
+        }
+    </script>
+</body>
+</html>

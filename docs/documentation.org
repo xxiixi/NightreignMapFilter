@@ -1,0 +1,232 @@
+#+TITLE: Nightreign Seed Recognizer - Developer Documentation
+#+AUTHOR: Development Team
+#+DATE: [2025-01-XX]
+
+* Overview
+This document provides technical guidance for expanding and maintaining the Nightreign Seed Recognizer system.
+
+* Adding New Maps
+
+** Prerequisites
+Before adding a new map, ensure you have:
+- High-quality POI overlay image for the new map
+- Complete set of seed pattern images (000.jpg through 319.jpg)
+- POI coordinate data for all potential locations
+
+** Step-by-Step Process
+
+*** 1. Update Configuration
+Add the new map to ~data.js~:
+
+#+BEGIN_SRC javascript
+const MAPS = [
+  'Default', 'Mountaintop', 'Crater', 'Rotted Woods', 'Noklateo',
+  'NewMapName'  // Add your new map here
+];
+
+const MAP_IMAGES = {
+  Default: "assets/images/Default-POI.png",
+  Mountaintop: "assets/images/Mountaintop-POI.png",
+  // ... existing maps ...
+  NewMapName: "assets/images/NewMapName-POI.png"
+};
+#+END_SRC
+
+*** 2. Define POI Locations
+Add POI coordinate mappings to ~POIS_BY_MAP~ in ~data.js~:
+
+#+BEGIN_SRC javascript
+const POIS_BY_MAP = {
+  // ... existing maps ...
+  NewMapName: [
+    { id: 1, x: 155, y: 551 },
+    { id: 2, x: 350, y: 545 },
+    // Define all POI locations for this map
+  ]
+};
+#+END_SRC
+
+*** 3. Create Asset Structure
+Create the required directory structure:
+
+#+BEGIN_EXAMPLE
+assets/
+├── images/
+│   └── NewMapName-POI.png    # POI overlay image
+└── pattern/
+    ├── 000.jpg               # Seed pattern images
+    ├── 001.jpg               # (should already exist)
+    └── ...
+#+END_EXAMPLE
+
+*** 4. Update Seed Data Matrix
+Expand ~seedDataMatrix~ in ~data.js~ to include entries for the new map:
+- Each seed needs an entry with the new map name
+- Add POI classifications for each seed/map combination
+- Follow existing pattern: [seedId, nightlord, mapName, ...]
+
+*** 5. Test Integration
+- Load ~index.html~ and verify new map appears in selection
+- Test POI coordinate mapping accuracy
+- Verify seed filtering works correctly
+
+** Recommended Asset Organization
+For better maintainability, consider organizing assets by map:
+
+#+BEGIN_EXAMPLE
+assets/
+├── maps/
+│   ├── Default/
+│   │   ├── poi-overlay.png
+│   │   └── seeds/
+│   ├── NewMapName/
+│   │   ├── poi-overlay.png
+│   │   └── seeds/
+│   └── ...
+└── icons/
+    ├── church.png
+    └── mage-tower.png
+#+END_EXAMPLE
+
+* Adding New Nightlords
+
+** Step-by-Step Process
+
+*** 1. Update Nightlord Configuration
+Add to ~NIGHTLORDS~ array in ~data.js~:
+
+#+BEGIN_SRC javascript
+const NIGHTLORDS = [
+  'Gladius', 'Adel', 'Gnoster', 'Maris', 
+  'Libra', 'Fulghor', 'Caligo', 'Heolstor',
+  'NewNightlord'  // Add your new nightlord here
+];
+#+END_SRC
+
+*** 2. Update UI Buttons
+The nightlord buttons in ~index.html~ are dynamically generated, so no manual HTML changes needed.
+
+*** 3. Expand Seed Data Matrix
+For each existing map, add seed entries for the new nightlord:
+
+#+BEGIN_SRC javascript
+// Add entries like this for each seed/map combination:
+[
+  seedNumber,
+  "NewNightlord",
+  "MapName",
+  // ... boss and POI data ...
+]
+#+END_SRC
+
+*** 4. Generate Initial Dataset
+Create empty dataset entries for the POI extraction tool:
+- Each seed needs a corresponding entry in ~dataset/dataset.json~
+- Start with empty POI classifications
+- Use extraction tool to populate data
+
+** Data Collection Process
+1. *Generate Templates*: Create empty seed entries for all maps
+2. *Extract POIs*: Use ~predefined-poi-extraction-tool.html~ to classify POIs
+3. *Export Data*: Export classifications from extraction tool
+4. *Integrate*: Import classifications into main application
+
+* Configuration System Improvements
+
+** Centralized Config (Future Enhancement)
+Consider creating ~config.js~ for centralized management:
+
+#+BEGIN_SRC javascript
+const CONFIG = {
+  maps: [
+    { id: 'Default', name: 'Default', image: 'Default-POI.png' },
+    { id: 'NewMap', name: 'New Map Name', image: 'NewMap-POI.png' }
+  ],
+  nightlords: [
+    { id: 'Gladius', name: 'Gladius' },
+    { id: 'NewNightlord', name: 'New Nightlord' }
+  ],
+  poiTypes: {
+    church: { name: 'Church', icon: 'church.png', color: '#4fc3f7' },
+    mage: { name: "Sorcerer's Rise", icon: 'mage-tower.png', color: '#e74c3c' },
+    other: { name: 'Other POI', icon: null, color: '#17a2b8' }
+  }
+};
+#+END_SRC
+
+** Validation System
+Implement asset validation to ensure all required files exist:
+
+#+BEGIN_SRC javascript
+function validateMapAssets(mapId) {
+  const required = [
+    `assets/images/${mapId}-POI.png`
+  ];
+  return required.every(path => fileExists(path));
+}
+#+END_SRC
+
+* Development Workflow
+
+** Testing New Maps
+1. Start local server: ~node server.js~
+2. Open ~http://localhost:8000/index.html~
+3. Select new nightlord/map combination
+4. Verify POI locations match overlay image
+5. Test seed recognition accuracy
+
+** Data Management
+- Use ~predefined-poi-extraction-tool.html~ for POI classification
+- Store extraction data in ~dataset/dataset.json~
+- Export/import functionality maintains data consistency
+- Regular backups recommended for dataset files
+
+** Quality Assurance
+- Cross-reference POI coordinates with actual game screenshots
+- Verify seed pattern images are correctly labeled (000.jpg = seed 0)
+- Test edge cases (seeds with no POIs, unusual POI combinations)
+- Validate exported data format matches application expectations
+
+* File Structure Reference
+
+#+BEGIN_EXAMPLE
+nightreign-seed-recogniser/
+├── docs/
+│   └── documentation.org           # This file
+├── dataset/
+│   └── dataset.json               # POI extraction data
+├── assets/
+│   ├── images/
+│   │   ├── *-POI.png              # Map overlay images
+│   │   ├── church.png             # POI icons
+│   │   └── mage-tower.png
+│   └── pattern/
+│       └── *.jpg                  # Seed pattern images (000-319)
+├── index.html                     # Main application
+├── predefined-poi-extraction-tool.html  # POI classification tool
+├── data.js                        # Core data definitions
+├── script.js                      # Main application logic
+├── styles.css                     # Application styling
+├── server.js                      # Development server
+└── CLAUDE.md                      # Project context
+#+END_EXAMPLE
+
+* Future Enhancements
+
+** Automation Opportunities
+- CSV import system for bulk seed data
+- Automated asset validation on startup
+- Template generation utilities for new nightlords
+- Batch processing tools for large datasets
+
+** UI Improvements
+- Admin panel for development operations
+- Progress indicators for data loading
+- Validation warnings for missing assets
+- Export/import workflow improvements
+
+** Performance Optimizations
+- Lazy loading of seed pattern images
+- Compressed asset formats
+- Caching strategies for large datasets
+- Progressive data loading
