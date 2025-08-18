@@ -10,11 +10,13 @@ How to use:
 + Select Nightlord & Map/Shifting Earth
 + Select the POIs of the map, which include Village, Church of Vows &
   Sorcerer's Rise.
-+ Based on the above input, you will find your mapseed information.
++ Based on the above input, you will find your map seed information.
 
-[[file:assets/images/screenshot-01.png]]
-
-[[file:assets/images/screenshot-02.png]]
+     #+BEGIN_HTML
+   <p align="center">
+     <img src="/assets/images/screenshot-02.png" alt="Screenshot" width="600"/>
+   </p>
+   #+END_HTML
 
 * Credits
 
