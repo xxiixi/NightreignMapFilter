@@ -70,13 +70,12 @@ const MAP_IMAGES = {
   "Rotted Woods": "assets/images/RottedWoods-POI.png"
 };
 
-// Use real POI images now that they're available
-const USE_PLACEHOLDER_IMAGES = false;
 
 // Icon assets (data URIs for now - no external dependencies)
 const ICON_ASSETS = {
   church: "assets/images/church.png",
-  mage: "assets/images/mage-tower.png"
+  mage: "assets/images/mage-tower.png",
+  village: "assets/images/village.png"
 };
 
 // Constants

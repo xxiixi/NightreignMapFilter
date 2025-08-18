@@ -1,38 +1,24 @@
-// Auto-generated POI coordinate mapping for Gladius Default seeds
+// Main application for Nightreign seed recognition
 let CV_CLASSIFICATION_DATA = null; // Will hold the exported classification results
 
-// Load classification results from JSON
-async function loadClassificationResults(jsonFile = 'dataset/dataset.json') {
+// Load classification results from dataset.json
+async function loadClassificationResults() {
     try {
-        const response = await fetch(jsonFile);
+        const response = await fetch('dataset/dataset.json');
         const data = await response.json();
-        CV_CLASSIFICATION_DATA = data.classifications;
         
-        const seedCount = Object.keys(CV_CLASSIFICATION_DATA).length;
-        console.log('✅ Loaded CV classification results:', seedCount, 'seeds');
-        console.log('📊 Source:', data.extractedBy || 'Unknown');
-        console.log('⚡ Last Updated:', data.lastUpdated || 'Unknown');
-        
-        // Update UI status
-        const statusElement = document.getElementById('cv-status');
-        if (statusElement) {
-            statusElement.innerHTML = `<span style="color: #28a745;">✅ Loaded ${seedCount} seeds</span>`;
+        if (data.classifications) {
+            CV_CLASSIFICATION_DATA = data.classifications;
+            const seedCount = Object.keys(CV_CLASSIFICATION_DATA).length;
+            console.log('✅ Loaded classification results:', seedCount, 'seeds');
+            return true;
         }
-        
-        return true;
+        return false;
     } catch (error) {
-        console.warn('⚠️ CV dataset not found (this is normal if not yet created):', error.message);
-        
-        // Update UI with helpful message
-        const statusElement = document.getElementById('cv-status');
-        if (statusElement) {
-            statusElement.innerHTML = `<span style="color: #6c757d;">No CV data (use extraction tool to create)</span>`;
-        }
-        
+        console.warn('⚠️ Dataset not found (this is normal if not yet created):', error.message);
         return false;
     }
 }
-
 
 
 class NightreignMapRecogniser {
@@ -45,6 +31,7 @@ class NightreignMapRecogniser {
             maps: {},
             church: new Image(),
             mage: new Image(),
+            village: new Image(),
             favicon: new Image()
         };
         this.showingSeedImage = false;
@@ -68,6 +55,7 @@ class NightreignMapRecogniser {
         // Load icon images (data URIs don't need crossOrigin)
         this.images.church.src = ICON_ASSETS.church;
         this.images.mage.src = ICON_ASSETS.mage;
+        this.images.village.src = ICON_ASSETS.village;
         this.images.favicon.src = 'assets/images/church.png';
 
         // Add error handling for images
@@ -80,6 +68,9 @@ class NightreignMapRecogniser {
         this.images.favicon.onerror = () => {
             console.warn('Failed to load favicon icon');
         };
+        this.images.village.onerror = () => {
+            console.warn('Failed to load village icon');
+        };
 
         // Load map images with error handling
         Object.entries(MAP_IMAGES).forEach(([mapName, url]) => {
@@ -91,74 +82,15 @@ class NightreignMapRecogniser {
             };
             img.onerror = () => {
                 console.warn(`Failed to load map image: ${mapName}`, url);
-                // Create a placeholder image if loading fails
-                this.createPlaceholderMap(img, mapName);
             };
             
-            // Use real images now that they're available locally
-            if (USE_PLACEHOLDER_IMAGES) {
-                this.createPlaceholderMap(img, mapName);
-            } else {
-                img.src = url;
-            }
+            // Load real images
+            img.src = url;
             
             this.images.maps[mapName] = img;
         });
     }
 
-    createPlaceholderMap(img, mapName) {
-        // Create a canvas as placeholder
-        const canvas = document.createElement('canvas');
-        canvas.width = CANVAS_SIZE;
-        canvas.height = CANVAS_SIZE;
-        const ctx = canvas.getContext('2d');
-        
-        // Draw a gradient background
-        const gradient = ctx.createRadialGradient(CANVAS_SIZE/2, CANVAS_SIZE/2, 0, CANVAS_SIZE/2, CANVAS_SIZE/2, CANVAS_SIZE/2);
-        gradient.addColorStop(0, '#34495e');
-        gradient.addColorStop(0.7, '#2c3e50');
-        gradient.addColorStop(1, '#1a1a2e');
-        ctx.fillStyle = gradient;
-        ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
-        
-        // Add decorative border
-        ctx.strokeStyle = '#4fc3f7';
-        ctx.lineWidth = 4;
-        ctx.strokeRect(10, 10, CANVAS_SIZE - 20, CANVAS_SIZE - 20);
-        
-        // Add title
-        ctx.fillStyle = '#ffd700';
-        ctx.font = 'bold 32px Inter, sans-serif';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(mapName, CANVAS_SIZE / 2, CANVAS_SIZE / 2 - 40);
-        
-        ctx.fillStyle = '#4fc3f7';
-        ctx.font = 'bold 20px Inter, sans-serif';
-        ctx.fillText('Map Area', CANVAS_SIZE / 2, CANVAS_SIZE / 2);
-        
-        ctx.fillStyle = '#ffffff';
-        ctx.font = '16px Inter, sans-serif';
-        ctx.fillText('Click orange dots to mark POIs', CANVAS_SIZE / 2, CANVAS_SIZE / 2 + 40);
-        
-        // Add some decorative elements
-        ctx.fillStyle = '#4fc3f7';
-        for (let i = 0; i < 5; i++) {
-            const x = 100 + i * 120;
-            const y = 100;
-            ctx.beginPath();
-            ctx.arc(x, y, 3, 0, 2 * Math.PI);
-            ctx.fill();
-            ctx.beginPath();
-            ctx.arc(x, CANVAS_SIZE - 100, 3, 0, 2 * Math.PI);
-            ctx.fill();
-        }
-        
-        // Convert canvas to image
-        img.src = canvas.toDataURL();
-        // Don't set complete - it's read-only, the browser will set it automatically
-        console.log(`Created placeholder map for ${mapName}`);
-    }
 
     setupEventListeners() {
         // Nightlord selection
@@ -183,9 +115,6 @@ class NightreignMapRecogniser {
         });
         
         // CV Classification data loader
-        document.getElementById('cv-data-input').addEventListener('change', (e) => {
-            this.handleCVDataUpload(e);
-        });
 
         // Help button and modal
         document.getElementById('help-btn').addEventListener('click', () => {
@@ -224,11 +153,21 @@ class NightreignMapRecogniser {
 
     async loadInitialData() {
         try {
-            // Load seed data and CV classification results in parallel
-            await Promise.all([
-                loadSeedData(),
-                loadClassificationResults()
-            ]);
+            // Load both seed data and classification data
+            const hasClassifications = await loadClassificationResults();
+            const seedCount = seedDataMatrix.length;
+            
+            // Update status display
+            const statusElement = document.getElementById('cv-status');
+            if (statusElement) {
+                if (hasClassifications) {
+                    const classCount = Object.keys(CV_CLASSIFICATION_DATA).length;
+                    statusElement.innerHTML = `<span style="color: #28a745;">✅ Loaded ${seedCount} seeds (${classCount} classified)</span>`;
+                } else {
+                    statusElement.innerHTML = `<span style="color: #28a745;">✅ Loaded ${seedCount} seeds</span>`;
+                }
+            }
+            
             this.hideLoadingSection();
         } catch (error) {
             console.error('Error loading initial data:', error);
@@ -238,7 +177,9 @@ class NightreignMapRecogniser {
 
     hideLoadingSection() {
         const loadingSection = document.getElementById('loading-section');
-        loadingSection.style.display = 'none';
+        if (loadingSection) {
+            loadingSection.style.display = 'none';
+        }
     }
 
     showSelectionSection() {
@@ -596,8 +537,11 @@ class NightreignMapRecogniser {
             case 'mage':
                 this.drawIcon(this.images.mage, x, y);
                 break;
+            case 'village':
+                this.drawIcon(this.images.village, x, y);
+                break;
             case 'other':
-                this.drawDot(x, y, 'P', '#4fc3f7');
+                this.drawDot(x, y, '', '#808080');
                 break;
             case 'unknown':
                 this.drawDot(x, y, '?', '#808080');
@@ -721,49 +665,13 @@ class NightreignMapRecogniser {
         this.updateSeedFiltering();
     }
 
-    handleCVDataUpload(event) {
-        const file = event.target.files[0];
-        if (!file) return;
-
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            try {
-                const data = JSON.parse(e.target.result);
-                
-                if (data.classifications) {
-                    CV_CLASSIFICATION_DATA = data.classifications;
-                    const seedCount = Object.keys(CV_CLASSIFICATION_DATA).length;
-                    
-                    document.getElementById('cv-status').innerHTML = 
-                        `<span style="color: #28a745;">✅ Loaded ${seedCount} seeds</span>`;
-                    
-                    console.log('🤖 CV Classification Data Loaded:', seedCount, 'seeds');
-                    
-                    // Refresh seed filtering to use new data
-                    this.updateSeedFiltering();
-                    
-                } else {
-                    throw new Error('Invalid JSON format - missing classifications field');
-                }
-                
-            } catch (error) {
-                console.error('Error loading CV data:', error);
-                document.getElementById('cv-status').innerHTML = 
-                    `<span style="color: #dc3545;">❌ Load failed</span>`;
-            }
-        };
-        
-        reader.readAsText(file);
-        
-        // Reset input so same file can be loaded again
-        event.target.value = '';
-    }
 
     classifyPOI(poiString) {
         if (!poiString) return null;
         if (poiString.includes('Church')) return 'Church';
         if (poiString.includes('Sorcerer') || poiString.includes('Mage') || poiString.includes('Rise')) return 'Mage';
-        return 'Other'; // Return 'Other' for non-Church/Mage POIs instead of null
+        if (poiString.includes('Village')) return 'Village';
+        return 'Other'; // Return 'Other' for non-Church/Mage/Village POIs instead of null
     }
 
     updateSeedCount() {
@@ -828,9 +736,9 @@ class NightreignMapRecogniser {
                 const realPOIType = this.findRealPOITypeAtCoordinate(seedNum, poi.x, poi.y);
                 console.log(`    Real data shows: ${realPOIType || 'NOTHING'} at this location`);
                 
-                // If user marked as unknown (?), reject if seed has Church/Mage here
+                // If user marked as unknown (?), reject if seed has Church/Mage/Village here
                 if (userState === 'unknown') {
-                    if (realPOIType === 'church' || realPOIType === 'mage') {
+                    if (realPOIType === 'church' || realPOIType === 'mage' || realPOIType === 'village') {
                         console.log(`    ❌ REJECTED: User said unknown but real data has ${realPOIType}`);
                         return false;
                     }
@@ -851,8 +759,14 @@ class NightreignMapRecogniser {
                         return false;
                     }
                     console.log(`    ✅ MATCH: User said mage and real data has mage`);
+                } else if (userState === 'village') {
+                    if (realPOIType !== 'village') {
+                        console.log(`    ❌ REJECTED: User said village but real data has ${realPOIType || 'nothing'}`);
+                        return false;
+                    }
+                    console.log(`    ✅ MATCH: User said village and real data has village`);
                 } else if (userState === 'other') {
-                    if (realPOIType === 'church' || realPOIType === 'mage' || !realPOIType) {
+                    if (realPOIType === 'church' || realPOIType === 'mage' || realPOIType === 'village' || !realPOIType) {
                         console.log(`    ❌ REJECTED: User said other POI but real data has ${realPOIType || 'nothing'}`);
                         return false;
                     }
@@ -956,7 +870,7 @@ class NightreignMapRecogniser {
                     const dx = clickX - poi.x;
                     const dy = clickY - poi.y;
                     const distance = Math.sqrt(dx * dx + dy * dy);
-                    return distance <= ICON_SIZE / 2;
+                    return distance <= 40; // Same tolerance as used elsewhere
                 });
                 
                 if (clickablePOI) {
@@ -964,14 +878,14 @@ class NightreignMapRecogniser {
                     const cvClassification = seedClassifications[poiKey];
                     
                     if (cvClassification) {
-                        console.log(`    ✅ Manual Classification: ${cvClassification.toUpperCase()} for POI ${clickablePOI.id}`);
+                        console.log(`    ✅ Classification: ${cvClassification.toUpperCase()} for POI ${clickablePOI.id}`);
                         return cvClassification === 'nothing' ? null : cvClassification;
                     }
                 }
             }
         }
         
-        // No classification available in dataset
+        // No classification data available - return null
         console.log(`    ❌ No classification found in dataset for seed ${seedNum}`);
         return null;
     }

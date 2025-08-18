@@ -27,6 +27,7 @@
         </header>
 
         <main class="main-content">
+
             <div id="loading-section" class="section" style="display: block;">
                 <div class="loading-indicator">
                     <i class="fas fa-spinner fa-spin"></i>
@@ -75,7 +76,7 @@
                         </div>
                         <div class="instruction-item">
                             <i class="fas fa-hand-pointer"></i>
-                            <span><strong>Right click</strong> to choose Sorcerer's Rise or Other POI</span>
+                            <span><strong>Right click</strong> to choose Sorcerer's Rise or Village</span>
                         </div>
                     </div>
                     <div class="button-row">
@@ -84,13 +85,6 @@
                             Reset Map & Remove All Markers
                         </button>
                         
-                        <div class="cv-loader" style="margin-left: 20px;">
-                            <label for="cv-data-input" class="cv-btn">
-                                <i class="fas fa-robot"></i>
-                                Load CV Classifications
-                            </label>
-                            <input type="file" id="cv-data-input" accept=".json" style="display: none;">
-                        </div>
                         <button id="help-btn" class="help-btn">
                             <i class="fas fa-question-circle"></i>
                             Help & Tips
@@ -153,7 +147,7 @@
                     <h4><i class="fas fa-lightbulb"></i> Tips for Best Results</h4>
                     <ul>
                         <li>Mark as many POIs as you can see clearly in your game</li>
-                        <li>Use right-click menu to distinguish between Sorcerer's Rises and other structures</li>
+                        <li>Use right-click menu to select between Sorcerer's Rise, Village, or Other POI</li>
                         <li>If you get no results, try resetting and being more precise with your clicks</li>
                         <li>The seed image shows the exact layout for verification</li>
                         <li>Select both Nightlord and Map before marking POIs</li>
@@ -169,11 +163,25 @@
             <img src="assets/images/mage-tower.png" style="width: 16px; height: 16px; margin-right: 8px; vertical-align: middle;">
             Sorcerer's Rise
         </div>
+        <div class="context-menu-item" data-type="village">
+            <img src="assets/images/village.png" style="width: 16px; height: 16px; margin-right: 8px; vertical-align: middle;">
+            Village
+        </div>
         <div class="context-menu-item" data-type="other">
             <i class="fas fa-question-circle"></i>
             Other POI
         </div>
     </div>
+
+    <footer style="text-align: center; padding: 20px; color: #6c757d; font-size: 14px; border-top: 1px solid #e0e0e0; margin-top: 40px;">
+        <p>
+            <i class="fab fa-github"></i> 
+            Open Source Project - 
+            <a href="https://github.com/thanosapollo/nightreign-mapseed-recogniser" target="_blank" style="color: #007bff; text-decoration: none;">
+                View Source Code on GitHub
+            </a>
+        </p>
+    </footer>
 
     <script src="data.js"></script>
     <script src="script.js"></script>
