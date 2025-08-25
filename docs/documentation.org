@@ -1,6 +1,5 @@
 #+TITLE: Nightreign Seed Recognizer - Developer Documentation
-#+AUTHOR: Development Team
-#+DATE: [2025-01-XX]
+#+DATE: [2025-08-25]
 
 * Overview
 This document provides technical guidance for expanding and maintaining the Nightreign Seed Recognizer system.
