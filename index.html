@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elden Ring Nightreign: Map Seed Recogniser</title>
+    <title>艾尔登法环 夜之降临：地图种子识别器</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#1a1a2e">
-    <meta name="description" content="Interactive tool to identify Elden Ring Nightreign map seeds based on point-of-interest locations">
-    <meta name="keywords" content="Elden Ring, Nightreign, map, seed, recogniser, POI, gaming, tool">
+    <meta name="description" content="基于兴趣点位置识别《艾尔登法环 夜之降临》地图种子的交互式工具">
+    <meta name="keywords" content="艾尔登法环, 夜之降临, 地图, 种子, 识别, 兴趣点, 工具">
     <link rel="icon" href="favicon.ico">
 </head>
 <body>
@@ -18,7 +18,7 @@
         <header class="header">
             <h1 class="title">
                 <i class="fas fa-map"></i>
-                Elden Ring Nightreign: Map Seed Recogniser
+                黑夜君临地图种子筛选器
             </h1>
             <div class="subtitle">
                 <p class="version">Version 1.0 | Nightreign version 1.01.3</p>
@@ -31,36 +31,36 @@
             <div id="loading-section" class="section" style="display: block;">
                 <div class="loading-indicator">
                     <i class="fas fa-spinner fa-spin"></i>
-                    <p>Initializing map data, please wait...</p>
+                    <p>初始化地图数据，请稍候...</p>
                 </div>
             </div>
 
             <div id="selection-section" class="section" style="display: none;">
                 <div class="selection-grid">
                     <div class="selection-card">
-                        <h3>Choose Your Nightlord</h3>
-                        <p class="current-selection">Currently chosen: <span id="chosen-nightlord">NONE</span></p>
+                        <h3>选择想要查看的夜王</h3>
+                        <p class="current-selection">当前选择: <span id="chosen-nightlord">NONE</span></p>
                         <div class="button-grid">
-                            <button class="nightlord-btn" data-nightlord="Gladius">Gladius</button>
-                            <button class="nightlord-btn" data-nightlord="Adel">Adel</button>
-                            <button class="nightlord-btn" data-nightlord="Gnoster">Gnoster</button>
-                            <button class="nightlord-btn" data-nightlord="Maris">Maris</button>
-                            <button class="nightlord-btn" data-nightlord="Libra">Libra</button>
-                            <button class="nightlord-btn" data-nightlord="Fulghor">Fulghor</button>
-                            <button class="nightlord-btn" data-nightlord="Caligo">Caligo</button>
-                            <button class="nightlord-btn" data-nightlord="Heolstor">Heolstor</button>
+                            <button class="nightlord-btn" data-nightlord="Gladius">"黑夜野兽"格拉狄乌斯</button>
+                            <button class="nightlord-btn" data-nightlord="Adel">"黑夜之爵"艾德雷</button>
+                            <button class="nightlord-btn" data-nightlord="Gnoster">"黑夜之智"格诺斯塔</button>
+                            <button class="nightlord-btn" data-nightlord="Maris">"深海黑夜"玛丽斯</button>
+                            <button class="nightlord-btn" data-nightlord="Libra">"黑夜之魔"利普拉</button>
+                            <button class="nightlord-btn" data-nightlord="Fulghor">"黑夜光骑士"弗格尔</button>
+                            <button class="nightlord-btn" data-nightlord="Caligo">"黑夜雾霾"卡莉果</button>
+                            <button class="nightlord-btn" data-nightlord="Heolstor">"黑夜王"布德奇冥</button>
                         </div>
                     </div>
 
                     <div class="selection-card">
-                        <h3>Choose Your Map / Shifting Earth</h3>
-                        <p class="current-selection">Currently chosen: <span id="chosen-map">NONE</span></p>
+                        <h3>选择想要查看的特殊地形</h3>
+                        <p class="current-selection">当前选择: <span id="chosen-map">NONE</span></p>
                         <div class="button-grid">
-                            <button class="map-btn" data-map="Default">Default</button>
-                            <button class="map-btn" data-map="Mountaintop">Mountaintop</button>
-                            <button class="map-btn" data-map="Crater">Crater</button>
-                            <button class="map-btn" data-map="Rotted Woods">Rotted Woods</button>
-                            <button class="map-btn" data-map="Noklateo">Noklateo</button>
+                            <button class="map-btn" data-map="Default">默认</button>
+                            <button class="map-btn" data-map="Mountaintop">山顶</button>
+                            <button class="map-btn" data-map="Crater">火山口</button>
+                            <button class="map-btn" data-map="Rotted Woods">腐败森林</button>
+                            <button class="map-btn" data-map="Noklateo">隐城</button>
                         </div>
                     </div>
                 </div>
@@ -68,26 +68,26 @@
 
             <div id="interaction-section" class="section" style="display: none;">
                 <div class="instructions-card">
-                    <h3><i class="fas fa-info-circle"></i> How to Use</h3>
+                    <h3><i class="fas fa-info-circle"></i> 使用方式</h3>
                     <div class="instruction-grid">
                         <div class="instruction-item">
                             <i class="fas fa-mouse-pointer"></i>
-                            <span><strong>Left click</strong> on orange dots to place Church</span>
+                            <span><strong>左键</strong> 点击橙色点来放置教堂</span>
                         </div>
                         <div class="instruction-item">
                             <i class="fas fa-hand-pointer"></i>
-                            <span><strong>Right click</strong> to choose Sorcerer's Rise or Village</span>
+                            <span><strong>右键</strong> 选择 法师塔 或 超级商人的村落</span>
                         </div>
                     </div>
                     <div class="button-row">
                         <button id="reset-map-btn" class="reset-btn">
                             <i class="fas fa-undo"></i>
-                            Reset Map & Remove All Markers
+                            重置地图 & 移除所有标点
                         </button>
                         
                         <button id="help-btn" class="help-btn">
                             <i class="fas fa-question-circle"></i>
-                            Help & Tips
+                            帮助 & 小技巧
                         </button>
                     </div>
                 </div>
@@ -96,7 +96,7 @@
             <div id="results-section" class="section" style="display: none;">
                 <div class="results-grid">
                     <div class="seed-counter">
-                        <h3>Possible Map Seeds</h3>
+                        <h3>可能的地图种子</h3>
                         <div class="seed-count" id="seed-count">0</div>
                     </div>
 
@@ -106,8 +106,8 @@
                         <div id="selection-overlay" class="selection-overlay">
                             <div class="overlay-message">
                                 <i class="fas fa-map-marked-alt"></i>
-                                <p>Select Nightlord and Map above to begin</p>
-                                <small>Choose your settings to start seed recognition</small>
+                                <p>请先在上方选择夜王与地图以开始</p>
+                                <small>选择设置后开始识别地图种子</small>
                             </div>
                         </div>
                     </div>
@@ -121,36 +121,36 @@
     <div id="help-modal" class="modal" style="display: none;">
         <div class="modal-content">
             <div class="modal-header">
-                <h3><i class="fas fa-question-circle"></i> Help & Tips</h3>
+                <h3><i class="fas fa-question-circle"></i> 帮助与技巧</h3>
                 <button class="close-btn" id="close-help">&times;</button>
             </div>
             <div class="modal-body">
                 <div class="help-section">
-                    <h4><i class="fas fa-gamepad"></i> How to Use This Tool</h4>
-                    <p>This tool helps you identify your Nightreign map seed by comparing the locations of Churches and Sorcerer's Rises on your map.</p>
+                    <h4><i class="fas fa-gamepad"></i> 使用说明</h4>
+                    <p>此工具通过对比地图上教堂与法师塔的位置，帮助你识别《夜之降临》地图种子。</p>
                     
-                    <h4><i class="fas fa-list-ol"></i> Step by Step Guide</h4>
+                    <h4><i class="fas fa-list-ol"></i> 逐步指南</h4>
                     <ol>
-                        <li>Select your <strong>Nightlord</strong> from the available options</li>
-                        <li>Choose your <strong>Map/Shifting Earth</strong> type</li>
-                        <li>Look at the highlighted orange dots on the map - these are potential POI locations</li>
-                        <li>Click on the dots to mark what you see in your actual game:
+                        <li>从可选项中选择你的<strong>夜王</strong></li>
+                        <li>选择你的<strong>地图/变动地貌</strong>类型</li>
+                        <li>查看地图上高亮的橙色点——这些是可能的兴趣点位置</li>
+                        <li>点击这些点，标记你在游戏中实际看到的内容：
                             <ul>
-                                <li><strong>Left click</strong> = Church</li>
-                                <li><strong>Right click</strong> = Choose Sorcerer's Rise or Other POI</li>
+                                <li><strong>左键</strong> = 教堂</li>
+                                <li><strong>右键</strong> = 选择 法师塔 或 其他兴趣点</li>
                             </ul>
                         </li>
-                        <li>As you mark locations, the possible seeds will be filtered</li>
-                        <li>When only one seed matches, you'll see the full seed details and map image</li>
+                        <li>随着你逐步标记，可能的种子会被筛减</li>
+                        <li>当只剩一个匹配时，你将看到完整的种子详情与地图图片</li>
                     </ol>
 
-                    <h4><i class="fas fa-lightbulb"></i> Tips for Best Results</h4>
+                    <h4><i class="fas fa-lightbulb"></i> 提示与建议</h4>
                     <ul>
-                        <li>Mark as many POIs as you can see clearly in your game</li>
-                        <li>Use right-click menu to select between Sorcerer's Rise, Village, or Other POI</li>
-                        <li>If you get no results, try resetting and being more precise with your clicks</li>
-                        <li>The seed image shows the exact layout for verification</li>
-                        <li>Select both Nightlord and Map before marking POIs</li>
+                        <li>尽量标记你在游戏中能清晰看到的尽可能多的兴趣点</li>
+                        <li>通过右键菜单选择 法师塔、商人村落 或 其他兴趣点</li>
+                        <li>若无结果，请尝试重置并更精确地点击</li>
+                        <li>种子图片会展示精确布局用于核对</li>
+                        <li>在标记兴趣点之前，先选择夜王与地图</li>
                     </ul>
                 </div>
             </div>
@@ -161,24 +161,24 @@
     <div id="poi-context-menu" class="context-menu" style="display: none;">
         <div class="context-menu-item" data-type="mage">
             <img src="assets/images/mage-tower.png" style="width: 16px; height: 16px; margin-right: 8px; vertical-align: middle;">
-            Sorcerer's Rise
+            法师塔
         </div>
         <div class="context-menu-item" data-type="village">
             <img src="assets/images/village.png" style="width: 16px; height: 16px; margin-right: 8px; vertical-align: middle;">
-            Village
+            商人村落
         </div>
         <div class="context-menu-item" data-type="other">
             <i class="fas fa-question-circle"></i>
-            Other POI
+            其他兴趣点
         </div>
     </div>
 
     <footer style="text-align: center; padding: 20px; color: #6c757d; font-size: 14px; border-top: 1px solid #e0e0e0; margin-top: 40px;">
         <p>
             <i class="fab fa-github"></i> 
-            Open Source Project - 
+            开源项目 - 
             <a href="https://github.com/thanosapollo/nightreign-mapseed-recogniser" target="_blank" style="color: #007bff; text-decoration: none;">
-                View Source Code on GitHub
+                在 GitHub 查看源码
             </a>
         </p>
     </footer>
