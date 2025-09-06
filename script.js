@@ -141,6 +141,13 @@ class NightreignMapRecogniser {
         document.getElementById('reset-map-btn').addEventListener('click', () => {
             this.resetMap();
         });
+        // Clear all POIs button
+        const clearPoiBtn = document.getElementById('clear-poi-btn');
+        if (clearPoiBtn) {
+            clearPoiBtn.addEventListener('click', () => {
+                this.clearAllPOISelections();
+            });
+        }
         // Toggle POI filter button
         const toggleBtn = document.getElementById('toggle-poi-filter-btn');
         if (toggleBtn) {
@@ -642,6 +649,41 @@ class NightreignMapRecogniser {
         });
         
         console.log(`Drew map with ${this.currentPOIs.length} POIs for ${this.chosenMap}`);
+    }
+
+    // Clear all selected POIs when in POI filter mode, keep nightlord/map
+    clearAllPOISelections() {
+        // Only works in POI filter mode
+        if (!this.poiFilterEnabled) {
+            // alert('仅在【兴趣点筛选模式】开启时可移除兴趣点');
+            return;
+        }
+        // Require nightlord and map to be selected
+        if (!this.chosenNightlord || !this.chosenMap) {
+            // alert('请先选择【夜王】与【特殊地形】');
+            return;
+        }
+
+        // Reinitialize POI states (equivalent to clearing current selections)
+        this.poiStates = this.initializePOIStates();
+        this.currentRightClickedPOI = null;
+        this.hideContextMenu();
+
+        // Redraw map and update filtering results
+        if (this.canvas && this.ctx) {
+            this.drawMap(this.images.maps[this.chosenMap]);
+        }
+        // Return to POI页面: show map canvas, hide seed image, and refresh list
+        const canvas = document.getElementById('map-canvas');
+        const seedImageContainer = document.getElementById('seed-image-container');
+        if (canvas && seedImageContainer) {
+            canvas.style.display = 'block';
+            seedImageContainer.style.display = 'none';
+        }
+        this.showingSeedImage = false;
+
+        // Update seeds list based on cleared POIs (still filtered by nightlord/map)
+        this.updateSeedFiltering();
     }
 
     drawPOI(poi, state) {

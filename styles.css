@@ -397,7 +397,7 @@ body {
 .header-actions {
     padding-bottom: 10px;
     display: flex;
-    gap: 10px;
+    gap: 8px;
     align-items: center;
     margin-right: 10px;
 }
@@ -437,7 +437,7 @@ body {
     background: linear-gradient(45deg, #a11d0e, #9b281b);
     color: white;
     border: none;
-    border-radius: 25px;
+    border-radius: 10px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -457,7 +457,7 @@ body {
 .toggle-poi-btn {
     padding: 10px 16px;
     border: none;
-    border-radius: 25px;
+    border-radius: 10px;
     font-weight: 700;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
@@ -475,7 +475,7 @@ body {
 .toggle-poi-btn:not(.active):hover {
     transform: translateY(-2px);
     background: linear-gradient(45deg, #7a8288, #9aa0a6); /* 关闭态：灰色 hover */
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+    /* box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35); */
 }
 
 .toggle-poi-btn.active:hover {
@@ -491,6 +491,17 @@ body {
 
 .reset-btn i {
     margin-right: 8px;
+}
+
+/* Blue styling for the "移除所有兴趣点" button */
+#clear-poi-btn {
+    background: linear-gradient(45deg, #3498db, #2980b9);
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+}
+
+#clear-poi-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
 }
 
 .cv-btn {
@@ -1097,7 +1108,7 @@ body {
 .possible-seeds-card .description {
     color: #4fc3f7;
     margin-bottom: 15px;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
 }
 
 .possible-seeds-grid {
