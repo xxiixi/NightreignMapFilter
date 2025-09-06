@@ -3,26 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elden Ring Nightreign: Map Seed Recogniser</title>
+    <title>黑夜君临地图筛选</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#1a1a2e">
-    <meta name="description" content="Interactive tool to identify Elden Ring Nightreign map seeds based on point-of-interest locations">
-    <meta name="keywords" content="Elden Ring, Nightreign, map, seed, recogniser, POI, gaming, tool">
+    <meta name="description" content="基于兴趣点位置识别《艾尔登法环:黑夜君临》地图种子的交互式工具">
+    <meta name="keywords" content="艾尔登法环, 黑夜君临, 地图, 种子, 识别, 兴趣点, 工具">
     <link rel="icon" href="favicon.ico">
+    <!-- Vercount PV/UV 统计脚本 -->
+    <script defer src="https://events.vercount.one/js"></script>
 </head>
 <body>
     <div class="container">
         <header class="header">
+            <div class="button-row">
+                <button id="help-btn" class="help-btn tooltip" aria-label="使用教程" data-tooltip="点击查看使用教程">
+                    <img src="favicon.ico" alt="使用教程" class="help-icon">
+                </button>
+            </div>
+            <!-- ======================= -->
+            <div class="top-actions">
+                <button id="action-stats" class="action-btn" title="查看访问量">
+                    <img src="assets/icons/fire.svg" alt="访问量">
+                </button>
+                <button id="action-repo" class="action-btn" title="查看项目">
+                    <img src="assets/icons/github.svg" alt="查看项目">
+                </button>
+                <button id="action-english-web" class="action-btn" title="查看英文版原网站">
+                    <img src="assets/icons/box-arrow-in-up-right.svg" alt="查看英文版原网站">
+                </button>
+                <button id="action-map-source" class="action-btn" title="地图数据来源">
+                    <img src="assets/icons/pin-map-fill.svg" alt="地图数据来源">
+                </button>
+                <button id="action-tbd" class="action-btn" title="待定">
+                    <i class="fas fa-ellipsis"></i>
+                </button>
+                <div id="stats-popover" class="actions-popover" style="display: none;">
+                    <div class="popover-title">
+                        🔥 访问量统计
+                    </div>
+                    <div class="popover-body">
+                        本站总访客数: <span id="vercount_value_site_uv">Loading</span> 人<br>
+                        本站总访问量: <span id="vercount_value_site_pv">Loading</span> 次<br>
+                        <div class="popover-meta" style="border-top: 1px solid #4fc3f7; padding-top: 8px;">统计服务：Vercount</div>
+                    </div>
+                </div>
+                <div id="repo-popover" class="actions-popover" style="display: none;">
+                    <div class="popover-inner">
+                        <div class="popover-title">
+                            🌟项目信息
+                        </div>
+                        <div class="popover-body">
+                            本站GitHub仓库
+                            <a
+                            href="https://github.com/xxiixi/NightreignMapseedFilter"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="footer-link"
+                        >
+                            点击跳转
+                        </a>
+                        </div>
+                        <div class="popover-body">
+                            提出issue
+                            <a
+                            href="https://github.com/xxiixi/NightreignMapseedFilter/issues"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="footer-link"
+                        >
+                            点击跳转
+                        </a>
+                        </div>
+                        <div class="popover-meta" style="border-top: 1px solid #4fc3f7; padding-top: 8px;">NightreignMapseedFilter</div>
+                    </div>
+                </div>
+                <div id="english-popover" class="actions-popover" style="display: none;">
+                    <div class="popover-inner">
+                        <div class="popover-title">
+                            🔗 英文版原网站
+                        </div>
+                        <div class="popover-body">
+                            <a href="https://thanosapollo.github.io/nightreign-mapseed-recogniser/" target="_blank" rel="noopener noreferrer" class="footer-link">点击查看英文版原网站</a>
+                        </div>
+                        <div class="popover-meta" style="border-top: 1px solid #4fc3f7; padding-top: 8px;"> <i class="fab fa-github"></i> @thanosapollo</div>
+                    </div>
+                </div>
+                <div id="map-source-popover" class="actions-popover" style="display: none;">
+                    <div class="popover-inner">
+                        <div class="popover-title">
+                            📒 地图数据来源
+                        </div>
+                        <div class="popover-body">
+                            <a href="https://www.bilibili.com/video/BV1xGe1zrEED/?spm_id_from=333.337.search-card.all.click&vd_source=37640654dbdd4ab80b471a16ac6da3c0" target="_blank" rel="noopener noreferrer" class="footer-link">黑夜君临-地图筛选器</a>
+                        </div>
+                        <div class="popover-meta" style="border-top: 1px solid #4fc3f7; padding-top: 8px; display: flex; align-items: center; justify-content: center;">
+                            <img src="assets/icons/bilibili.svg" style="width: 16px; height: 16px;filter: brightness(0) invert(1);"> @Fuwish
+                        </div>
+                    </div>
+                </div>
+                <div id="tbd-popover" class="actions-popover" style="display: none;">
+                    <div class="popover-inner">
+                        <div class="popover-title">🧪 功能预览</div>
+                        <div class="popover-body">此功能正在开发中，敬请期待</div>
+                        <div class="popover-body">
+                            <a href="https://github.com/xxiixi/NightreignMapseedFilter/issues" target="_blank" rel="noopener noreferrer" class="footer-link">提交 issue / 想法</a>
+                        </div>
+                        <div class="popover-meta" style="border-top: 1px solid #4fc3f7; padding-top: 8px;">NightreignMapseedFilter</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ======================= -->
             <h1 class="title">
                 <i class="fas fa-map"></i>
-                Elden Ring Nightreign: Map Seed Recogniser
+                黑夜君临地图种子筛选器
             </h1>
             <div class="subtitle">
-                <p class="version">Version 1.1</p>
-                <span id="cv-status" style="font-size: 11px; color: #6c757d; margin-left: 15px;"></span>
+                <p class="version">Version 1.0 | Nightreign version 1.01.3</p>
+                <span id="cv-status" style="font-size: 12px;"></span>
             </div>
         </header>
 
@@ -31,83 +132,79 @@
             <div id="loading-section" class="section" style="display: block;">
                 <div class="loading-indicator">
                     <i class="fas fa-spinner fa-spin"></i>
-                    <p>Initializing map data, please wait...</p>
+                    <p>初始化地图数据，请稍候...</p>
                 </div>
             </div>
 
             <div id="selection-section" class="section" style="display: none;">
                 <div class="selection-grid">
                     <div class="selection-card">
-                        <h3>Choose Your Nightlord</h3>
-                        <p class="current-selection">Currently chosen: <span id="chosen-nightlord">NONE</span></p>
+                        <h3>选择夜王</h3>
+                        <p class="current-selection">当前选择: <span id="chosen-nightlord">NONE</span></p>
                         <div class="button-grid">
-                            <button class="nightlord-btn" data-nightlord="Gladius">Gladius</button>
-                            <button class="nightlord-btn" data-nightlord="Adel">Adel</button>
-                            <button class="nightlord-btn" data-nightlord="Gnoster">Gnoster</button>
-                            <button class="nightlord-btn" data-nightlord="Maris">Maris</button>
-                            <button class="nightlord-btn" data-nightlord="Libra">Libra</button>
-                            <button class="nightlord-btn" data-nightlord="Fulghor">Fulghor</button>
-                            <button class="nightlord-btn" data-nightlord="Caligo">Caligo</button>
-                            <button class="nightlord-btn" data-nightlord="Heolstor">Heolstor</button>
-                        </div>
-                        <div class="unknown-nightlord-container">
-                            <button class="nightlord-btn unknown-nightlord" data-nightlord="Unknown">Unknown (Deep of Night)</button>
+                            <button class="nightlord-btn" data-nightlord="Gladius">"黑夜野兽"格拉狄乌斯</button>
+                            <button class="nightlord-btn" data-nightlord="Adel">"黑夜之爵"艾德雷</button>
+                            <button class="nightlord-btn" data-nightlord="Gnoster">"黑夜之智"格诺斯塔</button>
+                            <button class="nightlord-btn" data-nightlord="Maris">"深海黑夜"玛丽斯</button>
+                            <button class="nightlord-btn" data-nightlord="Libra">"黑夜之魔"利普拉</button>
+                            <button class="nightlord-btn" data-nightlord="Fulghor">"黑夜光骑士"弗格尔</button>
+                            <button class="nightlord-btn" data-nightlord="Caligo">"黑夜雾霾"卡莉果</button>
+                            <button class="nightlord-btn" data-nightlord="Heolstor">"黑夜王"布德奇冥</button>
                         </div>
                     </div>
 
                     <div class="selection-card">
-                        <h3>Choose Your Map / Shifting Earth</h3>
-                        <p class="current-selection">Currently chosen: <span id="chosen-map">NONE</span></p>
+                        <h3>选择特殊地形</h3>
+                        <p class="current-selection">当前选择: <span id="chosen-map">NONE</span></p>
                         <div class="button-grid">
-                            <button class="map-btn" data-map="Default">Default</button>
-                            <button class="map-btn" data-map="Mountaintop">Mountaintop</button>
-                            <button class="map-btn" data-map="Crater">Crater</button>
-                            <button class="map-btn" data-map="Rotted Woods">Rotted Woods</button>
-                            <button class="map-btn" data-map="Noklateo">Noklateo</button>
+                            <button class="map-btn" data-map="Default">默认</button>
+                            <button class="map-btn" data-map="Mountaintop">山顶</button>
+                            <button class="map-btn" data-map="Crater">火山口</button>
+                            <button class="map-btn" data-map="Rotted Woods">腐败森林</button>
+                            <button class="map-btn" data-map="Noklateo">隐城</button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div id="interaction-section" class="section" style="display: none;">
-                <div class="instructions-card">
-                    <h3><i class="fas fa-info-circle"></i> How to Use</h3>
-                    <div class="instruction-grid">
-                        <div class="instruction-item">
-                            <i class="fas fa-mouse-pointer"></i>
-                            <span><strong>Left click</strong> on orange dots to place Church</span>
-                        </div>
-                        <div class="instruction-item">
-                            <i class="fas fa-hand-pointer"></i>
-                            <span><strong>Right click</strong> to choose Sorcerer's Rise or Village</span>
-                        </div>
-                    </div>
-                    <div class="button-row">
-                        <button id="reset-map-btn" class="reset-btn">
-                            <i class="fas fa-undo"></i>
-                            Reset Map & Remove All Markers
-                        </button>
-                        
-                        <button id="help-btn" class="help-btn">
-                            <i class="fas fa-question-circle"></i>
-                            Help & Tips
-                        </button>
-                    </div>
+            <div class="section">
+            <!-- ======================= -->
+            
+            <h3 class="instructions-card-title"><i class="fas fa-layer-group"></i> 地图展示</h3>
+
+            <div class="instructions-card">
+                <div id="interaction-section"  style="display: none;">
+
                 </div>
             </div>
 
-            <div id="results-section" class="section" style="display: none;">
+            <!-- ======================= -->
+            <div id="results-section"  style="display: none;">
                 <div class="results-grid">
                     <div class="left-panel">
+                        <div class="instruction-grid">
+                            <div class="instruction-item">
+                                <i class="fas fa-mouse-pointer"></i>
+                                <span>左键标点</span>
+                            </div>
+                            <div class="instruction-item">
+                                <i class="fas fa-hand-pointer"></i>
+                                <span>右键删除</span>
+                            </div>
+                        </div>
                         <div class="seed-counter">
-                            <h3>Possible Map Seeds</h3>
+                            <h3>可能的地图种子</h3>
                             <div class="seed-count" id="seed-count">0</div>
                         </div>
+                        <button id="reset-map-btn" class="reset-btn">
+                            <i class="fas fa-undo"></i>
+                            重置地图 & 移除所有标点
+                        </button>
 
                         <div id="possible-seeds-section" class="possible-seeds-section" style="display: none;">
                             <div class="possible-seeds-card">
-                                <h4><i class="fas fa-list"></i> Select Seed to View</h4>
-                                <p class="description">Click on any seed or use arrow keys:</p>
+                                <h4><i class="fas fa-list"></i> 查看不同地图种子</h4>
+                                <p class="description">支持键盘左右键切换相邻种子</p>
                                 <div id="possible-seeds-grid" class="possible-seeds-grid">
                                 </div>
                             </div>
@@ -120,13 +217,13 @@
                         <div id="selection-overlay" class="selection-overlay">
                             <div class="overlay-message">
                                 <i class="fas fa-map-marked-alt"></i>
-                                <p>Select Nightlord and Map above to begin</p>
-                                <small>Choose your settings to start seed recognition</small>
+                                <p>请先在上方选择夜王与地图以开始</p>
+                                <small>选择设置后开始识别地图种子</small>
                             </div>
                         </div>
                     </div>
                 </div>
-
+            </div>
             </div>
         </main>
     </div>
@@ -135,36 +232,36 @@
     <div id="help-modal" class="modal" style="display: none;">
         <div class="modal-content">
             <div class="modal-header">
-                <h3><i class="fas fa-question-circle"></i> Help & Tips</h3>
+                <h3><i class="fas fa-question-circle"></i> 帮助与技巧</h3>
                 <button class="close-btn" id="close-help">&times;</button>
             </div>
             <div class="modal-body">
                 <div class="help-section">
-                    <h4><i class="fas fa-gamepad"></i> How to Use This Tool</h4>
-                    <p>This tool helps you identify your Nightreign map seed by comparing the locations of Churches and Sorcerer's Rises on your map.</p>
+                    <h4><i class="fas fa-gamepad"></i> 使用说明</h4>
+                    <p>此工具通过对比地图上教堂与法师塔的位置，帮助你识别《黑夜君临》地图种子。</p>
                     
-                    <h4><i class="fas fa-list-ol"></i> Step by Step Guide</h4>
+                    <h4><i class="fas fa-list-ol"></i> 逐步指南</h4>
                     <ol>
-                        <li>Select your <strong>Nightlord</strong> from the available options</li>
-                        <li>Choose your <strong>Map/Shifting Earth</strong> type</li>
-                        <li>Look at the highlighted orange dots on the map - these are potential POI locations</li>
-                        <li>Click on the dots to mark what you see in your actual game:
+                        <li>从可选项中选择你的<strong>夜王</strong></li>
+                        <li>选择你的<strong>地图/变动地貌</strong>类型</li>
+                        <li>查看地图上高亮的橙色点——这些是可能的兴趣点位置</li>
+                        <li>点击这些点，标记你在游戏中实际看到的内容：
                             <ul>
-                                <li><strong>Left click</strong> = Church</li>
-                                <li><strong>Right click</strong> = Choose Sorcerer's Rise or Other POI</li>
+                                <li><strong>左键</strong> = 教堂</li>
+                                <li><strong>右键</strong> = 选择 法师塔 或 其他兴趣点</li>
                             </ul>
                         </li>
-                        <li>As you mark locations, the possible seeds will be filtered</li>
-                        <li>When only one seed matches, you'll see the full seed details and map image</li>
+                        <li>随着你逐步标记，可能的种子会被筛减</li>
+                        <li>当只剩一个匹配时，你将看到完整的种子详情与地图图片</li>
                     </ol>
 
-                    <h4><i class="fas fa-lightbulb"></i> Tips for Best Results</h4>
+                    <h4><i class="fas fa-lightbulb"></i> 提示与建议</h4>
                     <ul>
-                        <li>Mark as many POIs as you can see clearly in your game</li>
-                        <li>Use right-click menu to select between Sorcerer's Rise, Village, or Other POI</li>
-                        <li>If you get no results, try resetting and being more precise with your clicks</li>
-                        <li>The seed image shows the exact layout for verification</li>
-                        <li>Select both Nightlord and Map before marking POIs</li>
+                        <li>尽量标记你在游戏中能清晰看到的尽可能多的兴趣点</li>
+                        <li>通过右键菜单选择 法师塔、商人村落 或 其他兴趣点</li>
+                        <li>若无结果，请尝试重置并更精确地点击</li>
+                        <li>种子图片会展示精确布局用于核对</li>
+                        <li>在标记兴趣点之前，先选择夜王与地图</li>
                     </ul>
                 </div>
             </div>
@@ -175,28 +272,179 @@
     <div id="poi-context-menu" class="context-menu" style="display: none;">
         <div class="context-menu-item" data-type="mage">
             <img src="assets/images/mage-tower.png" style="width: 16px; height: 16px; margin-right: 8px; vertical-align: middle;">
-            Sorcerer's Rise
+            法师塔
         </div>
         <div class="context-menu-item" data-type="village">
             <img src="assets/images/village.png" style="width: 16px; height: 16px; margin-right: 8px; vertical-align: middle;">
-            Village
+            商人村落
         </div>
         <div class="context-menu-item" data-type="other">
             <i class="fas fa-question-circle"></i>
-            Other POI
+            其他兴趣点
         </div>
     </div>
 
-    <footer style="text-align: center; padding: 20px; color: #6c757d; font-size: 14px; border-top: 1px solid #e0e0e0; margin-top: 40px;">
-        <p>
-            <i class="fab fa-github"></i> 
-            Open Source Project - 
-            <a href="https://github.com/thanosapollo/nightreign-mapseed-recogniser" target="_blank" style="color: #007bff; text-decoration: none;">
-                View Source Code on GitHub
-            </a>
+    <footer class="footer">
+        <p class="footer-text">
+            <i class="fa-regular fa-heart" style="margin-right: 4px; color: #ff4d4f;"></i>
+            Modified & Localized by <a class="footer-link" href="https://github.com/xxiixi" target="_blank">Cecilia</a> ｜
+            <i class="fab fa-github" style="margin: 0 4px 0 8px;"></i>
+            Forked from <a class="footer-link" href="https://github.com/thanosapollo/nightreign-mapseed-recogniser" target="_blank">thanosapollo/nightreign-mapseed-recogniser</a>
+        </p>
+        <p class="footer-text">
+            © <span id="current-year">2025</span> NightreignMapseedFilter · All Rights Reserved · Last updated: <span id="last-updated">September 5, 2025</span>
         </p>
     </footer>
 
+    <script>
+        (function () {
+            try {
+                var yearEl = document.getElementById('current-year');
+                var lastUpdatedEl = document.getElementById('last-updated');
+                var statsBtn = document.getElementById('action-stats');
+                var tbdBtn = document.getElementById('action-tbd');
+                var helpBtn = document.getElementById('help-btn');
+                var statsPopover = document.getElementById('stats-popover');
+                var repoBtn = document.getElementById('action-repo');
+                var repoPopover = document.getElementById('repo-popover');
+                var englishBtn = document.getElementById('action-english-web');
+                var englishPopover = document.getElementById('english-popover');
+                var mapSourceBtn = document.getElementById('action-map-source');
+                var mapSourcePopover = document.getElementById('map-source-popover');
+                var tbdPopover = document.getElementById('tbd-popover');
+                var now = new Date();
+                if (yearEl) {
+                    yearEl.textContent = String(now.getFullYear());
+                }
+                var parsed = new Date(document.lastModified);
+                if (!isNaN(parsed.getTime()) && lastUpdatedEl) {
+                    var formatted = parsed.toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    });
+                    lastUpdatedEl.textContent = formatted;
+                }
+
+                // 简易交互：访问量弹层、帮助弹窗、待定占位
+                if (statsBtn && statsPopover) {
+                    statsBtn.addEventListener('click', function (e) {
+                        e.stopPropagation();
+                        var willShow = statsPopover.style.display === 'none';
+                        // 互斥：开启当前前先关闭对方
+                        if (repoPopover) repoPopover.style.display = 'none';
+                        if (englishPopover) englishPopover.style.display = 'none';
+                        if (mapSourcePopover) mapSourcePopover.style.display = 'none';
+                        if (tbdPopover) tbdPopover.style.display = 'none';
+                        statsPopover.style.display = willShow ? 'block' : 'none';
+                    });
+                    document.addEventListener('click', function () {
+                        statsPopover.style.display = 'none';
+                        if (repoPopover) repoPopover.style.display = 'none';
+                        if (englishPopover) englishPopover.style.display = 'none';
+                        if (mapSourcePopover) mapSourcePopover.style.display = 'none';
+                        if (tbdPopover) tbdPopover.style.display = 'none';
+                    });
+                    statsPopover.addEventListener('click', function (e) { e.stopPropagation(); });
+                }
+
+                if (helpBtn) {
+                    helpBtn.addEventListener('click', function () {
+                        var helpModal = document.getElementById('help-modal');
+                        if (helpModal) helpModal.style.display = 'flex';
+                    });
+                }
+
+                // 查看源码：先弹出 Popover，再点击链接跳转
+                if (repoBtn && repoPopover) {
+                    repoBtn.addEventListener('click', function (e) {
+                        e.stopPropagation();
+                        var willShow = repoPopover.style.display === 'none';
+                        // 互斥：开启当前前先关闭对方
+                        if (statsPopover) statsPopover.style.display = 'none';
+                        if (englishPopover) englishPopover.style.display = 'none';
+                        if (mapSourcePopover) mapSourcePopover.style.display = 'none';
+                        if (tbdPopover) tbdPopover.style.display = 'none';
+                        repoPopover.style.display = willShow ? 'block' : 'none';
+                    });
+                    document.addEventListener('click', function () {
+                        repoPopover.style.display = 'none';
+                        if (statsPopover) statsPopover.style.display = 'none';
+                        if (englishPopover) englishPopover.style.display = 'none';
+                        if (mapSourcePopover) mapSourcePopover.style.display = 'none';
+                        if (tbdPopover) tbdPopover.style.display = 'none';
+                    });
+                    repoPopover.addEventListener('click', function (e) { e.stopPropagation(); });
+                }
+
+                // 英文站点：弹出 Popover，互斥显示
+                if (englishBtn && englishPopover) {
+                    englishBtn.addEventListener('click', function (e) {
+                        e.stopPropagation();
+                        var willShow = englishPopover.style.display === 'none';
+                        // 互斥：开启当前前先关闭对方
+                        if (statsPopover) statsPopover.style.display = 'none';
+                        if (repoPopover) repoPopover.style.display = 'none';
+                        if (mapSourcePopover) mapSourcePopover.style.display = 'none';
+                        if (tbdPopover) tbdPopover.style.display = 'none';
+                        englishPopover.style.display = willShow ? 'block' : 'none';
+                    });
+                    document.addEventListener('click', function () {
+                        englishPopover.style.display = 'none';
+                        if (statsPopover) statsPopover.style.display = 'none';
+                        if (repoPopover) repoPopover.style.display = 'none';
+                        if (mapSourcePopover) mapSourcePopover.style.display = 'none';
+                        if (tbdPopover) tbdPopover.style.display = 'none';
+                    });
+                    englishPopover.addEventListener('click', function (e) { e.stopPropagation(); });
+                }
+                if (mapSourceBtn && mapSourcePopover) {
+                    mapSourceBtn.addEventListener('click', function (e) {
+                        e.stopPropagation();
+                        var willShow = mapSourcePopover.style.display === 'none';
+                        // 互斥：开启当前前先关闭对方
+                        if (statsPopover) statsPopover.style.display = 'none';
+                        if (repoPopover) repoPopover.style.display = 'none';
+                        if (englishPopover) englishPopover.style.display = 'none';
+                        if (tbdPopover) tbdPopover.style.display = 'none';
+                        mapSourcePopover.style.display = willShow ? 'block' : 'none';
+                    });
+                    document.addEventListener('click', function () {
+                        mapSourcePopover.style.display = 'none';
+                        if (statsPopover) statsPopover.style.display = 'none';
+                        if (repoPopover) repoPopover.style.display = 'none';
+                        if (englishPopover) englishPopover.style.display = 'none';
+                        if (tbdPopover) tbdPopover.style.display = 'none';
+                    });
+                }
+                if (mapSourcePopover) {
+                    mapSourcePopover.addEventListener('click', function (e) { e.stopPropagation(); });
+                }
+                if (tbdBtn && tbdPopover) {
+                    tbdBtn.addEventListener('click', function (e) {
+                        e.stopPropagation();
+                        var willShow = tbdPopover.style.display === 'none';
+                        // 互斥：开启当前前先关闭对方
+                        if (statsPopover) statsPopover.style.display = 'none';
+                        if (repoPopover) repoPopover.style.display = 'none';
+                        if (englishPopover) englishPopover.style.display = 'none';
+                        if (mapSourcePopover) mapSourcePopover.style.display = 'none';
+                        tbdPopover.style.display = willShow ? 'block' : 'none';
+                    });
+                    document.addEventListener('click', function () {
+                        tbdPopover.style.display = 'none';
+                        if (statsPopover) statsPopover.style.display = 'none';
+                        if (repoPopover) repoPopover.style.display = 'none';
+                        if (englishPopover) englishPopover.style.display = 'none';
+                        if (mapSourcePopover) mapSourcePopover.style.display = 'none';
+                    });
+                    tbdPopover.addEventListener('click', function (e) { e.stopPropagation(); });
+                }
+            } catch (error) {
+                console.error('Error initializing popovers:', error);
+            }
+        })();
+    </script>
     <script src="data.js"></script>
     <script src="script.js"></script>
 </body>
