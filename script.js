@@ -40,6 +40,11 @@ class NightreignMapRecogniser {
         this.contextMenu = null;
         this.currentRightClickedPOI = null;
         
+        // Arrow key navigation for seeds
+        this.currentSeedIndex = -1;
+        this.availableSeeds = [];
+        
+        
         this.init();
     }
 
@@ -132,11 +137,13 @@ class NightreignMapRecogniser {
             }
         });
 
-        // Close modal with Escape key
+        // Close modal with Escape key and handle arrow keys for seed navigation
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 this.hideHelpModal();
                 this.hideContextMenu();
+            } else if (this.availableSeeds.length > 0) {
+                this.handleSeedNavigation(e);
             }
         });
 
@@ -153,9 +160,15 @@ class NightreignMapRecogniser {
 
     async loadInitialData() {
         try {
-            // Load both seed data and classification data
+            // Load both dataset and classification data
+            const hasDataset = await loadDatasetData();
             const hasClassifications = await loadClassificationResults();
-            const seedCount = seedDataMatrix.length;
+            
+            let seedCount = 320; // Default fallback
+            if (hasDataset) {
+                const allSeeds = getAllSeeds();
+                seedCount = allSeeds.length;
+            }
             
             // Update status display
             const statusElement = document.getElementById('cv-status');
@@ -343,6 +356,7 @@ class NightreignMapRecogniser {
             btn.classList.toggle('active', btn.dataset.map === map);
         });
 
+
         // Re-render the map with new POIs
         if (this.canvas && this.ctx) {
             if (this.chosenNightlord) {
@@ -364,6 +378,9 @@ class NightreignMapRecogniser {
     }
 
     updateGameState() {
+        // Hide possible seeds section when changing selections
+        this.hidePossibleSeeds();
+        
         if (this.chosenNightlord && this.chosenMap) {
             // Keep using the original clickable coordinates for user interaction
             this.currentPOIs = POIS_BY_MAP[this.chosenMap] || [];
@@ -655,6 +672,10 @@ class NightreignMapRecogniser {
         this.poiStates = this.initializePOIStates();
         this.showingSeedImage = false;
         
+        // Hide possible seeds section
+        this.hidePossibleSeeds();
+        
+        // Always go back to the interactive map for POI input
         if (this.chosenMap && this.chosenNightlord) {
             this.renderMap();
         } else if (this.chosenMap) {
@@ -662,6 +683,12 @@ class NightreignMapRecogniser {
         } else if (this.currentPOIs.length > 0) {
             this.drawDefaultMapWithImage();
         }
+        
+        // Show the canvas and hide seed image container
+        const canvas = document.getElementById('map-canvas');
+        const seedImageContainer = document.getElementById('seed-image-container');
+        canvas.style.display = 'block';
+        seedImageContainer.style.display = 'none';
         
         this.updateSeedFiltering();
     }
@@ -677,30 +704,14 @@ class NightreignMapRecogniser {
 
     updateSeedCount() {
         if (!this.chosenNightlord && !this.chosenMap) {
-            document.getElementById('seed-count').textContent = '320';
+            const allSeeds = getAllSeeds();
+            document.getElementById('seed-count').textContent = allSeeds.length || '320';
             return;
         }
 
-        // Use actual seed data to count seeds
-        let count = 0;
-        if (this.chosenNightlord && this.chosenMap) {
-            // Both selected - count actual seeds with this combination
-            count = seedDataMatrix.filter(row => 
-                row[1] === this.chosenNightlord && row[2] === this.chosenMap
-            ).length;
-        } else if (this.chosenNightlord) {
-            // Only nightlord selected - count all seeds for this nightlord
-            count = seedDataMatrix.filter(row => 
-                row[1] === this.chosenNightlord
-            ).length;
-        } else if (this.chosenMap) {
-            // Only map selected - count all seeds for this map type
-            count = seedDataMatrix.filter(row => 
-                row[2] === this.chosenMap
-            ).length;
-        }
-
-        this.updateSeedCountDisplay(count);
+        // Use new dataset functions to count seeds
+        const filteredSeeds = getFilteredSeeds(this.chosenNightlord, this.chosenMap);
+        this.updateSeedCountDisplay(filteredSeeds.length);
     }
 
     updateSeedFiltering() {
@@ -710,16 +721,19 @@ class NightreignMapRecogniser {
             return;
         }
 
-        // Filter seeds by nightlord and map
-        const possibleSeeds = seedDataMatrix.filter(row => {
-            return row[1] === this.chosenNightlord && row[2] === this.chosenMap;
-        });
+        // Handle "Unknown" nightlord case
+        if (this.chosenNightlord === 'Unknown') {
+            this.handleUnknownNightlord();
+            return;
+        }
 
+        // Filter seeds by nightlord and map using new dataset functions
+        const possibleSeeds = getFilteredSeeds(this.chosenNightlord, this.chosenMap);
         console.log(`Found ${possibleSeeds.length} seeds for ${this.chosenNightlord} + ${this.chosenMap}`);
 
         // Filter by POI states using coordinate-based matching
-        const filteredSeeds = possibleSeeds.filter(row => {
-            const seedNum = row[0];
+        const filteredSeeds = possibleSeeds.filter(seed => {
+            const seedNum = seed.seedNumber;
             console.log(`\n🔍 Checking Seed ${seedNum}:`);
             
             for (const poi of this.currentPOIs) {
@@ -734,7 +748,7 @@ class NightreignMapRecogniser {
                 console.log(`  POI ${poi.id} at (${poi.x}, ${poi.y}): User marked as ${userState.toUpperCase()}`);
                 
                 // Find what POI type exists at this coordinate in the real seed data
-                const realPOIType = this.findRealPOITypeAtCoordinate(seedNum, poi.x, poi.y);
+                const realPOIType = getPOITypeAtCoordinate(seedNum, poi.x, poi.y);
                 console.log(`    Real data shows: ${realPOIType || 'NOTHING'} at this location`);
                 
                 // If user marked as unknown (?), reject if seed has Church/Mage/Village here
@@ -780,16 +794,13 @@ class NightreignMapRecogniser {
 
         console.log(`After POI filtering: ${filteredSeeds.length} seeds remaining`);
 
-
         this.updateSeedCountDisplay(filteredSeeds.length);
 
         if (filteredSeeds.length === 0) {
             this.showNoSeedsFound();
-        } else if (filteredSeeds.length === 1) {
-            this.showSingleSeed(filteredSeeds[0]);
         } else {
-            this.showingSeedImage = false;
-            this.renderMap();
+            // Always show possible seeds (whether 1 or multiple)
+            this.showPossibleSeeds(filteredSeeds);
         }
     }
 
@@ -804,13 +815,6 @@ class NightreignMapRecogniser {
         seedCountElement.innerHTML = '<span style="color: #e74c3c; font-weight: 600;">NO SEED FOUND<br>RESET THE MAP!</span>';
     }
 
-    showSingleSeed(seedRow) {
-        const mapSeed = seedRow[0];
-        this.showingSeedImage = true;
-        
-        // Show seed image
-        this.showSeedImage(mapSeed);
-    }
 
     showSeedImage(mapSeed) {
         const canvas = document.getElementById('map-canvas');
@@ -862,6 +866,192 @@ class NightreignMapRecogniser {
         helpModal.style.display = 'none';
         document.body.style.overflow = '';
     }
+
+    handleUnknownNightlord() {
+        // When Unknown nightlord is selected, filter seeds by POI states only
+        const allSeeds = getFilteredSeeds(null, this.chosenMap); // Get all seeds for this map type
+        console.log(`Unknown nightlord selected. Checking ${allSeeds.length} seeds for ${this.chosenMap}`);
+
+        // Filter by POI states using coordinate-based matching
+        const filteredSeeds = allSeeds.filter(seed => {
+            const seedNum = seed.seedNumber;
+            
+            for (const poi of this.currentPOIs) {
+                const userState = this.poiStates[poi.id];
+                
+                // If user hasn't marked this POI yet, skip it
+                if (userState === 'dot') {
+                    continue;
+                }
+                
+                // Find what POI type exists at this coordinate in the real seed data
+                const realPOIType = getPOITypeAtCoordinate(seedNum, poi.x, poi.y);
+                
+                // Apply the same filtering logic as before
+                if (userState === 'unknown') {
+                    if (realPOIType === 'church' || realPOIType === 'mage' || realPOIType === 'village') {
+                        return false;
+                    }
+                } else if (userState === 'church') {
+                    if (realPOIType !== 'church') {
+                        return false;
+                    }
+                } else if (userState === 'mage') {
+                    if (realPOIType !== 'mage') {
+                        return false;
+                    }
+                } else if (userState === 'village') {
+                    if (realPOIType !== 'village') {
+                        return false;
+                    }
+                } else if (userState === 'other') {
+                    if (realPOIType === 'church' || realPOIType === 'mage' || realPOIType === 'village' || !realPOIType) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        });
+
+        console.log(`After POI filtering for Unknown nightlord: ${filteredSeeds.length} seeds remaining`);
+        
+        this.updateSeedCountDisplay(filteredSeeds.length);
+        
+        if (filteredSeeds.length === 0) {
+            this.showNoSeedsFound();
+        } else {
+            // Always show possible seeds (whether 1 or multiple)
+            this.showPossibleSeeds(filteredSeeds);
+        }
+    }
+
+    showPossibleSeeds(seeds) {
+        this.showingSeedImage = false;
+        this.renderMap();
+        
+        // Store seeds for arrow key navigation
+        this.availableSeeds = seeds.sort((a, b) => a.seedNumber - b.seedNumber);
+        this.currentSeedIndex = -1;
+        
+        // Show the possible seeds section
+        const possibleSeedsSection = document.getElementById('possible-seeds-section');
+        const possibleSeedsGrid = document.getElementById('possible-seeds-grid');
+        
+        possibleSeedsSection.style.display = 'block';
+        
+        // Clear existing seeds
+        possibleSeedsGrid.innerHTML = '';
+        
+        // Add each seed as a clickable item
+        this.availableSeeds.forEach((seed, index) => {
+            const seedItem = document.createElement('div');
+            seedItem.className = 'seed-item';
+            seedItem.textContent = seed.seedNumber;
+            seedItem.addEventListener('click', () => {
+                this.currentSeedIndex = index;
+                this.selectSeedFromGrid(seed.seedNumber);
+            });
+            possibleSeedsGrid.appendChild(seedItem);
+        });
+        
+        if (this.availableSeeds.length > 0) {
+            this.currentSeedIndex = 0;
+            setTimeout(() => {
+                this.highlightCurrentSeed();
+                // Only auto-display if there's exactly 1 seed left (definitive match)
+                // Don't auto-display for multiple seeds - let user browse manually
+                if (this.availableSeeds.length === 1) {
+                    this.selectSeedFromGrid(this.availableSeeds[0].seedNumber);
+                }
+            }, 100);
+        }
+    }
+
+    selectSeedFromGrid(seedNumber) {
+        // Remove previous selections
+        document.querySelectorAll('.seed-item.selected').forEach(item => {
+            item.classList.remove('selected');
+        });
+        
+        // Mark this seed as selected
+        const clickedItem = Array.from(document.querySelectorAll('.seed-item'))
+            .find(item => item.textContent == seedNumber);
+        if (clickedItem) {
+            clickedItem.classList.add('selected');
+        }
+        
+        // Show the seed image
+        this.showSeedImage(seedNumber);
+        this.showingSeedImage = true;
+    }
+
+    hidePossibleSeeds() {
+        const possibleSeedsSection = document.getElementById('possible-seeds-section');
+        possibleSeedsSection.style.display = 'none';
+        
+        // Clear seed navigation state
+        this.availableSeeds = [];
+        this.currentSeedIndex = -1;
+    }
+
+    handleSeedNavigation(e) {
+        if (this.availableSeeds.length === 0) return;
+        
+        let newIndex = this.currentSeedIndex;
+        
+        switch(e.key) {
+            case 'ArrowUp':
+                e.preventDefault();
+                newIndex = Math.max(0, this.currentSeedIndex - 1);
+                break;
+            case 'ArrowDown':
+                e.preventDefault();
+                newIndex = Math.min(this.availableSeeds.length - 1, this.currentSeedIndex + 1);
+                break;
+            case 'ArrowLeft':
+                e.preventDefault();
+                newIndex = Math.max(0, this.currentSeedIndex - 1);
+                break;
+            case 'ArrowRight':
+                e.preventDefault();
+                newIndex = Math.min(this.availableSeeds.length - 1, this.currentSeedIndex + 1);
+                break;
+            case 'Enter':
+                e.preventDefault();
+                if (this.currentSeedIndex >= 0) {
+                    const seed = this.availableSeeds[this.currentSeedIndex];
+                    this.selectSeedFromGrid(seed.seedNumber);
+                }
+                return;
+            default:
+                return;
+        }
+        
+        if (newIndex !== this.currentSeedIndex) {
+            this.currentSeedIndex = newIndex;
+            this.highlightCurrentSeed();
+            
+            // Immediately display the selected seed
+            const selectedSeed = this.availableSeeds[this.currentSeedIndex];
+            this.selectSeedFromGrid(selectedSeed.seedNumber);
+        }
+    }
+
+    highlightCurrentSeed() {
+        // Remove previous highlight
+        document.querySelectorAll('.seed-item.keyboard-selected').forEach(item => {
+            item.classList.remove('keyboard-selected');
+        });
+        
+        if (this.currentSeedIndex >= 0 && this.currentSeedIndex < this.availableSeeds.length) {
+            const seedItems = document.querySelectorAll('.seed-item');
+            if (seedItems[this.currentSeedIndex]) {
+                seedItems[this.currentSeedIndex].classList.add('keyboard-selected');
+                seedItems[this.currentSeedIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+    }
+
 
     findRealPOITypeAtCoordinate(seedNum, clickX, clickY) {
         // Use CV classification data if available
