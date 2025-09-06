@@ -173,16 +173,42 @@
         </div>
     </div>
 
-    <footer style="text-align: center; padding: 20px; color: #6c757d; font-size: 14px; border-top: 1px solid #e0e0e0; margin-top: 40px;">
-        <p>
-            <i class="fab fa-github"></i> 
-            开源项目 - 
-            <a href="https://github.com/thanosapollo/nightreign-mapseed-recogniser" target="_blank" style="color: #007bff; text-decoration: none;">
-                在 GitHub 查看源码
-            </a>
+    <footer class="footer">
+        <p class="footer-text">
+            <i class="fa-regular fa-heart" style="margin-right: 4px; color: #ff4d4f;"></i>
+            Created by Cecilia ｜
+            <i class="fab fa-github" style="margin: 0 4px 0 8px;"></i>
+            Report an issue on 
+            <a class="footer-link" href="https://github.com/xxiixi/NightreignMapseedFilter/issues" target="_blank" rel="noopener noreferrer">NightreignMapseedFilter</a>
+        </p>
+        <p class="footer-text">
+            © <span id="current-year">2025</span> NightreignMapseedFilter · All Rights Reserved · Last updated: <span id="last-updated">September 5, 2025</span>
         </p>
     </footer>
 
+    <script>
+        (function () {
+            try {
+                var yearEl = document.getElementById('current-year');
+                var lastUpdatedEl = document.getElementById('last-updated');
+                var now = new Date();
+                if (yearEl) {
+                    yearEl.textContent = String(now.getFullYear());
+                }
+                var parsed = new Date(document.lastModified);
+                if (!isNaN(parsed.getTime()) && lastUpdatedEl) {
+                    var formatted = parsed.toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    });
+                    lastUpdatedEl.textContent = formatted;
+                }
+            } catch (e) {
+                // ignore
+            }
+        })();
+    </script>
     <script src="data.js"></script>
     <script src="script.js"></script>
 </body>

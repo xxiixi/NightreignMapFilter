@@ -625,6 +625,37 @@ body {
     }
 }
 
+/* ===== Footer styles ===== */
+.footer {
+    text-align: center;
+    background: rgba(0, 0, 0, 0.05);
+    padding: 16px;
+    margin-top: 40px;
+    max-width: 100%;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-text {
+    font-size: 12px;
+    font-weight: 500;
+    padding: 8px 10px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.footer-link {
+    color: #4fc3f7;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s ease-in-out;
+    display: inline-flex;
+    align-items: center;
+}
+
+.footer-link:hover {
+    color: #29b6f6;
+    text-decoration: underline;
+}
+
 .active-poi {
     animation: pulse 2s infinite;
 }
