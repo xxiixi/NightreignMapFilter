@@ -279,13 +279,13 @@
             
             <div class="poi-panel">
                 <div class="instructions">
-                    <h4>Instructions:</h4>
-                    <p><strong>Click on the POI circles</strong> on the image to classify them:</p>
+                    <h4>使用说明：</h4>
+                    <p><strong>点击图中的橙色圆圈</strong>对兴趣点进行标注：</p>
                     <ul style="margin: 8px 0; padding-left: 20px; font-size: 13px;">
-                        <li><strong>Left Click:</strong> Church 🏰</li>
-                        <li><strong>Right Click:</strong> Show menu (Mage Tower 🔮 / Village 🏘️ / Other 📍)</li>  
+                        <li><strong>左键</strong>：教堂 🏰</li>
+                        <li><strong>右键</strong>：弹出菜单（法师塔 🔮 / 商人村落 🏘️ / 其他 📍）</li>  
                     </ul>
-                    <p style="margin: 8px 0; font-size: 13px;">Only the predefined POI locations are clickable (shown as orange circles).</p>
+                    <p style="margin: 8px 0; font-size: 13px;">仅预设兴趣点位置可点击（以橙色圈显示）。</p>
                 </div>
                 
                 <h4>POI Status:</h4>
@@ -294,25 +294,25 @@
                 <div id="mappingStats" style="margin: 15px 0; padding: 10px; background: #f8f9fa; border-radius: 6px; font-size: 12px; color: #495057;"></div>
                 
                 <div class="controls">
-                    <button id="prevBtn" class="button secondary">◀ Previous Seed (B)</button>
-                    <button id="nextBtn" class="button primary">Next Seed (Space/Enter) ▶</button>
-                    <button id="resetBtn" class="button secondary">Reset Current Seed</button>
-                    <button id="saveBtn" class="button primary">Save Progress</button>
-                    <button id="exportBtn" class="button primary">Export Data</button>
-                    <button id="loadBtn" class="button secondary">Load Existing Data</button>
-                    <button id="calibrateBtn" class="button secondary">Calibration: Off</button>
-                    <button id="exportCoordsBtn" class="button primary">Export POI Coordinates</button>
+                    <button id="prevBtn" class="button secondary">◀ 上一个种子（B）</button>
+                    <button id="nextBtn" class="button primary">下一个种子（空格/回车） ▶</button>
+                    <button id="resetBtn" class="button secondary">重置当前种子标注</button>
+                    <button id="saveBtn" class="button primary">保存进度</button>
+                    <button id="exportBtn" class="button primary">导出数据（dataset.json）</button>
+                    <button id="loadBtn" class="button secondary">加载已有数据</button>
+                    <button id="calibrateBtn" class="button secondary">校准模式：关闭</button>
+                    <button id="exportCoordsBtn" class="button primary">导出坐标（当前地图）</button>
                 </div>
                 
                 <div style="margin-top: 10px; font-size: 12px; color: #6c757d; text-align: center;">
-                    <div id="autoSaveStatus">Auto-save: Ready</div>
+                    <div id="autoSaveStatus">自动保存：就绪</div>
                     <div id="progressStatus"></div>
                 </div>
                 
                 <div class="stats" id="stats">
-                    <div>Churches: <span id="churchCount">0</span></div>
-                    <div>Mage Towers: <span id="mageCount">0</span></div>
-                    <div>Villages: <span id="villageCount">0</span></div>
+                    <div>教堂数: <span id="churchCount">0</span></div>
+                    <div>法师塔数: <span id="mageCount">0</span></div>
+                    <div>商人村落数: <span id="villageCount">0</span></div>
                 </div>
             </div>
         </div>
@@ -696,12 +696,12 @@
             });
 
             // Canvas click events for POI classification
-            console.log('Setting up canvas event listeners on canvas:', canvas);
+            console.log('正在绑定画布事件监听器:', canvas);
             
             canvas.addEventListener('click', function(e) {
-                console.log('Canvas click event fired');
-                console.log('Current seed:', currentSeed);
-                console.log('Current nightlord:', currentNightlord);
+                console.log('检测到画布点击事件');
+                console.log('当前种子:', currentSeed);
+                console.log('当前夜王:', currentNightlord);
                 handlePOIClick(e, 'church');
             });
 
@@ -744,7 +744,7 @@
             // Calibration toggle
             document.getElementById('calibrateBtn').addEventListener('click', function() {
                 calibrationMode = !calibrationMode;
-                this.textContent = `Calibration: ${calibrationMode ? 'On' : 'Off'}`;
+                this.textContent = `校准模式：${calibrationMode ? '开启' : '关闭'}`;
             });
 
             // Export updated POI coordinates
@@ -1013,7 +1013,7 @@
             mageItem.className = 'context-menu-item mage';
             mageItem.innerHTML = `
                 <img src="assets/images/mage-tower.png" style="width: 16px; height: 16px; margin-right: 8px; vertical-align: middle;">
-                Mage Tower
+                法师塔
             `;
             mageItem.onclick = () => {
                 if (pendingPOI) {
@@ -1043,7 +1043,7 @@
             villageItem.className = 'context-menu-item village';
             villageItem.innerHTML = `
                 <img src="assets/images/village.png" style="width: 16px; height: 16px; margin-right: 8px; vertical-align: middle;">
-                Village
+                商人村落
             `;
             villageItem.onclick = () => {
                 if (pendingPOI) {
@@ -1436,13 +1436,13 @@
                 };
                 localStorage.setItem('nightreign-poi-extraction-progress', JSON.stringify(saveData));
                 
-                document.getElementById('autoSaveStatus').textContent = 'Auto-save: ✅ Saved';
+                document.getElementById('autoSaveStatus').textContent = '自动保存：✅ 已保存';
                 setTimeout(() => {
-                    document.getElementById('autoSaveStatus').textContent = 'Auto-save: Ready';
+                    document.getElementById('autoSaveStatus').textContent = '自动保存：就绪';
                 }, 2000);
             } catch (error) {
                 console.error('Auto-save failed:', error);
-                document.getElementById('autoSaveStatus').textContent = 'Auto-save: ❌ Failed';
+                document.getElementById('autoSaveStatus').textContent = '自动保存：❌ 失败';
             }
         }
 
@@ -1507,7 +1507,7 @@
                         }
                         
                         const lastSaved = new Date(saveData.lastSaved).toLocaleString();
-                        document.getElementById('autoSaveStatus').textContent = `Last saved: ${lastSaved}`;
+                        document.getElementById('autoSaveStatus').textContent = `上次保存时间：${lastSaved}`;
                     }
                 }
             } catch (error) {

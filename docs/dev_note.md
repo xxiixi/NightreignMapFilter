@@ -42,3 +42,32 @@ Get-ChildItem -LiteralPath $dir -File |
 - 点击判定与资源文件名无直接关系，重命名无需修改坐标数据。
 
 
+## 中文图替换与标点校准使用方式
+
+### 启动与页面
+- 本地启动：`node server.js`，访问主应用 `http://localhost:8000/index.html`；校准工具 `http://localhost:8000/extraction.html`。
+- 开发时已禁用缓存（响应头 + URL 时间戳），资源更新无需手动清缓存。
+
+### 主应用的图片加载策略（单一匹配种子时）
+- 优先加载本地中文图：`assets/pattern-zh-CN/{三位数}.jpg`。
+- 若缺失，自动回退到远程：`https://www.trc-playground.hu/GameZ/NightreignSeeds/Seeds/{三位数}.jpg`。
+- 图片文件名需为三位数（零填充）。
+
+### 校准模式（extraction.html）
+1) 选择夜王和种子后，点击“Calibration: Off”切换为 On。
+2) 在画布上拖拽橙色圆圈（POI）进行坐标微调（坐标系为 768×768 像素）。
+3) 完成后点击“Export POI Coordinates”导出当前地图类型下的最新坐标 JSON：
+```json
+{
+  "mapType": "Default",
+  "seed": 1,
+  "updatedPOIs": [ { "id": 1, "x": 155, "y": 551 }, ... ]
+}
+```
+4) 将导出的 `updatedPOIs` 同步更新到 `data.js` 中对应地图的 `POIS_BY_MAP[MapName]`。
+
+### 注意事项
+- 若 `seedData` 含 0，会请求 `000.jpg`，请在 `assets/pattern-zh-CN` 准备对应图片或选择从 1 开始标注。
+- `POIS_BY_MAP` 中坐标为画布绝对像素；底图会被拉伸至 768×768 绘制，需以此为基准校准。
+- 点击/命中半径与 `ICON_SIZE` 相关（默认 38，半径 19），如需更易点中可适度调整。
+
