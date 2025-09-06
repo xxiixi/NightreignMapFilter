@@ -155,27 +155,39 @@ class NightreignMapRecogniser {
                 this.poiFilterEnabled = !this.poiFilterEnabled;
                 toggleBtn.classList.toggle('active', this.poiFilterEnabled);
                 toggleBtn.textContent = this.poiFilterEnabled ? '兴趣点筛选模式【已开启】' : '兴趣点筛选模式【已关闭】';
-                // When enabling, require both selections; otherwise show toast
+                // 开启筛选时仅需选择地图
                 if (this.poiFilterEnabled) {
-                    if (!this.chosenNightlord || !this.chosenMap) {
+                    if (!this.chosenMap) {
                         this.poiFilterEnabled = false;
                         toggleBtn.classList.remove('active');
                         toggleBtn.textContent = '兴趣点筛选模式【已关闭】';
-                        alert('请先选择【夜王】与【特殊地形】后再开启兴趣点筛选');
+                        alert('请先选择【特殊地形】后再开启兴趣点筛选');
                         return;
                     }
                 }
-                // Clear previously selected POI marks when toggling on/off
+                // 清除已标注POI
                 this.poiStates = this.initializePOIStates();
                 this.currentRightClickedPOI = null;
                 this.hideContextMenu();
-                // Redraw map (if canvas exists) to reflect cleared markers
-                if (this.canvas && this.ctx) {
-                    if (this.chosenMap) {
-                        this.drawMap(this.images.maps[this.chosenMap]);
-                    } else {
-                        this.drawDefaultMapWithImage();
+                // 关闭筛选时自动关闭POI标注（停留在非交互态并回到画布）
+                if (!this.poiFilterEnabled) {
+                    this.showingSeedImage = false;
+                    const canvas = document.getElementById('map-canvas');
+                    const seedImageContainer = document.getElementById('seed-image-container');
+                    if (canvas && seedImageContainer) {
+                        canvas.style.display = 'block';
+                        seedImageContainer.style.display = 'none';
                     }
+                }
+                // 渲染画布与交互区域
+                if (this.chosenMap) {
+                    this.showingSeedImage = false;
+                    this.showInteractionSection();
+                    this.showResultsSection();
+                    this.renderMap();
+                    this.hideSelectionOverlay();
+                } else if (this.canvas && this.ctx) {
+                    this.drawDefaultMapWithImage();
                 }
                 this.updateSeedFiltering();
             });
@@ -487,6 +499,17 @@ class NightreignMapRecogniser {
         } else {
             // Always update seed count when selections change
             this.updateSeedCount();
+            // 仅选地图 + 启用POI筛选：进入POI交互
+            if (this.poiFilterEnabled && this.chosenMap && !this.chosenNightlord) {
+                this.currentPOIs = POIS_BY_MAP[this.chosenMap] || [];
+                this.poiStates = this.initializePOIStates();
+                this.showInteractionSection();
+                this.showResultsSection();
+                this.renderMap();
+                this.updateSeedFiltering();
+                this.hideSelectionOverlay();
+                return;
+            }
             // If only nightlord is selected, show all seeds for that nightlord (across maps)
             if (this.chosenNightlord && !this.chosenMap) {
                 const nightlordFilter = this.chosenNightlord === 'Unknown' ? null : this.chosenNightlord;
@@ -658,9 +681,9 @@ class NightreignMapRecogniser {
             // alert('仅在【兴趣点筛选模式】开启时可移除兴趣点');
             return;
         }
-        // Require nightlord and map to be selected
-        if (!this.chosenNightlord || !this.chosenMap) {
-            // alert('请先选择【夜王】与【特殊地形】');
+        // Require map to be selected (nightlord optional)
+        if (!this.chosenMap) {
+            // alert('请先选择【特殊地形】');
             return;
         }
 
@@ -682,7 +705,7 @@ class NightreignMapRecogniser {
         }
         this.showingSeedImage = false;
 
-        // Update seeds list based on cleared POIs (still filtered by nightlord/map)
+        // Update seeds list based on cleared POIs (still filtered by map and optionally nightlord)
         this.updateSeedFiltering();
     }
 
@@ -752,8 +775,8 @@ class NightreignMapRecogniser {
     setupCanvasEventListeners() {
         // Left click - open selection menu (church/mage/village/other)
         this.canvas.addEventListener('click', (e) => {
-            if (!this.chosenNightlord) {
-                console.log('Please select Nightlord before marking POIs');
+            if (!this.chosenMap || !this.poiFilterEnabled) {
+                console.log('请先选择特殊地形并开启兴趣点筛选');
                 return;
             }
             const pos = this.getMousePos(e);
@@ -770,8 +793,8 @@ class NightreignMapRecogniser {
         // Right click - delete current marker (reset to unmarked dot)
         this.canvas.addEventListener('contextmenu', (e) => {
             e.preventDefault();
-            if (!this.chosenNightlord) {
-                console.log('Please select Nightlord before marking POIs');
+            if (!this.chosenMap || !this.poiFilterEnabled) {
+                console.log('请先选择特殊地形并开启兴趣点筛选');
                 return;
             }
             const pos = this.getMousePos(e);
@@ -793,8 +816,8 @@ class NightreignMapRecogniser {
         this.canvas.addEventListener('mousedown', (e) => {
             if (e.button === 1) {
                 e.preventDefault();
-                if (!this.chosenNightlord) {
-                    console.log('Please select Nightlord before marking POIs');
+                if (!this.chosenMap || !this.poiFilterEnabled) {
+                    console.log('请先选择特殊地形并开启兴趣点筛选');
                     return;
                 }
                 const pos = this.getMousePos(e);
@@ -924,15 +947,14 @@ class NightreignMapRecogniser {
             return;
         }
 
-        // POI filter enabled: require both selections
-        if (!this.chosenNightlord || !this.chosenMap) {
+        // POI filter enabled: 至少需要地图
+        if (!this.chosenMap) {
             this.updateSeedCount();
-            this.hideSeedDetails();
             return;
         }
-
-        // Handle "Unknown" nightlord case
-        if (this.chosenNightlord === 'Unknown') {
+        
+        // 未选择夜王或选择 Unknown：仅按地图+POI
+        if (!this.chosenNightlord || this.chosenNightlord === 'Unknown') {
             this.handleUnknownNightlord();
             return;
         }
