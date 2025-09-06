@@ -71,3 +71,27 @@ Get-ChildItem -LiteralPath $dir -File |
 - `POIS_BY_MAP` 中坐标为画布绝对像素；底图会被拉伸至 768×768 绘制，需以此为基准校准。
 - 点击/命中半径与 `ICON_SIZE` 相关（默认 38，半径 19），如需更易点中可适度调整。
 
+## 图标（Font Awesome 6）引入与使用
+
+- 全局引入（已在 index.html 的 <head> 中添加）：
+```html
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+```
+
+- 使用示例（可在任意位置直接使用类名）：
+```html
+<!-- 心形（Regular 风格） -->
+<i class="fa-regular fa-heart"></i>
+
+<!-- GitHub（品牌类图标） -->
+<i class="fab fa-github"></i>
+```
+
+- 类名前缀：
+  - `fa-solid`/`fa-regular`：同一图标的不同风格
+  - `fab`：品牌类图标（GitHub、Twitter 等）
+
+- 可选：改用本地 SVG 资源（无需 Font Awesome）：
+```html
+<img src="assets/icons/github.svg" alt="GitHub" width="16" height="16">
+```

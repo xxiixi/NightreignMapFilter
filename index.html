@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>艾尔登法环 夜之降临：地图种子识别器</title>
+    <title>黑夜君临地图筛选</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -12,17 +12,58 @@
     <meta name="description" content="基于兴趣点位置识别《艾尔登法环 夜之降临》地图种子的交互式工具">
     <meta name="keywords" content="艾尔登法环, 夜之降临, 地图, 种子, 识别, 兴趣点, 工具">
     <link rel="icon" href="favicon.ico">
+    <!-- Vercount PV/UV 统计脚本 -->
+    <script defer src="https://events.vercount.one/js"></script>
 </head>
 <body>
     <div class="container">
         <header class="header">
+            <div class="top-actions">
+                <button id="action-stats" class="action-btn" title="查看访问量">
+                    <img src="assets/icons/fire.svg" alt="访问量">
+                </button>
+                <button id="action-repo" class="action-btn" title="查看原项目">
+                    <img src="assets/icons/star-fill.svg" alt="查看原项目">
+                </button>
+                <button id="action-help" class="action-btn" title="使用说明">
+                    <i class="fas fa-book-open"></i>
+                </button>
+                <button id="action-tbd" class="action-btn" title="待定">
+                    <i class="fas fa-ellipsis"></i>
+                </button>
+                <div id="stats-popover" class="actions-popover" style="display: none;">
+                    <div class="popover-body">
+                        本站总访客数: <span id="vercount_value_site_uv">Loading</span> 人<br>
+                        本站总访问量: <span id="vercount_value_site_pv">Loading</span> 次<br>
+                        <div class="popover-meta" style="border-top: 1px solid #4fc3f7; padding-top: 8px;">统计服务：Vercount</div>
+                    </div>
+                </div>
+                <div id="repo-popover" class="actions-popover" style="display: none;">
+                    <div class="popover-inner">
+                        <div class="popover-title">
+                            🙏 求个Star ⭐️ 感谢支持 🙏
+                        </div>
+                        <div class="popover-body">
+                            本站GitHub仓库
+                            <a
+                            href="https://github.com/xxiixi/NightreignMapseedFilter"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="footer-link"
+                        >
+                            点击跳转
+                        </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <h1 class="title">
                 <i class="fas fa-map"></i>
                 黑夜君临地图种子筛选器
             </h1>
             <div class="subtitle">
                 <p class="version">Version 1.0 | Nightreign version 1.01.3</p>
-                <span id="cv-status" style="font-size: 11px; color: #6c757d; margin-left: 15px;"></span>
+                <span id="cv-status" style="font-size: 12px; color: #6c757d; margin-left: 15px;"></span>
             </div>
         </header>
 
@@ -176,10 +217,9 @@
     <footer class="footer">
         <p class="footer-text">
             <i class="fa-regular fa-heart" style="margin-right: 4px; color: #ff4d4f;"></i>
-            Created by Cecilia ｜
+            Modified & Localized by <a class="footer-link" href="https://github.com/xxiixi" target="_blank">Cecilia</a> ｜
             <i class="fab fa-github" style="margin: 0 4px 0 8px;"></i>
-            Report an issue on 
-            <a class="footer-link" href="https://github.com/xxiixi/NightreignMapseedFilter/issues" target="_blank" rel="noopener noreferrer">NightreignMapseedFilter</a>
+            Forked from <a class="footer-link" href="https://github.com/thanosapollo/nightreign-mapseed-recogniser" target="_blank">thanosapollo/nightreign-mapseed-recogniser</a>
         </p>
         <p class="footer-text">
             © <span id="current-year">2025</span> NightreignMapseedFilter · All Rights Reserved · Last updated: <span id="last-updated">September 5, 2025</span>
@@ -191,6 +231,12 @@
             try {
                 var yearEl = document.getElementById('current-year');
                 var lastUpdatedEl = document.getElementById('last-updated');
+                var statsBtn = document.getElementById('action-stats');
+                var helpBtn = document.getElementById('action-help');
+                var tbdBtn = document.getElementById('action-tbd');
+                var statsPopover = document.getElementById('stats-popover');
+                var repoBtn = document.getElementById('action-repo');
+                var repoPopover = document.getElementById('repo-popover');
                 var now = new Date();
                 if (yearEl) {
                     yearEl.textContent = String(now.getFullYear());
@@ -203,6 +249,51 @@
                         day: 'numeric'
                     });
                     lastUpdatedEl.textContent = formatted;
+                }
+
+                // 简易交互：访问量弹层、帮助弹窗、待定占位
+                if (statsBtn && statsPopover) {
+                    statsBtn.addEventListener('click', function (e) {
+                        e.stopPropagation();
+                        var willShow = statsPopover.style.display === 'none';
+                        // 互斥：开启当前前先关闭对方
+                        if (repoPopover) repoPopover.style.display = 'none';
+                        statsPopover.style.display = willShow ? 'block' : 'none';
+                    });
+                    document.addEventListener('click', function () {
+                        statsPopover.style.display = 'none';
+                        if (repoPopover) repoPopover.style.display = 'none';
+                    });
+                    statsPopover.addEventListener('click', function (e) { e.stopPropagation(); });
+                }
+
+                if (helpBtn) {
+                    helpBtn.addEventListener('click', function () {
+                        var helpModal = document.getElementById('help-modal');
+                        if (helpModal) helpModal.style.display = 'flex';
+                    });
+                }
+
+                if (tbdBtn) {
+                    tbdBtn.addEventListener('click', function () {
+                        alert('功能待定，敬请期待');
+                    });
+                }
+
+                // 查看源码：先弹出 Popover，再点击链接跳转
+                if (repoBtn && repoPopover) {
+                    repoBtn.addEventListener('click', function (e) {
+                        e.stopPropagation();
+                        var willShow = repoPopover.style.display === 'none';
+                        // 互斥：开启当前前先关闭对方
+                        if (statsPopover) statsPopover.style.display = 'none';
+                        repoPopover.style.display = willShow ? 'block' : 'none';
+                    });
+                    document.addEventListener('click', function () {
+                        repoPopover.style.display = 'none';
+                        if (statsPopover) statsPopover.style.display = 'none';
+                    });
+                    repoPopover.addEventListener('click', function (e) { e.stopPropagation(); });
                 }
             } catch (e) {
                 // ignore
