@@ -819,12 +819,16 @@ class NightreignMapRecogniser {
         seedImageContainer.style.display = 'block';
         
         const seedStr = mapSeed.toString().padStart(3, '0');
-        const seedImageUrl = "https://www.trc-playground.hu/GameZ/NightreignSeeds/Seeds/" + seedStr + ".jpg";
+        const cacheBust = Date.now();
+        const localUrl = `assets/pattern-zh-CN/${seedStr}.jpg?v=${cacheBust}`;
+        const remoteUrl = `https://www.trc-playground.hu/GameZ/NightreignSeeds/Seeds/${seedStr}.jpg`;
         
+        // Prefer local zh-CN image; fallback to remote if missing
         seedImageContainer.innerHTML = `
             <center>
-                <a href="${seedImageUrl}" target="_blank">
-                    <img src="${seedImageUrl}" alt="Seed ${mapSeed}" style="max-width: 768px; border: 2px solid black;">
+                <a href="${remoteUrl}" target="_blank">
+                    <img src="${localUrl}" alt="Seed ${mapSeed}" style="max-width: 768px; border: 2px solid black;"
+                         onerror="this.onerror=null;this.src='${remoteUrl}';">
                 </a>
                 <br>
                 <b style="color: black;">Mapseed: ${mapSeed}</b>

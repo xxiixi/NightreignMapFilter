@@ -300,6 +300,8 @@
                     <button id="saveBtn" class="button primary">Save Progress</button>
                     <button id="exportBtn" class="button primary">Export Data</button>
                     <button id="loadBtn" class="button secondary">Load Existing Data</button>
+                    <button id="calibrateBtn" class="button secondary">Calibration: Off</button>
+                    <button id="exportCoordsBtn" class="button primary">Export POI Coordinates</button>
                 </div>
                 
                 <div style="margin-top: 10px; font-size: 12px; color: #6c757d; text-align: center;">
@@ -479,6 +481,9 @@
         let poiCounter = 1;
         let contextMenu = null;
         let pendingPOI = null;
+        let calibrationMode = false;
+        let draggingPOI = null;
+        let dragOffset = { x: 0, y: 0 };
 
         function isSeedMapped(seedKey) {
             // Simple check: does this seed exist in the tool database with any POIs?
@@ -490,6 +495,66 @@
             return seedData && seedData.pois && Object.keys(seedData.pois).length > 0;
         }
 
+        function findPOIAt(x, y, radius = 25) {
+            const mapTypeName = mapTypeNames[currentMapType] || 'Default';
+            const pois = PREDEFINED_POIS[mapTypeName] || [];
+            return pois.find(poi => {
+                const dx = x - poi.x;
+                const dy = y - poi.y;
+                return Math.sqrt(dx * dx + dy * dy) <= radius;
+            });
+        }
+
+        function onCanvasMouseDown(e) {
+            if (!calibrationMode) return;
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            const x = (e.clientX - rect.left) * scaleX;
+            const y = (e.clientY - rect.top) * scaleY;
+            const poi = findPOIAt(x, y, 25);
+            if (poi) {
+                draggingPOI = poi;
+                dragOffset.x = x - poi.x;
+                dragOffset.y = y - poi.y;
+            }
+        }
+
+        function onCanvasMouseMove(e) {
+            if (!calibrationMode || !draggingPOI) return;
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            const x = (e.clientX - rect.left) * scaleX;
+            const y = (e.clientY - rect.top) * scaleY;
+            draggingPOI.x = Math.max(0, Math.min(canvas.width, x - dragOffset.x));
+            draggingPOI.y = Math.max(0, Math.min(canvas.height, y - dragOffset.y));
+            drawCanvas();
+        }
+
+        function onCanvasMouseUp() {
+            if (!calibrationMode) return;
+            draggingPOI = null;
+        }
+
+        function exportPOICoordinates() {
+            const mapTypeName = mapTypeNames[currentMapType] || 'Default';
+            const pois = PREDEFINED_POIS[mapTypeName] || [];
+            const exportData = {
+                mapType: mapTypeName,
+                seed: currentSeed,
+                updatedPOIs: pois.map(p => ({ id: p.id, x: Math.round(p.x), y: Math.round(p.y) }))
+            };
+            const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `poi_${mapTypeName}_${currentSeed?.toString().padStart(3,'0') || 'unknown'}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
         function updateMappingStats() {
             // Count only seeds that exist in the tool database with POIs
             let mappedSeeds = 0;
@@ -675,6 +740,20 @@
             });
             
             document.getElementById('fileInput').addEventListener('change', loadExistingData);
+
+            // Calibration toggle
+            document.getElementById('calibrateBtn').addEventListener('click', function() {
+                calibrationMode = !calibrationMode;
+                this.textContent = `Calibration: ${calibrationMode ? 'On' : 'Off'}`;
+            });
+
+            // Export updated POI coordinates
+            document.getElementById('exportCoordsBtn').addEventListener('click', exportPOICoordinates);
+
+            // Dragging handlers for calibration
+            canvas.addEventListener('mousedown', onCanvasMouseDown);
+            window.addEventListener('mousemove', onCanvasMouseMove);
+            window.addEventListener('mouseup', onCanvasMouseUp);
         }
 
         function loadSeed(nightlord, seedNum, mapType) {
@@ -705,18 +784,27 @@
 
         function loadSeedImage(seedNum) {
             const paddedNum = seedNum.toString().padStart(3, '0');
-            const imageUrl = `assets/pattern/${paddedNum}.jpg`;
-            
+            const cacheBust = Date.now();
+            const primaryUrl = `assets/pattern-zh-CN/${paddedNum}.jpg?v=${cacheBust}`;
+            const fallbackUrl = `assets/pattern/${paddedNum}.jpg?v=${cacheBust}`;
+
             currentImage = new Image();
+            let triedFallback = false;
             currentImage.onload = function() {
                 drawCanvas();
             };
             currentImage.onerror = function() {
-                console.error(`Failed to load image: ${imageUrl}`);
-                // Draw placeholder with POI locations
-                drawCanvas();
+                if (!triedFallback) {
+                    console.warn(`Primary not found: ${primaryUrl}. Falling back to: ${fallbackUrl}`);
+                    triedFallback = true;
+                    currentImage.src = fallbackUrl;
+                } else {
+                    console.error(`Failed to load both primary and fallback images for seed ${paddedNum}`);
+                    // Draw placeholder with POI locations
+                    drawCanvas();
+                }
             };
-            currentImage.src = imageUrl;
+            currentImage.src = primaryUrl;
         }
 
         function drawCanvas() {
@@ -830,6 +918,7 @@
         }
 
         function handlePOIClick(event, type) {
+            if (calibrationMode) return; // disable labeling when calibrating
             if (currentSeed === null || currentSeed === undefined) return;
             
             console.log('Click detected:', event.type, type);
@@ -880,6 +969,7 @@
         }
 
         function handlePOIRightClick(event) {
+            if (calibrationMode) return; // disable context menu when calibrating
             if (currentSeed === null || currentSeed === undefined) return;
             
             console.log('Right click detected');

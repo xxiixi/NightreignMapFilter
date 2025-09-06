@@ -57,6 +57,11 @@ const server = http.createServer((req, res) => {
         // Set proper headers
         res.setHeader('Content-Type', mimeType);
         res.setHeader('Content-Length', stat.size);
+        // Disable caching for dev to avoid stale assets
+        res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+        res.setHeader('Pragma', 'no-cache');
+        res.setHeader('Expires', '0');
+        res.setHeader('Surrogate-Control', 'no-store');
         
         // Stream the file
         const stream = fs.createReadStream(fullPath);
