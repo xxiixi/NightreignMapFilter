@@ -140,7 +140,7 @@
                 <div class="selection-grid">
                     <div class="selection-card">
                         <h3>选择夜王</h3>
-                        <p class="current-selection">当前选择: <span id="chosen-nightlord">NONE</span></p>
+                        <p class="current-selection">当前选择: <span id="chosen-nightlord">未选择</span></p>
                         <div class="button-grid">
                             <button class="nightlord-btn" data-nightlord="Gladius">"黑夜野兽"格拉狄乌斯</button>
                             <button class="nightlord-btn" data-nightlord="Adel">"黑夜之爵"艾德雷</button>
@@ -155,7 +155,7 @@
 
                     <div class="selection-card">
                         <h3>选择特殊地形</h3>
-                        <p class="current-selection">当前选择: <span id="chosen-map">NONE</span></p>
+                        <p class="current-selection">当前选择: <span id="chosen-map">未选择</span></p>
                         <div class="button-grid">
                             <button class="map-btn" data-map="Default">默认</button>
                             <button class="map-btn" data-map="Mountaintop">山顶</button>
@@ -170,7 +170,18 @@
             <div class="section">
             <!-- ======================= -->
             
-            <h3 class="instructions-card-title"><i class="fas fa-layer-group"></i> 地图展示</h3>
+            <div class="map-header">
+                <h3 class="instructions-card-title"><i class="fas fa-layer-group"></i>地图展示</h3>
+                <div class="header-actions">
+                    <button id="reset-map-btn" class="reset-btn">
+                        <i class="fas fa-undo"></i>
+                        重置地图 & 移除所有标点
+                    </button>
+                    <button id="toggle-poi-filter-btn" class="toggle-poi-btn" title="切换POI筛选">
+                        兴趣点筛选模式【已关闭】
+                    </button>
+                </div>
+            </div>
 
             <div class="instructions-card">
                 <div id="interaction-section"  style="display: none;">
@@ -185,26 +196,19 @@
                         <div class="instruction-grid">
                             <div class="instruction-item">
                                 <i class="fas fa-mouse-pointer"></i>
-                                <span>左键标点</span>
-                            </div>
-                            <div class="instruction-item">
-                                <i class="fas fa-hand-pointer"></i>
-                                <span>右键删除</span>
+                                <span>使用方法：左键标点，右键删除</span>
                             </div>
                         </div>
                         <div class="seed-counter">
                             <h3>可能的地图种子</h3>
                             <div class="seed-count" id="seed-count">0</div>
                         </div>
-                        <button id="reset-map-btn" class="reset-btn">
-                            <i class="fas fa-undo"></i>
-                            重置地图 & 移除所有标点
-                        </button>
+                        
 
-                        <div id="possible-seeds-section" class="possible-seeds-section" style="display: none;">
+                        <div id="possible-seeds-section" class="possible-seeds-section">
                             <div class="possible-seeds-card">
                                 <h4><i class="fas fa-list"></i> 查看不同地图种子</h4>
-                                <p class="description">支持键盘左右键切换相邻种子</p>
+                                <p class="description">支持键盘方向键快捷切换</p>
                                 <div id="possible-seeds-grid" class="possible-seeds-grid">
                                 </div>
                             </div>
@@ -212,7 +216,7 @@
                     </div>
 
                     <div class="map-container">
-                        <canvas id="map-canvas" width="768" height="768"></canvas>
+                        <canvas id="map-canvas" width="900" height="900"></canvas>
                         <div id="seed-image-container" style="display: none;"></div>
                         <div id="selection-overlay" class="selection-overlay">
                             <div class="overlay-message">
@@ -270,6 +274,10 @@
 
     <!-- Context Menu for Right Click -->
     <div id="poi-context-menu" class="context-menu" style="display: none;">
+        <div class="context-menu-item" data-type="church">
+            <img src="assets/images/church.png" style="width: 16px; height: 16px; margin-right: 8px; vertical-align: middle;">
+            教堂
+        </div>
         <div class="context-menu-item" data-type="mage">
             <img src="assets/images/mage-tower.png" style="width: 16px; height: 16px; margin-right: 8px; vertical-align: middle;">
             法师塔

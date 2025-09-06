@@ -21,6 +21,28 @@ async function loadClassificationResults() {
 }
 
 
+// Display name mappings (English key -> Chinese display)
+const NIGHTLORD_NAME_ZH = {
+    Gladius: '"黑夜野兽"格拉狄乌斯',
+    Adel: '"黑夜之爵"艾德雷',
+    Gnoster: '"黑夜之智"格诺斯塔',
+    Maris: '"深海黑夜"玛丽斯',
+    Libra: '"黑夜之魔"利普拉',
+    Fulghor: '"黑夜光骑士"弗格尔',
+    Caligo: '"黑夜雾霾"卡莉果',
+    Heolstor: '"黑夜王"布德奇冥',
+    Unknown: '未知'
+};
+
+const MAP_NAME_ZH = {
+    Default: '默认',
+    Mountaintop: '山顶',
+    Crater: '火山口',
+    'Rotted Woods': '腐败森林',
+    Noklateo: '隐城'
+};
+
+
 class NightreignMapRecogniser {
     constructor() {
         this.chosenNightlord = null;
@@ -43,6 +65,7 @@ class NightreignMapRecogniser {
         // Arrow key navigation for seeds
         this.currentSeedIndex = -1;
         this.availableSeeds = [];
+        this.poiFilterEnabled = false;
         
         
         this.init();
@@ -118,6 +141,38 @@ class NightreignMapRecogniser {
         document.getElementById('reset-map-btn').addEventListener('click', () => {
             this.resetMap();
         });
+        // Toggle POI filter button
+        const toggleBtn = document.getElementById('toggle-poi-filter-btn');
+        if (toggleBtn) {
+            toggleBtn.addEventListener('click', () => {
+                this.poiFilterEnabled = !this.poiFilterEnabled;
+                toggleBtn.classList.toggle('active', this.poiFilterEnabled);
+                toggleBtn.textContent = this.poiFilterEnabled ? '兴趣点筛选模式【已开启】' : '兴趣点筛选模式【已关闭】';
+                // When enabling, require both selections; otherwise show toast
+                if (this.poiFilterEnabled) {
+                    if (!this.chosenNightlord || !this.chosenMap) {
+                        this.poiFilterEnabled = false;
+                        toggleBtn.classList.remove('active');
+                        toggleBtn.textContent = '兴趣点筛选模式【已关闭】';
+                        alert('请先选择【夜王】与【特殊地形】后再开启兴趣点筛选');
+                        return;
+                    }
+                }
+                // Clear previously selected POI marks when toggling on/off
+                this.poiStates = this.initializePOIStates();
+                this.currentRightClickedPOI = null;
+                this.hideContextMenu();
+                // Redraw map (if canvas exists) to reflect cleared markers
+                if (this.canvas && this.ctx) {
+                    if (this.chosenMap) {
+                        this.drawMap(this.images.maps[this.chosenMap]);
+                    } else {
+                        this.drawDefaultMapWithImage();
+                    }
+                }
+                this.updateSeedFiltering();
+            });
+        }
         
         // CV Classification data loader
 
@@ -328,10 +383,21 @@ class NightreignMapRecogniser {
     }
 
     selectNightlord(nightlord) {
+        // Toggle off if clicking the same nightlord
+        if (this.chosenNightlord === nightlord) {
+            this.chosenNightlord = null;
+            // Update UI
+            document.getElementById('chosen-nightlord').textContent = '未选择';
+            document.querySelectorAll('.nightlord-btn').forEach(btn => btn.classList.remove('active'));
+            this.updateGameState();
+            return;
+        }
+
         this.chosenNightlord = nightlord;
         
         // Update UI
-        document.getElementById('chosen-nightlord').textContent = nightlord;
+        const zhName = NIGHTLORD_NAME_ZH[nightlord] || nightlord;
+        document.getElementById('chosen-nightlord').textContent = zhName;
         
         // Update button states
         document.querySelectorAll('.nightlord-btn').forEach(btn => {
@@ -342,6 +408,25 @@ class NightreignMapRecogniser {
     }
 
     selectMap(map) {
+        // Toggle off if clicking the same map
+        if (this.chosenMap === map) {
+            this.chosenMap = null;
+            this.currentPOIs = POIS_BY_MAP['Default'] || [];
+            this.poiStates = this.initializePOIStates();
+            // Auto-disable POI filtering when map is unset
+            this.poiFilterEnabled = false;
+            const toggleBtn = document.getElementById('toggle-poi-filter-btn');
+            if (toggleBtn) {
+                toggleBtn.classList.remove('active');
+                toggleBtn.textContent = '兴趣点筛选模式【已关闭】';
+            }
+            // Update UI
+            document.getElementById('chosen-map').textContent = '未选择';
+            document.querySelectorAll('.map-btn').forEach(btn => btn.classList.remove('active'));
+            this.updateGameState();
+            return;
+        }
+
         this.chosenMap = map;
         this.currentPOIs = POIS_BY_MAP[map] || [];
         this.poiStates = this.initializePOIStates();
@@ -349,7 +434,8 @@ class NightreignMapRecogniser {
         console.log(`Selected map: ${map}, POIs: ${this.currentPOIs.length}`);
         
         // Update UI
-        document.getElementById('chosen-map').textContent = map;
+        const zhMap = MAP_NAME_ZH[map] || map;
+        document.getElementById('chosen-map').textContent = zhMap;
         
         // Update button states
         document.querySelectorAll('.map-btn').forEach(btn => {
@@ -394,7 +480,28 @@ class NightreignMapRecogniser {
         } else {
             // Always update seed count when selections change
             this.updateSeedCount();
-            this.showSelectionOverlay();
+            // If only nightlord is selected, show all seeds for that nightlord (across maps)
+            if (this.chosenNightlord && !this.chosenMap) {
+                const nightlordFilter = this.chosenNightlord === 'Unknown' ? null : this.chosenNightlord;
+                const seedsByNightlord = getFilteredSeeds(nightlordFilter, null);
+                this.showPossibleSeeds(seedsByNightlord);
+                // Default behavior: show first seed image instead of POI canvas
+                if (seedsByNightlord.length > 0) {
+                    this.hideSelectionOverlay();
+                    this.selectSeedFromGrid(seedsByNightlord[0].seedNumber);
+                }
+            } else if (!this.chosenNightlord && this.chosenMap) {
+                // If only map is selected, show all seeds for that map
+                const seedsByMap = getFilteredSeeds(null, this.chosenMap);
+                this.showPossibleSeeds(seedsByMap);
+                if (seedsByMap.length > 0) {
+                    this.hideSelectionOverlay();
+                    this.selectSeedFromGrid(seedsByMap[0].seedNumber);
+                }
+            } else {
+                this.hidePossibleSeeds();
+                this.showSelectionOverlay();
+            }
         }
     }
 
@@ -538,7 +645,11 @@ class NightreignMapRecogniser {
     }
 
     drawPOI(poi, state) {
-        const { x, y } = poi;
+        // Scale POI coordinates from base (768) to canvas size
+        const COORD_BASE_SIZE = 768;
+        const DRAW_SCALE = CANVAS_SIZE / COORD_BASE_SIZE;
+        const x = poi.x * DRAW_SCALE;
+        const y = poi.y * DRAW_SCALE;
         
         switch (state) {
             case 'dot':
@@ -568,8 +679,10 @@ class NightreignMapRecogniser {
     }
 
     drawDot(x, y, label, color) {
+        const COORD_BASE_SIZE = 768;
+        const DRAW_SCALE = CANVAS_SIZE / COORD_BASE_SIZE;
         this.ctx.beginPath();
-        this.ctx.arc(x, y, ICON_SIZE / 2, 0, 2 * Math.PI);
+        this.ctx.arc(x, y, (ICON_SIZE * DRAW_SCALE) / 2, 0, 2 * Math.PI);
         this.ctx.fillStyle = color;
         this.ctx.fill();
         this.ctx.strokeStyle = '#000000';
@@ -586,39 +699,51 @@ class NightreignMapRecogniser {
     }
 
     drawIcon(image, x, y) {
+        const COORD_BASE_SIZE = 768;
+        const DRAW_SCALE = CANVAS_SIZE / COORD_BASE_SIZE;
         if (image.complete) {
-            this.ctx.drawImage(image, x - ICON_SIZE / 2, y - ICON_SIZE / 2, ICON_SIZE, ICON_SIZE);
+            const size = ICON_SIZE * DRAW_SCALE;
+            this.ctx.drawImage(image, x - size / 2, y - size / 2, size, size);
         }
     }
 
     setupCanvasEventListeners() {
-        // Left click - place church
+        // Left click - open selection menu (church/mage/village/other)
         this.canvas.addEventListener('click', (e) => {
-            if (!this.chosenNightlord || !this.chosenMap) {
-                console.log('Please select both Nightlord and Map before marking POIs');
-                return;
-            }
-            const pos = this.getMousePos(e);
-            const poi = this.findClickedPOI(pos.x, pos.y);
-            if (poi) {
-                this.poiStates[poi.id] = 'church';
-                this.drawMap(this.images.maps[this.chosenMap]);
-                this.updateSeedFiltering();
-            }
-        });
-
-        // Right click - show context menu
-        this.canvas.addEventListener('contextmenu', (e) => {
-            e.preventDefault();
-            if (!this.chosenNightlord || !this.chosenMap) {
-                console.log('Please select both Nightlord and Map before marking POIs');
+            if (!this.chosenNightlord) {
+                console.log('Please select Nightlord before marking POIs');
                 return;
             }
             const pos = this.getMousePos(e);
             const poi = this.findClickedPOI(pos.x, pos.y);
             if (poi) {
                 this.currentRightClickedPOI = poi;
+                // Show existing context menu at the click position
                 this.showContextMenu(e.clientX, e.clientY);
+                // Prevent the document-level click handler from immediately hiding the menu
+                e.stopPropagation();
+            }
+        });
+
+        // Right click - delete current marker (reset to unmarked dot)
+        this.canvas.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            if (!this.chosenNightlord) {
+                console.log('Please select Nightlord before marking POIs');
+                return;
+            }
+            const pos = this.getMousePos(e);
+            const poi = this.findClickedPOI(pos.x, pos.y);
+            if (poi) {
+                this.poiStates[poi.id] = 'dot';
+                this.hideContextMenu();
+                this.currentRightClickedPOI = null;
+                if (this.chosenMap) {
+                    this.drawMap(this.images.maps[this.chosenMap]);
+                } else {
+                    this.drawDefaultMapWithImage();
+                }
+                this.updateSeedFiltering();
             }
         });
 
@@ -626,15 +751,19 @@ class NightreignMapRecogniser {
         this.canvas.addEventListener('mousedown', (e) => {
             if (e.button === 1) {
                 e.preventDefault();
-                if (!this.chosenNightlord || !this.chosenMap) {
-                    console.log('Please select both Nightlord and Map before marking POIs');
+                if (!this.chosenNightlord) {
+                    console.log('Please select Nightlord before marking POIs');
                     return;
                 }
                 const pos = this.getMousePos(e);
                 const poi = this.findClickedPOI(pos.x, pos.y);
                 if (poi) {
                     this.poiStates[poi.id] = 'unknown';
-                    this.drawMap(this.images.maps[this.chosenMap]);
+                    if (this.chosenMap) {
+                        this.drawMap(this.images.maps[this.chosenMap]);
+                    } else {
+                        this.drawDefaultMapWithImage();
+                    }
                     this.updateSeedFiltering();
                 }
             }
@@ -660,27 +789,46 @@ class NightreignMapRecogniser {
     }
 
     findClickedPOI(x, y) {
+        const COORD_BASE_SIZE = 768;
+        const DRAW_SCALE = CANVAS_SIZE / COORD_BASE_SIZE;
         return this.currentPOIs.find(poi => {
-            const dx = x - poi.x;
-            const dy = y - poi.y;
+            const dx = x - poi.x * DRAW_SCALE;
+            const dy = y - poi.y * DRAW_SCALE;
             const distance = Math.sqrt(dx * dx + dy * dy);
-            return distance <= ICON_SIZE / 2;
+            return distance <= (ICON_SIZE * DRAW_SCALE) / 2;
         });
     }
 
     resetMap() {
+        // Clear selections
+        this.chosenNightlord = null;
+        this.chosenMap = null;
+        // Disable POI filtering
+        this.poiFilterEnabled = false;
+        const toggleBtn = document.getElementById('toggle-poi-filter-btn');
+        if (toggleBtn) {
+            toggleBtn.classList.remove('active');
+            toggleBtn.textContent = '兴趣点筛选模式【已关闭】';
+        }
+        // Clear button highlights
+        document.querySelectorAll('.nightlord-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.map-btn').forEach(btn => btn.classList.remove('active'));
+        // Reset selection labels
+        const nightlordLabel = document.getElementById('chosen-nightlord');
+        const mapLabel = document.getElementById('chosen-map');
+        if (nightlordLabel) nightlordLabel.textContent = '未选择';
+        if (mapLabel) mapLabel.textContent = '未选择';
+        
+        // Reset POIs to default map for drawing baseline
+        this.currentPOIs = POIS_BY_MAP['Default'] || [];
         this.poiStates = this.initializePOIStates();
         this.showingSeedImage = false;
         
         // Hide possible seeds section
         this.hidePossibleSeeds();
         
-        // Always go back to the interactive map for POI input
-        if (this.chosenMap && this.chosenNightlord) {
-            this.renderMap();
-        } else if (this.chosenMap) {
-            this.drawMapWithSelectedImage();
-        } else if (this.currentPOIs.length > 0) {
+        // Draw default baseline and show overlay
+        if (this.currentPOIs.length > 0 && this.canvas && this.ctx) {
             this.drawDefaultMapWithImage();
         }
         
@@ -690,7 +838,11 @@ class NightreignMapRecogniser {
         canvas.style.display = 'block';
         seedImageContainer.style.display = 'none';
         
-        this.updateSeedFiltering();
+        // Update counts and lists
+        this.hideSelectionOverlay();
+        this.showSelectionOverlay();
+        this.hidePossibleSeeds();
+        this.updateSeedCount();
     }
 
 
@@ -715,6 +867,22 @@ class NightreignMapRecogniser {
     }
 
     updateSeedFiltering() {
+        // If POI filter is disabled: only filter by nightlord/map, show list, no POI matching
+        if (!this.poiFilterEnabled) {
+            const filteredSeeds = getFilteredSeeds(
+                this.chosenNightlord && this.chosenNightlord !== 'Unknown' ? this.chosenNightlord : null,
+                this.chosenMap || null
+            );
+            this.updateSeedCountDisplay(filteredSeeds.length);
+            this.showPossibleSeeds(filteredSeeds);
+            // If both selected but POI filter is off, auto-show the first seed
+            if (this.chosenNightlord && this.chosenMap && filteredSeeds.length > 0) {
+                this.selectSeedFromGrid(filteredSeeds[0].seedNumber);
+            }
+            return;
+        }
+
+        // POI filter enabled: require both selections
         if (!this.chosenNightlord || !this.chosenMap) {
             this.updateSeedCount();
             this.hideSeedDetails();
@@ -812,7 +980,7 @@ class NightreignMapRecogniser {
 
     showNoSeedsFound() {
         const seedCountElement = document.getElementById('seed-count');
-        seedCountElement.innerHTML = '<span style="color: #e74c3c; font-weight: 600;">NO SEED FOUND<br>RESET THE MAP!</span>';
+        seedCountElement.innerHTML = '<span style="color: #e74c3c; font-weight: 600;">未找到匹配的种子<br>请重置地图！</span>';
     }
 
 
@@ -831,14 +999,14 @@ class NightreignMapRecogniser {
         // Prefer local zh-CN image; fallback to remote if missing
         seedImageContainer.innerHTML = `
             <center>
-                <a href="${remoteUrl}" target="_blank">
-                    <img src="${localUrl}" alt="Seed ${mapSeed}" style="max-width: 768px; border: 2px solid black;"
+                <a href="${localUrl}" target="_blank">
+                    <img src="${localUrl}" alt="Seed ${mapSeed}" style="max-width: ${CANVAS_SIZE}px; border: 2px solid black;"
                          onerror="this.onerror=null;this.src='${remoteUrl}';">
                 </a>
                 <br>
-                <b style="color: black;">Mapseed: ${mapSeed}</b>
+                <b style="color: #ffd700;">地图种子：${mapSeed}</b>
                 <br>
-                <small style="color: blue;">Click on the map to open it in a new tab.</small>
+                <small style="color: #4fc3f7;">点击图片可在新标签页中打开</small>
             </center>
         `;
     }
@@ -927,7 +1095,9 @@ class NightreignMapRecogniser {
 
     showPossibleSeeds(seeds) {
         this.showingSeedImage = false;
-        this.renderMap();
+        if (this.chosenNightlord && this.chosenMap) {
+            this.renderMap();
+        }
         
         // Store seeds for arrow key navigation
         this.availableSeeds = seeds.sort((a, b) => a.seedNumber - b.seedNumber);
@@ -955,12 +1125,10 @@ class NightreignMapRecogniser {
         });
         
         if (this.availableSeeds.length > 0) {
-            this.currentSeedIndex = 0;
             setTimeout(() => {
-                this.highlightCurrentSeed();
                 // Only auto-display if there's exactly 1 seed left (definitive match)
-                // Don't auto-display for multiple seeds - let user browse manually
-                if (this.availableSeeds.length === 1) {
+                // Don't auto-highlight for multiple seeds - let user browse manually
+                if (this.availableSeeds.length === 1 && this.chosenNightlord && this.chosenMap && this.poiFilterEnabled) {
                     this.selectSeedFromGrid(this.availableSeeds[0].seedNumber);
                 }
             }, 100);
@@ -980,14 +1148,20 @@ class NightreignMapRecogniser {
             clickedItem.classList.add('selected');
         }
         
-        // Show the seed image
+        // Always allow showing the seed image when a seed is clicked
         this.showSeedImage(seedNumber);
         this.showingSeedImage = true;
     }
 
     hidePossibleSeeds() {
         const possibleSeedsSection = document.getElementById('possible-seeds-section');
-        possibleSeedsSection.style.display = 'none';
+        // Keep the section visible but clear its content
+        if (possibleSeedsSection) {
+            const possibleSeedsGrid = document.getElementById('possible-seeds-grid');
+            if (possibleSeedsGrid) {
+                possibleSeedsGrid.innerHTML = '';
+            }
+        }
         
         // Clear seed navigation state
         this.availableSeeds = [];

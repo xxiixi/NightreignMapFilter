@@ -283,8 +283,8 @@ body {
 /* Selection grid */
 .selection-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 20px;
 }
 
 @media (max-width: 768px) {
@@ -306,6 +306,8 @@ body {
     margin-bottom: 15px;
     color: #ffd700;
     text-align: center;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .current-selection {
@@ -322,9 +324,10 @@ body {
 
 .button-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 10px;
 }
+
 
 .nightlord-btn,
 .map-btn {
@@ -362,9 +365,41 @@ body {
 .instructions-card-title {
     font-size: 1.4rem;
     font-weight: 600;
-    margin-bottom: 25px;
+    /* margin-bottom: 25px; */
     color: #ffd700;
     text-align: center;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.map-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* gap: 12px; */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.map-header .instructions-card-title {
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: none;
+    /* text-align: left; */
+}
+.map-header .instructions-card-title i {
+    margin-right: 5px;
+}
+
+.header-actions {
+    padding-bottom: 10px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-right: 10px;
 }
 
 .instruction-grid {
@@ -398,16 +433,55 @@ body {
 }
 
 .reset-btn {
-    padding: 12px 30px;
-    background: linear-gradient(45deg, #e74c3c, #c0392b);
+    padding: 10px 20px;
+    background: linear-gradient(45deg, #a11d0e, #9b281b);
     color: white;
     border: none;
     border-radius: 25px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-    font-size: 1rem;
+    font-size: 0.8rem;
     box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+    /* width: 80%; */
+    align-self: center;
+}
+
+.inline-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.toggle-poi-btn {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 25px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    font-size: 0.8rem;
+    box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
+    background: linear-gradient(45deg, #6c757d, #8a9096); /* 关闭：灰色 */
+    color: #fff;
+}
+
+.toggle-poi-btn.active {
+    box-shadow: 0 4px 15px rgba(39, 174, 96, 0.35);
+    background: linear-gradient(45deg, #27ae60, #2ecc71); /* 开启：绿色 */
+}
+
+.toggle-poi-btn:not(.active):hover {
+    transform: translateY(-2px);
+    background: linear-gradient(45deg, #7a8288, #9aa0a6); /* 关闭态：灰色 hover */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+}
+
+.toggle-poi-btn.active:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(45deg, #2fd57a, #27ae60); /* 开启态：绿色 hover */
+    box-shadow: 0 6px 20px rgba(46, 204, 113, 0.45);
 }
 
 .reset-btn:hover {
@@ -504,7 +578,9 @@ body {
 .left-panel {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
+    /* align-items: center; */
+    /* justify-content: center; */
 }
 
 @media (max-width: 1024px) {
@@ -522,10 +598,11 @@ body {
 }
 
 .seed-counter h3 {
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: 600;
     margin-bottom: 15px;
     color: #ffd700;
+    /* padding-bottom: 8px; */
 }
 
 .seed-count {
@@ -705,7 +782,7 @@ body {
     }
 
     .button-grid {
-        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
         gap: 8px;
     }
 
@@ -721,11 +798,11 @@ body {
         flex-direction: row;
     }
 
-    .instruction-item {
+    /* .instruction-item {
         flex-direction: column;
         text-align: center;
         gap: 5px;
-    }
+    } */
 }
 
 /* Animations */
