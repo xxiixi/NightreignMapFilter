@@ -192,7 +192,7 @@ body {
 
 /* Section styles */
 .section {
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     padding: 30px;
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
@@ -359,34 +359,38 @@ body {
     text-align: center;
 }
 
-.instructions-card h3 {
+.instructions-card-title {
     font-size: 1.4rem;
     font-weight: 600;
     margin-bottom: 25px;
     color: #ffd700;
+    text-align: center;
 }
 
 .instruction-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-    margin-bottom: 30px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    /* margin-bottom: 10px; */
 }
 
 .instruction-item {
     display: flex;
     align-items: center;
-    gap: 15px;
-    padding: 15px 20px;
+    width: 100%;
+    gap: 10px;
+    justify-content: center;
+    padding: 10px 20px;
     background: rgba(79, 195, 247, 0.1);
     border-radius: 10px;
     border: 1px solid rgba(79, 195, 247, 0.3);
+    font-size: 12px;
 }
 
 .instruction-item i {
-    font-size: 1.5rem;
+    font-size: 1rem;
     color: #4fc3f7;
-    min-width: 24px;
+    min-width: 20px;
 }
 
 .instruction-item span {
@@ -450,28 +454,43 @@ body {
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
+    margin-bottom: 1em;
 }
 
 .help-btn {
-    padding: 12px 30px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
     background: linear-gradient(45deg, #3498db, #2980b9);
     color: white;
     border: none;
-    border-radius: 25px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 1rem;
-    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+    border-radius: 50%;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.25);
+    margin-top: 20px;
+    margin-left: 20px;
 }
 
 .help-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+    transform: translateY(-1px) scale(1.05);
+    box-shadow: 0 8px 20px rgba(52, 152, 219, 0.45), 0 0 12px rgba(79, 195, 247, 0.6);
 }
 
-.help-btn i {
-    margin-right: 8px;
+.help-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* 固定“使用教程”按钮到页面左上角 */
+#help-btn {
+    position: fixed;
+    top: 16px;
+    left: 20px;
+    z-index: 200;
 }
 
 /* Results */
@@ -697,13 +716,15 @@ body {
     }
 
     .instruction-grid {
-        grid-template-columns: 1fr;
+        /* grid-template-columns: instruction-item; */
+        display: flex;
+        flex-direction: row;
     }
 
     .instruction-item {
         flex-direction: column;
         text-align: center;
-        gap: 10px;
+        gap: 5px;
     }
 }
 
@@ -758,7 +779,7 @@ body {
 /* Tooltips */
 .tooltip {
     position: relative;
-    cursor: help;
+    /* cursor: help; */
 }
 
 .tooltip::after {
@@ -782,6 +803,14 @@ body {
 .tooltip:hover::after {
     opacity: 1;
     visibility: visible;
+}
+
+/* Place help button tooltip to the right */
+#help-btn.tooltip::after {
+    top: 50%;
+    left: calc(100% + 8px);
+    bottom: auto;
+    transform: translateY(-50%);
 }
 
 /* Modal styles */

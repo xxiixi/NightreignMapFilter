@@ -18,6 +18,11 @@
 <body>
     <div class="container">
         <header class="header">
+            <div class="button-row">
+                <button id="help-btn" class="help-btn tooltip" aria-label="使用教程" data-tooltip="点击查看使用教程">
+                    <img src="favicon.ico" alt="使用教程" class="help-icon">
+                </button>
+            </div>
             <!-- ======================= -->
             <div class="top-actions">
                 <button id="action-stats" class="action-btn" title="查看访问量">
@@ -134,7 +139,7 @@
             <div id="selection-section" class="section" style="display: none;">
                 <div class="selection-grid">
                     <div class="selection-card">
-                        <h3>选择想要查看的夜王</h3>
+                        <h3>选择夜王</h3>
                         <p class="current-selection">当前选择: <span id="chosen-nightlord">NONE</span></p>
                         <div class="button-grid">
                             <button class="nightlord-btn" data-nightlord="Gladius">"黑夜野兽"格拉狄乌斯</button>
@@ -149,7 +154,7 @@
                     </div>
 
                     <div class="selection-card">
-                        <h3>选择想要查看的特殊地形</h3>
+                        <h3>选择特殊地形</h3>
                         <p class="current-selection">当前选择: <span id="chosen-map">NONE</span></p>
                         <div class="button-grid">
                             <button class="map-btn" data-map="Default">默认</button>
@@ -162,45 +167,44 @@
                 </div>
             </div>
 
-            <div id="interaction-section" class="section" style="display: none;">
-                <div class="instructions-card">
-                    <h3><i class="fas fa-info-circle"></i> 使用方式</h3>
-                    <div class="instruction-grid">
-                        <div class="instruction-item">
-                            <i class="fas fa-mouse-pointer"></i>
-                            <span><strong>左键</strong> 点击橙色点来放置教堂</span>
+            <div class="section">
+            <!-- ======================= -->
+            
+            <h3 class="instructions-card-title"><i class="fas fa-layer-group"></i> 地图展示</h3>
+
+            <div class="instructions-card">
+                <div id="interaction-section"  style="display: none;">
+
+                </div>
+            </div>
+
+            <!-- ======================= -->
+            <div id="results-section"  style="display: none;">
+                <div class="results-grid">
+                    <div class="left-panel">
+                        <div class="instruction-grid">
+                            <div class="instruction-item">
+                                <i class="fas fa-mouse-pointer"></i>
+                                <span>左键标点</span>
+                            </div>
+                            <div class="instruction-item">
+                                <i class="fas fa-hand-pointer"></i>
+                                <span>右键删除</span>
+                            </div>
                         </div>
-                        <div class="instruction-item">
-                            <i class="fas fa-hand-pointer"></i>
-                            <span><strong>右键</strong> 选择 法师塔 或 超级商人的村落</span>
+                        <div class="seed-counter">
+                            <h3>可能的地图种子</h3>
+                            <div class="seed-count" id="seed-count">0</div>
                         </div>
-                    </div>
-                    <div class="button-row">
                         <button id="reset-map-btn" class="reset-btn">
                             <i class="fas fa-undo"></i>
                             重置地图 & 移除所有标点
                         </button>
-                        
-                        <button id="help-btn" class="help-btn">
-                            <i class="fas fa-question-circle"></i>
-                            帮助 & 小技巧
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div id="results-section" class="section" style="display: none;">
-                <div class="results-grid">
-                    <div class="left-panel">
-                        <div class="seed-counter">
-                            <h3>Possible Map Seeds</h3>
-                            <div class="seed-count" id="seed-count">0</div>
-                        </div>
 
                         <div id="possible-seeds-section" class="possible-seeds-section" style="display: none;">
                             <div class="possible-seeds-card">
-                                <h4><i class="fas fa-list"></i> Select Seed to View</h4>
-                                <p class="description">Click on any seed or use arrow keys:</p>
+                                <h4><i class="fas fa-list"></i> 查看不同地图种子</h4>
+                                <p class="description">支持键盘左右键切换相邻种子</p>
                                 <div id="possible-seeds-grid" class="possible-seeds-grid">
                                 </div>
                             </div>
@@ -219,7 +223,7 @@
                         </div>
                     </div>
                 </div>
-
+            </div>
             </div>
         </main>
     </div>
@@ -234,7 +238,7 @@
             <div class="modal-body">
                 <div class="help-section">
                     <h4><i class="fas fa-gamepad"></i> 使用说明</h4>
-                    <p>此工具通过对比地图上教堂与法师塔的位置，帮助你识别《夜之降临》地图种子。</p>
+                    <p>此工具通过对比地图上教堂与法师塔的位置，帮助你识别《黑夜君临》地图种子。</p>
                     
                     <h4><i class="fas fa-list-ol"></i> 逐步指南</h4>
                     <ol>
