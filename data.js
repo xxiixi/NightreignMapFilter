@@ -85,7 +85,7 @@ const CANVAS_SIZE = 768;
 // Available Nightlords
 const NIGHTLORDS = [
   'Gladius', 'Adel', 'Gnoster', 'Maris', 
-  'Libra', 'Fulghor', 'Caligo', 'Heolstor'
+  'Libra', 'Fulghor', 'Caligo', 'Heolstor', 'Unknown'
 ];
 
 // Available Maps
