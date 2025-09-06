@@ -80,7 +80,7 @@ const ICON_ASSETS = {
 
 // Constants
 const ICON_SIZE = 38;
-const CANVAS_SIZE = 768;
+const CANVAS_SIZE = 900;
 
 // Available Nightlords
 const NIGHTLORDS = [
