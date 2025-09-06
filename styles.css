@@ -87,9 +87,9 @@ body {
     position: absolute;
     top: 48px;
     right: 20px;
-    background: rgba(0, 0, 0, 0.85);
+    background: rgba(0, 0, 0, 0.397);
     color: #fff;
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(0, 0, 0, 0.199);
     border-radius: 10px;
     padding: 10px 12px;
     width: 220px;
@@ -99,12 +99,12 @@ body {
 
 .popover-inner {
     padding: 8px;
-    max-width: 200px;
+    max-width: 220px;
     width: 180px;
 }
 
 .popover-title {
-    font-size: 12px;
+    font-size: 14px;
     margin-bottom: 8px;
 }
 
@@ -141,6 +141,17 @@ body {
 .version {
     font-size: 0.9rem;
     opacity: 0.7;
+}
+
+/* Status icon next to cv-status */
+.status-rocket {
+    color: #4fc3f7; /* 默认火箭颜色，可按需调整 */
+}
+.status-rocket svg {
+    width: 14px;
+    height: 14px;
+    margin-right: 6px;
+    vertical-align: -2px;
 }
 
 .attribution {

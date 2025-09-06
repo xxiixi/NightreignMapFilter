@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#1a1a2e">
-    <meta name="description" content="基于兴趣点位置识别《艾尔登法环 夜之降临》地图种子的交互式工具">
-    <meta name="keywords" content="艾尔登法环, 夜之降临, 地图, 种子, 识别, 兴趣点, 工具">
+    <meta name="description" content="基于兴趣点位置识别《艾尔登法环:黑夜君临》地图种子的交互式工具">
+    <meta name="keywords" content="艾尔登法环, 黑夜君临, 地图, 种子, 识别, 兴趣点, 工具">
     <link rel="icon" href="favicon.ico">
     <!-- Vercount PV/UV 统计脚本 -->
     <script defer src="https://events.vercount.one/js"></script>
@@ -22,16 +22,19 @@
                 <button id="action-stats" class="action-btn" title="查看访问量">
                     <img src="assets/icons/fire.svg" alt="访问量">
                 </button>
-                <button id="action-repo" class="action-btn" title="查看原项目">
-                    <img src="assets/icons/star-fill.svg" alt="查看原项目">
+                <button id="action-repo" class="action-btn" title="查看项目">
+                    <img src="assets/icons/github.svg" alt="查看项目">
                 </button>
-                <button id="action-help" class="action-btn" title="使用说明">
-                    <i class="fas fa-book-open"></i>
+                <button id="action-english-web" class="action-btn" title="查看英文版原网站">
+                    <img src="assets/icons/box-arrow-in-up-right.svg" alt="查看英文版原网站">
                 </button>
                 <button id="action-tbd" class="action-btn" title="待定">
                     <i class="fas fa-ellipsis"></i>
                 </button>
                 <div id="stats-popover" class="actions-popover" style="display: none;">
+                    <div class="popover-title">
+                        🔥 访问量统计
+                    </div>
                     <div class="popover-body">
                         本站总访客数: <span id="vercount_value_site_uv">Loading</span> 人<br>
                         本站总访问量: <span id="vercount_value_site_pv">Loading</span> 次<br>
@@ -41,7 +44,7 @@
                 <div id="repo-popover" class="actions-popover" style="display: none;">
                     <div class="popover-inner">
                         <div class="popover-title">
-                            🙏 求个Star ⭐️ 感谢支持 🙏
+                            🌟项目信息
                         </div>
                         <div class="popover-body">
                             本站GitHub仓库
@@ -54,6 +57,29 @@
                             点击跳转
                         </a>
                         </div>
+                        <div class="popover-body">
+                            提出issue
+                            <a
+                            href="https://github.com/xxiixi/NightreignMapseedFilter/issues"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="footer-link"
+                        >
+                            点击跳转
+                        </a>
+                        </div>
+                        <div class="popover-meta" style="border-top: 1px solid #4fc3f7; padding-top: 8px;">NightreignMapseedFilter</div>
+                    </div>
+                </div>
+                <div id="english-popover" class="actions-popover" style="display: none;">
+                    <div class="popover-inner">
+                        <div class="popover-title">
+                            🔗 英文版原网站
+                        </div>
+                        <div class="popover-body">
+                            <a href="https://thanosapollo.github.io/nightreign-mapseed-recogniser/" target="_blank" rel="noopener noreferrer" class="footer-link">点击查看英文版原网站</a>
+                        </div>
+                        <div class="popover-meta" style="border-top: 1px solid #4fc3f7; padding-top: 8px;"> <i class="fab fa-github"></i> thanosapollo</div>
                     </div>
                 </div>
             </div>
@@ -63,7 +89,7 @@
             </h1>
             <div class="subtitle">
                 <p class="version">Version 1.0 | Nightreign version 1.01.3</p>
-                <span id="cv-status" style="font-size: 12px; color: #6c757d; margin-left: 15px;"></span>
+                <span id="cv-status" style="font-size: 12px;"></span>
             </div>
         </header>
 
@@ -232,11 +258,12 @@
                 var yearEl = document.getElementById('current-year');
                 var lastUpdatedEl = document.getElementById('last-updated');
                 var statsBtn = document.getElementById('action-stats');
-                var helpBtn = document.getElementById('action-help');
                 var tbdBtn = document.getElementById('action-tbd');
                 var statsPopover = document.getElementById('stats-popover');
                 var repoBtn = document.getElementById('action-repo');
                 var repoPopover = document.getElementById('repo-popover');
+                var englishBtn = document.getElementById('action-english-web');
+                var englishPopover = document.getElementById('english-popover');
                 var now = new Date();
                 if (yearEl) {
                     yearEl.textContent = String(now.getFullYear());
@@ -258,11 +285,13 @@
                         var willShow = statsPopover.style.display === 'none';
                         // 互斥：开启当前前先关闭对方
                         if (repoPopover) repoPopover.style.display = 'none';
+                        if (englishPopover) englishPopover.style.display = 'none';
                         statsPopover.style.display = willShow ? 'block' : 'none';
                     });
                     document.addEventListener('click', function () {
                         statsPopover.style.display = 'none';
                         if (repoPopover) repoPopover.style.display = 'none';
+                        if (englishPopover) englishPopover.style.display = 'none';
                     });
                     statsPopover.addEventListener('click', function (e) { e.stopPropagation(); });
                 }
@@ -287,13 +316,33 @@
                         var willShow = repoPopover.style.display === 'none';
                         // 互斥：开启当前前先关闭对方
                         if (statsPopover) statsPopover.style.display = 'none';
+                        if (englishPopover) englishPopover.style.display = 'none';
                         repoPopover.style.display = willShow ? 'block' : 'none';
                     });
                     document.addEventListener('click', function () {
                         repoPopover.style.display = 'none';
                         if (statsPopover) statsPopover.style.display = 'none';
+                        if (englishPopover) englishPopover.style.display = 'none';
                     });
                     repoPopover.addEventListener('click', function (e) { e.stopPropagation(); });
+                }
+
+                // 英文站点：弹出 Popover，互斥显示
+                if (englishBtn && englishPopover) {
+                    englishBtn.addEventListener('click', function (e) {
+                        e.stopPropagation();
+                        var willShow = englishPopover.style.display === 'none';
+                        // 互斥：开启当前前先关闭对方
+                        if (statsPopover) statsPopover.style.display = 'none';
+                        if (repoPopover) repoPopover.style.display = 'none';
+                        englishPopover.style.display = willShow ? 'block' : 'none';
+                    });
+                    document.addEventListener('click', function () {
+                        englishPopover.style.display = 'none';
+                        if (statsPopover) statsPopover.style.display = 'none';
+                        if (repoPopover) repoPopover.style.display = 'none';
+                    });
+                    englishPopover.addEventListener('click', function (e) { e.stopPropagation(); });
                 }
             } catch (e) {
                 // ignore
