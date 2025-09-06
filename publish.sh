@@ -17,8 +17,8 @@ git checkout gh-pages 2>/dev/null || git checkout --orphan gh-pages
 # Get all files from master except the extraction tool
 
 # 用当前分支作为发布源
-git checkout "$CURRENT_BRANCH" -- .
-# git checkout main -- .
+# git checkout "$CURRENT_BRANCH" -- .
+git checkout main -- .
 git rm --cached extraction.html 2>/dev/null || true
 rm -f extraction.html
 
