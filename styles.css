@@ -823,7 +823,9 @@ body {
 
 #seed-image-container {
     text-align: center;
+    min-width: 700px;
 }
+
 
 #seed-image-container img {
     width: 100%;
@@ -915,6 +917,11 @@ body {
         text-align: center;
         gap: 5px;
     } */
+
+    #seed-image-container {
+        text-align: center;
+        min-width: 0;
+    }
 }
 
 /* Animations */
