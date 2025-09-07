@@ -789,6 +789,26 @@
             const fallbackUrl = `assets/pattern/${paddedNum}.jpg?v=${cacheBust}`;
 
             currentImage = new Image();
+            // 在加载前绘制一个自定义 loading 圈
+            (function showLoader(){
+                try {
+                    // 复用画布，绘制一个简单的环形旋转占位（与主站样式保持一致的感觉）
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    // 背景
+                    const gradient = ctx.createRadialGradient(canvas.width/2, canvas.height/2, 0, canvas.width/2, canvas.height/2, canvas.width/2);
+                    gradient.addColorStop(0, '#34495e');
+                    gradient.addColorStop(0.7, '#2c3e50');
+                    gradient.addColorStop(1, '#1a1a2e');
+                    ctx.fillStyle = gradient;
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    // 提示文字
+                    ctx.fillStyle = '#ffd700';
+                    ctx.font = 'bold 20px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText('图片加载中...', canvas.width/2, canvas.height/2 + 40);
+                } catch(_) {}
+            })();
             let triedFallback = false;
             currentImage.onload = function() {
                 drawCanvas();

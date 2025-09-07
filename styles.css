@@ -11,12 +11,15 @@ body {
     color: #ffffff;
     min-height: 100vh;
     line-height: 1.6;
+    display: flex;
+    flex-direction: column;
 }
 
 .container {
     max-width: 1400px;
     margin: 0 auto;
     padding: 20px;
+    flex: 1 0 auto;
 }
 
 /* Header styles */
@@ -278,6 +281,40 @@ body {
 .loading-indicator p {
     font-size: 1.2rem;
     font-weight: 500;
+}
+
+/* 圆环加载动画 */
+.loader {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 16px auto;
+}
+
+.loader:before, .loader:after {
+    content: '';
+    border-radius: 50%;
+    position: absolute;
+    inset: 0;
+    box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.3) inset;
+}
+
+.loader:after {
+    box-shadow: 0 3px 0 #ffd700 inset;
+    animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+    0% { transform: rotate(0); }
+    100% { transform: rotate(360deg); }
+}
+
+/* 移动端基础适配 - 简化版 */
+@media (max-width: 999px) {
+    .loader {
+        width: 80px;
+        height: 80px;
+    }
 }
 
 /* Selection grid */
@@ -777,6 +814,7 @@ body {
     border: 2px solid rgba(255, 255, 255, 0.2);
     border-radius: 15px;
     background: #2b2b2b;
+    width: 100%;
     max-width: 100%;
     height: auto;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
@@ -788,6 +826,8 @@ body {
 }
 
 #seed-image-container img {
+    width: 100%;
+    height: auto;
     max-width: 100%;
     border: 2px solid #ffd700;
     border-radius: 15px;

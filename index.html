@@ -37,9 +37,9 @@
                 <button id="action-map-source" class="action-btn" title="地图数据来源">
                     <img src="assets/icons/pin-map-fill.svg" alt="地图数据来源">
                 </button>
-                <button id="action-tbd" class="action-btn" title="待定">
+                <!-- <button id="action-tbd" class="action-btn" title="待定">
                     <i class="fas fa-ellipsis"></i>
-                </button>
+                </button> -->
                 <div id="stats-popover" class="actions-popover" style="display: none;">
                     <div class="popover-title">
                         🔥 访问量统计
@@ -105,7 +105,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="tbd-popover" class="actions-popover" style="display: none;">
+                <!-- <div id="tbd-popover" class="actions-popover" style="display: none;">
                     <div class="popover-inner">
                         <div class="popover-title">🧪 功能预览</div>
                         <div class="popover-body">此功能正在开发中，敬请期待</div>
@@ -114,7 +114,7 @@
                         </div>
                         <div class="popover-meta" style="border-top: 1px solid #4fc3f7; padding-top: 8px;">NightreignMapFilter</div>
                     </div>
-                </div>
+                </div> -->
             </div>
 
             <!-- ======================= -->
@@ -132,7 +132,7 @@
 
             <div id="loading-section" class="section" style="display: block;">
                 <div class="loading-indicator">
-                    <i class="fas fa-spinner fa-spin"></i>
+                    <div class="loader" aria-label="Loading"></div>
                     <p>初始化地图数据，请稍候...</p>
                 </div>
             </div>
@@ -311,7 +311,7 @@
                 var yearEl = document.getElementById('current-year');
                 var lastUpdatedEl = document.getElementById('last-updated');
                 var statsBtn = document.getElementById('action-stats');
-                var tbdBtn = document.getElementById('action-tbd');
+                // var tbdBtn = document.getElementById('action-tbd');
                 var helpBtn = document.getElementById('help-btn');
                 var statsPopover = document.getElementById('stats-popover');
                 var repoBtn = document.getElementById('action-repo');
