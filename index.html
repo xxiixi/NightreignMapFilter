@@ -25,11 +25,11 @@
             </div>
             <!-- ======================= -->
             <div class="top-actions">
+                <button id="action-quickref" class="action-btn" title="点击跳转【黑夜君临速查手册】">
+                    <img src="assets/icons/window-stack.svg" alt="速查手册">
+                </button>
                 <button id="action-stats" class="action-btn" title="查看访问量">
                     <img src="assets/icons/fire.svg" alt="访问量">
-                </button>
-                <button id="action-repo" class="action-btn" title="查看项目">
-                    <img src="assets/icons/github.svg" alt="查看项目">
                 </button>
                 <button id="action-english-web" class="action-btn" title="查看英文版原网站">
                     <img src="assets/icons/box-arrow-in-up-right.svg" alt="查看英文版原网站">
@@ -37,9 +37,12 @@
                 <button id="action-map-source" class="action-btn" title="地图数据来源">
                     <img src="assets/icons/pin-map-fill.svg" alt="地图数据来源">
                 </button>
-                <button id="action-tbd" class="action-btn" title="待定">
-                    <i class="fas fa-ellipsis"></i>
+                <button id="action-repo" class="action-btn" title="查看项目">
+                    <img src="assets/icons/github.svg" alt="查看项目">
                 </button>
+                <!-- <button id="action-tbd" class="action-btn" title="待定">
+                    <i class="fas fa-ellipsis"></i>
+                </button> -->
                 <div id="stats-popover" class="actions-popover" style="display: none;">
                     <div class="popover-title">
                         🔥 访问量统计
@@ -105,7 +108,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="tbd-popover" class="actions-popover" style="display: none;">
+                <!-- <div id="tbd-popover" class="actions-popover" style="display: none;">
                     <div class="popover-inner">
                         <div class="popover-title">🧪 功能预览</div>
                         <div class="popover-body">此功能正在开发中，敬请期待</div>
@@ -114,7 +117,7 @@
                         </div>
                         <div class="popover-meta" style="border-top: 1px solid #4fc3f7; padding-top: 8px;">NightreignMapFilter</div>
                     </div>
-                </div>
+                </div> -->
             </div>
 
             <!-- ======================= -->
@@ -130,14 +133,14 @@
 
         <main class="main-content">
 
-            <div id="loading-section" class="section" style="display: block;">
+            <div id="loading-section" class="section" style="display: flex;">
                 <div class="loading-indicator">
-                    <i class="fas fa-spinner fa-spin"></i>
+                    <div class="loader" aria-label="Loading"></div>
                     <p>初始化地图数据，请稍候...</p>
                 </div>
             </div>
 
-            <div id="selection-section" class="section" style="display: none;">
+            <div id="selection-section" class="section" style="display: block;">
                 <div class="selection-grid">
                     <div class="selection-card">
                         <h3>选择夜王</h3>
@@ -195,7 +198,7 @@
             </div>
 
             <!-- ======================= -->
-            <div id="results-section"  style="display: none;">
+            <div id="results-section"  style="display: block;">
                 <div class="results-grid">
                     <div class="left-panel">
                         <div class="instruction-grid">
@@ -311,7 +314,6 @@
                 var yearEl = document.getElementById('current-year');
                 var lastUpdatedEl = document.getElementById('last-updated');
                 var statsBtn = document.getElementById('action-stats');
-                var tbdBtn = document.getElementById('action-tbd');
                 var helpBtn = document.getElementById('help-btn');
                 var statsPopover = document.getElementById('stats-popover');
                 var repoBtn = document.getElementById('action-repo');
@@ -320,6 +322,7 @@
                 var englishPopover = document.getElementById('english-popover');
                 var mapSourceBtn = document.getElementById('action-map-source');
                 var mapSourcePopover = document.getElementById('map-source-popover');
+                var quickRefBtn = document.getElementById('action-quickref');
                 var tbdPopover = document.getElementById('tbd-popover');
                 var now = new Date();
                 if (yearEl) {
@@ -361,6 +364,14 @@
                     helpBtn.addEventListener('click', function () {
                         var helpModal = document.getElementById('help-modal');
                         if (helpModal) helpModal.style.display = 'flex';
+                    });
+                }
+
+                // 速查手册：新标签页打开
+                if (quickRefBtn) {
+                    quickRefBtn.addEventListener('click', function (e) {
+                        e.stopPropagation();
+                        window.open('https://xxiixi.github.io/NightreignQuickRef/', '_blank', 'noopener,noreferrer');
                     });
                 }
 
@@ -428,26 +439,6 @@
                 }
                 if (mapSourcePopover) {
                     mapSourcePopover.addEventListener('click', function (e) { e.stopPropagation(); });
-                }
-                if (tbdBtn && tbdPopover) {
-                    tbdBtn.addEventListener('click', function (e) {
-                        e.stopPropagation();
-                        var willShow = tbdPopover.style.display === 'none';
-                        // 互斥：开启当前前先关闭对方
-                        if (statsPopover) statsPopover.style.display = 'none';
-                        if (repoPopover) repoPopover.style.display = 'none';
-                        if (englishPopover) englishPopover.style.display = 'none';
-                        if (mapSourcePopover) mapSourcePopover.style.display = 'none';
-                        tbdPopover.style.display = willShow ? 'block' : 'none';
-                    });
-                    document.addEventListener('click', function () {
-                        tbdPopover.style.display = 'none';
-                        if (statsPopover) statsPopover.style.display = 'none';
-                        if (repoPopover) repoPopover.style.display = 'none';
-                        if (englishPopover) englishPopover.style.display = 'none';
-                        if (mapSourcePopover) mapSourcePopover.style.display = 'none';
-                    });
-                    tbdPopover.addEventListener('click', function (e) { e.stopPropagation(); });
                 }
             } catch (error) {
                 console.error('Error initializing popovers:', error);
