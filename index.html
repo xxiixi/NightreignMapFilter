@@ -314,7 +314,6 @@
                 var yearEl = document.getElementById('current-year');
                 var lastUpdatedEl = document.getElementById('last-updated');
                 var statsBtn = document.getElementById('action-stats');
-                // var tbdBtn = document.getElementById('action-tbd');
                 var helpBtn = document.getElementById('help-btn');
                 var statsPopover = document.getElementById('stats-popover');
                 var repoBtn = document.getElementById('action-repo');
@@ -440,26 +439,6 @@
                 }
                 if (mapSourcePopover) {
                     mapSourcePopover.addEventListener('click', function (e) { e.stopPropagation(); });
-                }
-                if (tbdBtn && tbdPopover) {
-                    tbdBtn.addEventListener('click', function (e) {
-                        e.stopPropagation();
-                        var willShow = tbdPopover.style.display === 'none';
-                        // 互斥：开启当前前先关闭对方
-                        if (statsPopover) statsPopover.style.display = 'none';
-                        if (repoPopover) repoPopover.style.display = 'none';
-                        if (englishPopover) englishPopover.style.display = 'none';
-                        if (mapSourcePopover) mapSourcePopover.style.display = 'none';
-                        tbdPopover.style.display = willShow ? 'block' : 'none';
-                    });
-                    document.addEventListener('click', function () {
-                        tbdPopover.style.display = 'none';
-                        if (statsPopover) statsPopover.style.display = 'none';
-                        if (repoPopover) repoPopover.style.display = 'none';
-                        if (englishPopover) englishPopover.style.display = 'none';
-                        if (mapSourcePopover) mapSourcePopover.style.display = 'none';
-                    });
-                    tbdPopover.addEventListener('click', function (e) { e.stopPropagation(); });
                 }
             } catch (error) {
                 console.error('Error initializing popovers:', error);

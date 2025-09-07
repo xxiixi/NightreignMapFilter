@@ -267,6 +267,9 @@ class NightreignMapRecogniser {
         const loadingSection = document.getElementById('loading-section');
         if (loadingSection) {
             loadingSection.style.display = 'none';
+            // loadingSection.setAttribute('hidden', '');
+            // loadingSection.setAttribute('aria-hidden', 'true');
+            // loadingSection.classList.add('is-hidden');
         }
     }
 
@@ -1068,38 +1071,22 @@ class NightreignMapRecogniser {
         canvas.style.display = 'none';
         seedImageContainer.style.display = 'block';
         
-        // Show an overlay while the image is loading (reuse selection-overlay styles)
-        const mapContainer = document.querySelector('.map-container');
-        let imageLoadingOverlay = document.getElementById('image-loading-overlay');
-        if (!imageLoadingOverlay && mapContainer) {
-            imageLoadingOverlay = document.createElement('div');
-            imageLoadingOverlay.id = 'image-loading-overlay';
-            imageLoadingOverlay.className = 'selection-overlay';
-            // imageLoadingOverlay.innerHTML = '<div class="overlay-message"><div class="loader" aria-label="Loading"></div><p>图片加载中...</p></div>';
-            mapContainer.appendChild(imageLoadingOverlay);
-        }
-        if (imageLoadingOverlay) {
-            imageLoadingOverlay.style.display = 'flex';
-        }
+        // 使用浏览器默认加载指示，不再创建自定义覆盖层
 
         const seedStr = mapSeed.toString().padStart(3, '0');
         const cacheBust = Date.now();
         const localUrl = `assets/pattern-zh-CN/${seedStr}.jpg?v=${cacheBust}`;
         // const remoteUrl = `https://www.trc-playground.hu/GameZ/NightreignSeeds/Seeds/${seedStr}.jpg`;
         
-        // Prefer local zh-CN image; show loading text, fallback to remote if missing
+        // Prefer local zh-CN image; 仅使用占位容器与默认加载
         seedImageContainer.innerHTML = `
             <center>
-                <div id="seed-loading-text" style="margin-bottom: 8px;" aria-live="polite"><div class="loader" aria-label="Loading"></div></div>
                 <a href="${localUrl}" target="_blank">
-                    <img id="seed-image" src="" alt="Seed ${mapSeed}" style="width: 100%; height: auto; max-width: 100%; border: 2px solid black; visibility: hidden;"
-                         onload="this.style.visibility='visible'; 
-                         var t=document.getElementById('seed-loading-text'); 
-                         if(t) t.style.display='none'; 
-                         var o=document.getElementById('image-loading-overlay'); 
-                         if(o) o.style.display='none';"
-                         onerror="this.onerror=null;
-                         ;">
+                    <div class="seed-image-wrapper">
+                        <img id="seed-image" class="seed-image" src="" alt="Seed ${mapSeed}" style="opacity: 0;"
+                             onload="this.style.opacity='1';"
+                             onerror="this.onerror=null;">
+                    </div>
                 </a>
                 <br>
                 <b style="color: #ffd700;">地图种子：${mapSeed}</b>
@@ -1107,23 +1094,29 @@ class NightreignMapRecogniser {
                 <small style="color: #4fc3f7;">点击图片可在新标签页中打开</small>
             </center>
         `;
+        // 设置实际图片地址，触发加载
+        const imgEl = document.getElementById('seed-image');
+        if (imgEl) {
+            imgEl.src = localUrl;
+        }
         // ==========================测试用===============================================
         // Optional: simulate image loading delay via URL param ?imgDelay=ms
-        try {
-            const val = new URLSearchParams(location.search).get('imgDelay');
-            const ms = parseInt(val, 10);
-            const delayMs = isNaN(ms) ? 0 : Math.max(0, ms);
-            const imgEl = document.getElementById('seed-image');
-            const setSrc = () => { if (imgEl) imgEl.src = localUrl; };
-            if (delayMs > 0) {
-                setTimeout(setSrc, delayMs);
-            } else {
-                setSrc();
-            }
-        } catch (_) {
-            const imgEl = document.getElementById('seed-image');
-            if (imgEl) imgEl.src = localUrl;
-        }
+    //     try {
+    //         const val = new URLSearchParams(location.search).get('imgDelay');
+    //         const ms = parseInt(val, 10);
+    //         const delayMs = isNaN(ms) ? 0 : Math.max(0, ms);
+    //         const imgEl = document.getElementById('seed-image');
+    //         const setSrc = () => { if (imgEl) imgEl.src = localUrl; };
+    //         if (delayMs > 0) {
+    //             setTimeout(setSrc, delayMs);
+    //         } else {
+    //             setSrc();
+    //         }
+    //     } catch (_) {
+    //         const imgEl = document.getElementById('seed-image');
+    //         if (imgEl) imgEl.src = localUrl;
+    //     }
+    // }
     }
 
 // =========================================================================

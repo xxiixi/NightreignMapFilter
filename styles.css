@@ -272,6 +272,26 @@ body {
     padding: 40px;
 }
 
+/* 使 Loading 作为全屏覆盖层*/
+#loading-section {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    z-index: 999;
+}
+
+/* 强制隐藏（供 JS/属性切换使用） */
+#loading-section[hidden],
+#loading-section.is-hidden,
+#loading-section[aria-hidden="true"] {
+    display: none !important;
+}
+
 .loading-indicator i {
     font-size: 3rem;
     color: #ffd700;
@@ -823,8 +843,9 @@ body {
 
 #seed-image-container {
     text-align: center;
-    min-width: 700px;
+    min-width: 900px;
 }
+
 
 
 #seed-image-container img {
