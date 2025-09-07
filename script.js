@@ -281,6 +281,13 @@ class NightreignMapRecogniser {
         
         // Show default map immediately so users can start clicking
         this.showDefaultMap();
+
+        // When nothing is selected, display all seeds by default
+        const allSeeds = getAllSeeds();
+        if (Array.isArray(allSeeds) && allSeeds.length > 0) {
+            this.showPossibleSeeds(allSeeds);
+            this.updateSeedCountDisplay(allSeeds.length);
+        }
     }
 
     showDefaultMap() {
@@ -529,8 +536,12 @@ class NightreignMapRecogniser {
                     this.selectSeedFromGrid(seedsByMap[0].seedNumber);
                 }
             } else {
-                this.hidePossibleSeeds();
-                this.showSelectionOverlay();
+                // Nothing selected: show all seeds and results panel
+                this.showResultsSection();
+                this.hideSelectionOverlay();
+                const allSeeds = getAllSeeds();
+                this.updateSeedCountDisplay(allSeeds.length);
+                this.showPossibleSeeds(allSeeds);
             }
         }
     }
@@ -1051,6 +1062,8 @@ class NightreignMapRecogniser {
     showSeedImage(mapSeed) {
         const canvas = document.getElementById('map-canvas');
         const seedImageContainer = document.getElementById('seed-image-container');
+        // Ensure selection overlay does not block the view when showing a seed image
+        this.hideSelectionOverlay();
         
         canvas.style.display = 'none';
         seedImageContainer.style.display = 'block';
