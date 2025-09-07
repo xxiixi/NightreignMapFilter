@@ -25,17 +25,20 @@
             </div>
             <!-- ======================= -->
             <div class="top-actions">
+                <button id="action-quickref" class="action-btn" title="点击跳转【黑夜君临速查手册】">
+                    <img src="assets/icons/window-stack.svg" alt="速查手册">
+                </button>
                 <button id="action-stats" class="action-btn" title="查看访问量">
                     <img src="assets/icons/fire.svg" alt="访问量">
-                </button>
-                <button id="action-repo" class="action-btn" title="查看项目">
-                    <img src="assets/icons/github.svg" alt="查看项目">
                 </button>
                 <button id="action-english-web" class="action-btn" title="查看英文版原网站">
                     <img src="assets/icons/box-arrow-in-up-right.svg" alt="查看英文版原网站">
                 </button>
                 <button id="action-map-source" class="action-btn" title="地图数据来源">
                     <img src="assets/icons/pin-map-fill.svg" alt="地图数据来源">
+                </button>
+                <button id="action-repo" class="action-btn" title="查看项目">
+                    <img src="assets/icons/github.svg" alt="查看项目">
                 </button>
                 <!-- <button id="action-tbd" class="action-btn" title="待定">
                     <i class="fas fa-ellipsis"></i>
@@ -320,6 +323,7 @@
                 var englishPopover = document.getElementById('english-popover');
                 var mapSourceBtn = document.getElementById('action-map-source');
                 var mapSourcePopover = document.getElementById('map-source-popover');
+                var quickRefBtn = document.getElementById('action-quickref');
                 var tbdPopover = document.getElementById('tbd-popover');
                 var now = new Date();
                 if (yearEl) {
@@ -361,6 +365,14 @@
                     helpBtn.addEventListener('click', function () {
                         var helpModal = document.getElementById('help-modal');
                         if (helpModal) helpModal.style.display = 'flex';
+                    });
+                }
+
+                // 速查手册：新标签页打开
+                if (quickRefBtn) {
+                    quickRefBtn.addEventListener('click', function (e) {
+                        e.stopPropagation();
+                        window.open('https://xxiixi.github.io/NightreignQuickRef/', '_blank', 'noopener,noreferrer');
                     });
                 }
 
