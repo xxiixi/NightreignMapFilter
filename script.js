@@ -922,6 +922,16 @@ class NightreignMapRecogniser {
         this.showSelectionOverlay();
         this.hidePossibleSeeds();
         this.updateSeedCount();
+        // 重置后恢复默认：展示全部种子列表并允许直接浏览
+        try {
+            const allSeeds = getAllSeeds();
+            if (Array.isArray(allSeeds) && allSeeds.length > 0) {
+                this.showPossibleSeeds(allSeeds);
+                this.updateSeedCountDisplay(allSeeds.length);
+            }
+        } catch (_) {
+            // 忽略异常，保持计数已更新
+        }
     }
 
 
