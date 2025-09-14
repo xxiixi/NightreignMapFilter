@@ -274,18 +274,18 @@
         
         <div class="main-content">
             <div class="canvas-container">
-                <canvas id="imageCanvas" width="900" height="900"></canvas>
+                <canvas id="imageCanvas" width="768" height="768"></canvas>
             </div>
             
             <div class="poi-panel">
                 <div class="instructions">
-                    <h4>使用说明：</h4>
-                    <p><strong>点击图中的橙色圆圈</strong>对兴趣点进行标注：</p>
+                    <h4>Instructions:</h4>
+                    <p><strong>Click on the POI circles</strong> on the image to classify them:</p>
                     <ul style="margin: 8px 0; padding-left: 20px; font-size: 13px;">
-                        <li><strong>左键</strong>：教堂 🏰</li>
-                        <li><strong>右键</strong>：弹出菜单（法师塔 🔮 / 商人村落 🏘️ / 其他 📍）</li>  
+                        <li><strong>Left Click:</strong> Church 🏰</li>
+                        <li><strong>Right Click:</strong> Show menu (Mage Tower 🔮 / Village 🏘️ / Other 📍)</li>  
                     </ul>
-                    <p style="margin: 8px 0; font-size: 13px;">仅预设兴趣点位置可点击（以橙色圈显示）。</p>
+                    <p style="margin: 8px 0; font-size: 13px;">Only the predefined POI locations are clickable (shown as orange circles).</p>
                 </div>
                 
                 <h4>POI Status:</h4>
@@ -294,25 +294,23 @@
                 <div id="mappingStats" style="margin: 15px 0; padding: 10px; background: #f8f9fa; border-radius: 6px; font-size: 12px; color: #495057;"></div>
                 
                 <div class="controls">
-                    <button id="prevBtn" class="button secondary">◀ 上一个种子（B）</button>
-                    <button id="nextBtn" class="button primary">下一个种子（空格/回车） ▶</button>
-                    <button id="resetBtn" class="button secondary">重置当前种子标注</button>
-                    <button id="saveBtn" class="button primary">保存进度</button>
-                    <button id="exportBtn" class="button primary">导出数据（dataset.json）</button>
-                    <button id="loadBtn" class="button secondary">加载已有数据</button>
-                    <button id="calibrateBtn" class="button secondary">校准模式：关闭</button>
-                    <button id="exportCoordsBtn" class="button primary">导出坐标（当前地图）</button>
+                    <button id="prevBtn" class="button secondary">◀ Previous Seed (B)</button>
+                    <button id="nextBtn" class="button primary">Next Seed (Space/Enter) ▶</button>
+                    <button id="resetBtn" class="button secondary">Reset Current Seed</button>
+                    <button id="saveBtn" class="button primary">Save Progress</button>
+                    <button id="exportBtn" class="button primary">Export Data</button>
+                    <button id="loadBtn" class="button secondary">Load Existing Data</button>
                 </div>
                 
                 <div style="margin-top: 10px; font-size: 12px; color: #6c757d; text-align: center;">
-                    <div id="autoSaveStatus">自动保存：就绪</div>
+                    <div id="autoSaveStatus">Auto-save: Ready</div>
                     <div id="progressStatus"></div>
                 </div>
                 
                 <div class="stats" id="stats">
-                    <div>教堂数: <span id="churchCount">0</span></div>
-                    <div>法师塔数: <span id="mageCount">0</span></div>
-                    <div>商人村落数: <span id="villageCount">0</span></div>
+                    <div>Churches: <span id="churchCount">0</span></div>
+                    <div>Mage Towers: <span id="mageCount">0</span></div>
+                    <div>Villages: <span id="villageCount">0</span></div>
                 </div>
             </div>
         </div>
@@ -481,9 +479,6 @@
         let poiCounter = 1;
         let contextMenu = null;
         let pendingPOI = null;
-        let calibrationMode = false;
-        let draggingPOI = null;
-        let dragOffset = { x: 0, y: 0 };
 
         function isSeedMapped(seedKey) {
             // Simple check: does this seed exist in the tool database with any POIs?
@@ -495,66 +490,6 @@
             return seedData && seedData.pois && Object.keys(seedData.pois).length > 0;
         }
 
-        function findPOIAt(x, y, radius = 25) {
-            const mapTypeName = mapTypeNames[currentMapType] || 'Default';
-            const pois = PREDEFINED_POIS[mapTypeName] || [];
-            return pois.find(poi => {
-                const dx = x - poi.x;
-                const dy = y - poi.y;
-                return Math.sqrt(dx * dx + dy * dy) <= radius;
-            });
-        }
-
-        function onCanvasMouseDown(e) {
-            if (!calibrationMode) return;
-            const rect = canvas.getBoundingClientRect();
-            const scaleX = canvas.width / rect.width;
-            const scaleY = canvas.height / rect.height;
-            const x = (e.clientX - rect.left) * scaleX;
-            const y = (e.clientY - rect.top) * scaleY;
-            const poi = findPOIAt(x, y, 25);
-            if (poi) {
-                draggingPOI = poi;
-                dragOffset.x = x - poi.x;
-                dragOffset.y = y - poi.y;
-            }
-        }
-
-        function onCanvasMouseMove(e) {
-            if (!calibrationMode || !draggingPOI) return;
-            const rect = canvas.getBoundingClientRect();
-            const scaleX = canvas.width / rect.width;
-            const scaleY = canvas.height / rect.height;
-            const x = (e.clientX - rect.left) * scaleX;
-            const y = (e.clientY - rect.top) * scaleY;
-            draggingPOI.x = Math.max(0, Math.min(canvas.width, x - dragOffset.x));
-            draggingPOI.y = Math.max(0, Math.min(canvas.height, y - dragOffset.y));
-            drawCanvas();
-        }
-
-        function onCanvasMouseUp() {
-            if (!calibrationMode) return;
-            draggingPOI = null;
-        }
-
-        function exportPOICoordinates() {
-            const mapTypeName = mapTypeNames[currentMapType] || 'Default';
-            const pois = PREDEFINED_POIS[mapTypeName] || [];
-            const exportData = {
-                mapType: mapTypeName,
-                seed: currentSeed,
-                updatedPOIs: pois.map(p => ({ id: p.id, x: Math.round(p.x), y: Math.round(p.y) }))
-            };
-            const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `poi_${mapTypeName}_${currentSeed?.toString().padStart(3,'0') || 'unknown'}.json`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-        }
         function updateMappingStats() {
             // Count only seeds that exist in the tool database with POIs
             let mappedSeeds = 0;
@@ -696,12 +631,12 @@
             });
 
             // Canvas click events for POI classification
-            console.log('正在绑定画布事件监听器:', canvas);
+            console.log('Setting up canvas event listeners on canvas:', canvas);
             
             canvas.addEventListener('click', function(e) {
-                console.log('检测到画布点击事件');
-                console.log('当前种子:', currentSeed);
-                console.log('当前夜王:', currentNightlord);
+                console.log('Canvas click event fired');
+                console.log('Current seed:', currentSeed);
+                console.log('Current nightlord:', currentNightlord);
                 handlePOIClick(e, 'church');
             });
 
@@ -740,20 +675,6 @@
             });
             
             document.getElementById('fileInput').addEventListener('change', loadExistingData);
-
-            // Calibration toggle
-            document.getElementById('calibrateBtn').addEventListener('click', function() {
-                calibrationMode = !calibrationMode;
-                this.textContent = `校准模式：${calibrationMode ? '开启' : '关闭'}`;
-            });
-
-            // Export updated POI coordinates
-            document.getElementById('exportCoordsBtn').addEventListener('click', exportPOICoordinates);
-
-            // Dragging handlers for calibration
-            canvas.addEventListener('mousedown', onCanvasMouseDown);
-            window.addEventListener('mousemove', onCanvasMouseMove);
-            window.addEventListener('mouseup', onCanvasMouseUp);
         }
 
         function loadSeed(nightlord, seedNum, mapType) {
@@ -784,47 +705,18 @@
 
         function loadSeedImage(seedNum) {
             const paddedNum = seedNum.toString().padStart(3, '0');
-            const cacheBust = Date.now();
-            const primaryUrl = `assets/pattern-zh-CN/${paddedNum}.jpg?v=${cacheBust}`;
-            const fallbackUrl = `assets/pattern/${paddedNum}.jpg?v=${cacheBust}`;
-
+            const imageUrl = `assets/pattern-zh-CN/${paddedNum}.jpg`;
+            
             currentImage = new Image();
-            // 在加载前绘制一个自定义 loading 圈
-            (function showLoader(){
-                try {
-                    // 复用画布，绘制一个简单的环形旋转占位（与主站样式保持一致的感觉）
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    // 背景
-                    const gradient = ctx.createRadialGradient(canvas.width/2, canvas.height/2, 0, canvas.width/2, canvas.height/2, canvas.width/2);
-                    gradient.addColorStop(0, '#34495e');
-                    gradient.addColorStop(0.7, '#2c3e50');
-                    gradient.addColorStop(1, '#1a1a2e');
-                    ctx.fillStyle = gradient;
-                    ctx.fillRect(0, 0, canvas.width, canvas.height);
-                    // 提示文字
-                    ctx.fillStyle = '#ffd700';
-                    ctx.font = 'bold 20px Arial';
-                    ctx.textAlign = 'center';
-                    ctx.textBaseline = 'middle';
-                    ctx.fillText('图片加载中...', canvas.width/2, canvas.height/2 + 40);
-                } catch(_) {}
-            })();
-            let triedFallback = false;
             currentImage.onload = function() {
                 drawCanvas();
             };
             currentImage.onerror = function() {
-                if (!triedFallback) {
-                    console.warn(`Primary not found: ${primaryUrl}. Falling back to: ${fallbackUrl}`);
-                    triedFallback = true;
-                    currentImage.src = fallbackUrl;
-                } else {
-                    console.error(`Failed to load both primary and fallback images for seed ${paddedNum}`);
-                    // Draw placeholder with POI locations
-                    drawCanvas();
-                }
+                console.error(`Failed to load image: ${imageUrl}`);
+                // Draw placeholder with POI locations
+                drawCanvas();
             };
-            currentImage.src = primaryUrl;
+            currentImage.src = imageUrl;
         }
 
         function drawCanvas() {
@@ -938,7 +830,6 @@
         }
 
         function handlePOIClick(event, type) {
-            if (calibrationMode) return; // disable labeling when calibrating
             if (currentSeed === null || currentSeed === undefined) return;
             
             console.log('Click detected:', event.type, type);
@@ -989,7 +880,6 @@
         }
 
         function handlePOIRightClick(event) {
-            if (calibrationMode) return; // disable context menu when calibrating
             if (currentSeed === null || currentSeed === undefined) return;
             
             console.log('Right click detected');
@@ -1033,7 +923,7 @@
             mageItem.className = 'context-menu-item mage';
             mageItem.innerHTML = `
                 <img src="assets/images/mage-tower.png" style="width: 16px; height: 16px; margin-right: 8px; vertical-align: middle;">
-                法师塔
+                Mage Tower
             `;
             mageItem.onclick = () => {
                 if (pendingPOI) {
@@ -1063,7 +953,7 @@
             villageItem.className = 'context-menu-item village';
             villageItem.innerHTML = `
                 <img src="assets/images/village.png" style="width: 16px; height: 16px; margin-right: 8px; vertical-align: middle;">
-                商人村落
+                Village
             `;
             villageItem.onclick = () => {
                 if (pendingPOI) {
@@ -1456,13 +1346,13 @@
                 };
                 localStorage.setItem('nightreign-poi-extraction-progress', JSON.stringify(saveData));
                 
-                document.getElementById('autoSaveStatus').textContent = '自动保存：✅ 已保存';
+                document.getElementById('autoSaveStatus').textContent = 'Auto-save: ✅ Saved';
                 setTimeout(() => {
-                    document.getElementById('autoSaveStatus').textContent = '自动保存：就绪';
+                    document.getElementById('autoSaveStatus').textContent = 'Auto-save: Ready';
                 }, 2000);
             } catch (error) {
                 console.error('Auto-save failed:', error);
-                document.getElementById('autoSaveStatus').textContent = '自动保存：❌ 失败';
+                document.getElementById('autoSaveStatus').textContent = 'Auto-save: ❌ Failed';
             }
         }
 
@@ -1527,7 +1417,7 @@
                         }
                         
                         const lastSaved = new Date(saveData.lastSaved).toLocaleString();
-                        document.getElementById('autoSaveStatus').textContent = `上次保存时间：${lastSaved}`;
+                        document.getElementById('autoSaveStatus').textContent = `Last saved: ${lastSaved}`;
                     }
                 }
             } catch (error) {
