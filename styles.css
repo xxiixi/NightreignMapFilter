@@ -1303,3 +1303,196 @@ body {
 .possible-seeds-grid::-webkit-scrollbar-thumb:hover {
     background: rgba(79, 195, 247, 0.7);
 }
+
+/* Boss table styles */
+.boss-table-container {
+    margin-top: 20px;
+    display: grid;
+    gap: 30px;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+}
+
+.boss-table-section {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.boss-table-section h4 {
+    color: #ffd700;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    text-align: center;
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+}
+
+.boss-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.boss-table thead {
+    background: linear-gradient(45deg, #2c3e50, #34495e);
+}
+
+.boss-table th {
+    padding: 12px 8px;
+    text-align: center;
+    font-weight: 600;
+    color: #ffd700;
+    border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+    font-size: 0.85rem;
+}
+
+.boss-table td {
+    padding: 10px 8px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    font-size: 0.8rem;
+}
+
+.boss-table tbody tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.boss-table tbody tr:hover {
+    background: rgba(79, 195, 247, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.boss-table td:first-child {
+    text-align: center;
+    font-weight: 500;
+    color: #e8f4fd;
+}
+
+.boss-table td:nth-child(2) {
+    font-weight: 600;
+    color: #4fc3f7;
+    text-align: center;
+}
+
+/* Nightlord tag styles */
+.nightlord-tag {
+    display: inline-block;
+    padding: 2px 6px;
+    margin: 1px 2px;
+    border-radius: 8px;
+    font-size: 0.85em;
+    font-weight: 600;
+    text-align: center;
+    min-width: 32px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+}
+
+.nightlord-tag:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Different colors for each nightlord */
+.nightlord-sg {
+    background: #ee5a52;
+    color: white;
+}
+
+.nightlord-dz {
+    background: #44a08d;
+    color: white;
+}
+
+.nightlord-c {
+    background: #2980b9;
+    color: white;
+}
+
+.nightlord-sm {
+    background: #a2d8ee;
+    color: #4d5051;
+}
+
+.nightlord-sy {
+    background: #fdcb6e;
+    color: #4d5051;
+}
+
+.nightlord-rm {
+    background: #e84393;
+    color: white;
+}
+
+.nightlord-bl {
+    background: #0984e3;
+    color: white;
+}
+
+.nightlord-bdqm {
+    background: #6c5ce7;
+    color: white;
+}
+
+/* Responsive adjustments for boss tables */
+@media (max-width: 768px) {
+    .boss-table-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .boss-table-section {
+        padding: 15px;
+    }
+    
+    .boss-table {
+        font-size: 0.8rem;
+    }
+    
+    .boss-table th,
+    .boss-table td {
+        padding: 8px 4px;
+        font-size: 0.75rem;
+    }
+    
+    .boss-table th {
+        font-size: 0.8rem;
+    }
+    
+    .nightlord-tag {
+        font-size: 0.75em;
+        padding: 1px 4px;
+        margin: 1px;
+        min-width: 28px;
+    }
+}
+
+@media (max-width: 480px) {
+    .boss-table {
+        font-size: 0.7rem;
+    }
+    
+    .boss-table th,
+    .boss-table td {
+        padding: 6px 3px;
+        font-size: 0.7rem;
+    }
+    
+    .boss-table-section h4 {
+        font-size: 1rem;
+    }
+    
+    .nightlord-tag {
+        font-size: 0.7em;
+        padding: 1px 3px;
+        margin: 0.5px;
+        min-width: 24px;
+    }
+}
