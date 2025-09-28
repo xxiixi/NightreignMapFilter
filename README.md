@@ -1,4 +1,4 @@
-你可以在此访问站点：[在线访问](https://xxiixi.github.io/NightreignMapFilter/)
+你可以在此访问站点：[Nightreign Map Filter](https://xxiixi.github.io/NightreignMapFilter/)
 
 ## About
 
@@ -11,3 +11,7 @@
 <p align="center">
   <img src="/assets/images/screenshot.png" alt="Screenshot" width="600"/>
 </p>
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=xxiixi/NightreignMapFilter&type=Date)](https://www.star-history.com/#xxiixi/NightreignMapFilter&Date)
