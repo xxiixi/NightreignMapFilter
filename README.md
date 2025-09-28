@@ -15,12 +15,25 @@
 
 用于识别《艾尔登法环：黑夜君临》地图种子的中文版工具。
 
-- Fork From：[thanosapollo](https://github.com/thanosapollo/nightreign-mapseed-recogniser)
-- 中文版地图种子来源：[点击跳转Bilibili](https://www.bilibili.com/video/BV1xGe1zrEED/?spm_id_from=333.337.search-card.all.click&vd_source=37640654dbdd4ab80b471a16ac6da3c0)
+- Fork From：[Github@thanosapollo](https://github.com/thanosapollo/nightreign-mapseed-recogniser)
+- 中文版地图种子来源：[Bilibili@Fuwish](https://www.bilibili.com/video/BV1xGe1zrEED/?spm_id_from=333.337.search-card.all.click&vd_source=37640654dbdd4ab80b471a16ac6da3c0)
 
 <p align="center">
   <img src="/assets/images/screenshot.png" alt="Screenshot" width="600"/>
 </p>
+
+## Local Development
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/xxiixi/NightreignMapFilter.git
+   ```
+
+2. **Start development server**
+   ```bash
+   node server.js
+   ```
+   The application will be available at `http://localhost:8000/index.html`
+
 
 ## Star History
 
