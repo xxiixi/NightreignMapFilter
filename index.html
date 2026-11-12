@@ -25,14 +25,11 @@
             </div>
             <!-- ======================= -->
             <div class="top-actions">
-                <button id="action-quickref" class="action-btn" title="黑夜君临速查手册">
-                    <img src="assets/icons/window-stack.svg" alt="速查手册">
+                <button id="action-sources" class="action-btn" title="相关网页" aria-label="相关网页">
+                    <img src="assets/icons/link-45deg.svg" alt="" class="action-icon-link">
                 </button>
                 <button id="action-stats" class="action-btn" title="查看访问量">
                     <img src="assets/icons/fire.svg" alt="访问量">
-                </button>
-                <button id="action-sources" class="action-btn" title="资料来源" aria-label="资料来源">
-                    <img src="assets/icons/link-45deg.svg" alt="" class="action-icon-link">
                 </button>
                 <button id="action-changelog" class="action-btn" title="更新记录" aria-label="更新记录">
                     <img src="assets/icons/clock-history.svg" alt="">
@@ -43,53 +40,34 @@
                 <!-- <button id="action-tbd" class="action-btn" title="待定">
                     <i class="fas fa-ellipsis"></i>
                 </button> -->
-                <div id="quickref-popover" class="actions-popover" style="display: none;">
-                    <div class="popover-inner">
-                        <div class="popover-title">
-                            📘 黑夜君临速查手册
-                        </div>
-                        <div class="popover-body">
-                            <a href="https://xxiixi.github.io/NightreignQuickRef/" target="_blank" rel="noopener noreferrer" class="footer-link">点击跳转</a>
-                        </div>
-                        <div class="popover-meta" style="border-top: 1px solid #4fc3f7; padding-top: 8px; display: flex; align-items: center; justify-content: center;">
-                            <i class="fab fa-github" style="margin-right: 4px;"></i> @xxiixi
-                        </div>
-                    </div>
-                </div>
-                <div id="stats-popover" class="actions-popover" style="display: none;">
-                    <div class="popover-title">
-                        🔥 访问量统计
-                    </div>
+                <div id="stats-popover" class="actions-popover popover-center" style="display: none;">
+                    <div class="popover-title">🔥 访问量统计</div>
                     <div class="popover-body">
                         本站总访客数: <span id="vercount_value_site_uv">Loading</span> 人<br>
                         本站总访问量: <span id="vercount_value_site_pv">Loading</span> 次<br>
-                        地图筛选页访问量: <span id="vercount_value_page_pv">Loading</span> 次<br>
-                        <div class="popover-meta" style="border-top: 1px solid #4fc3f7; padding-top: 8px;">统计服务：Vercount</div>
+                        地图筛选页访问量: <span id="vercount_value_page_pv">Loading</span> 次
+                        <div class="popover-meta">统计服务：Vercount</div>
                     </div>
                 </div>
-                <div id="repo-popover" class="actions-popover" style="display: none;">
+                <div id="repo-popover" class="actions-popover popover-center" style="display: none;">
                     <div class="popover-inner">
-                        <div class="popover-title">
-                            🌟本项目GitHub仓库
-                        </div>
+                        <div class="popover-title">🌟 本项目GitHub仓库</div>
                         <div class="popover-body">
                             <i class="fab fa-github"></i>
-                             NightreignMapFilter<br>
-                            <a
-                            href="https://github.com/xxiixi/NightreignMapFilter"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="footer-link"
-                        >
-                            点击跳转
-                        </a>
+                            NightreignMapFilter<br>
+                            <a href="https://github.com/xxiixi/NightreignMapFilter" target="_blank" rel="noopener noreferrer" class="footer-link">点击跳转</a>
                         </div>
-                        <div class="popover-meta" style="border-top: 1px solid #4fc3f7; padding-top: 8px;">🙏 求个Star ⭐️ 感谢支持 🙏</div>
+                        <div class="popover-meta">🙏 求个Star ⭐️ 感谢支持 🙏</div>
                     </div>
                 </div>
                 <div id="sources-popover" class="actions-popover sources-popover" style="display: none;">
                     <div class="popover-inner">
+                        <div class="popover-title">🔗 相关网页</div>
                         <div class="popover-body source-list">
+                            <a href="https://xxiixi.github.io/NightreignQuickRef/" target="_blank" rel="noopener noreferrer" class="source-item">
+                                <span class="source-name">黑夜君临速查手册</span>
+                                <span class="source-meta"><i class="fab fa-github"></i> @xxiixi</span>
+                            </a>
                             <a href="https://thanosapollo.github.io/nightreign-mapseed-recogniser/" target="_blank" rel="noopener noreferrer" class="source-item">
                                 <span class="source-name">英文版原网站</span>
                                 <span class="source-meta"><i class="fab fa-github"></i> @thanosapollo</span>
@@ -99,6 +77,15 @@
                                 <span class="source-meta"><img src="assets/icons/bilibili.svg" alt="" class="source-meta-icon"> @Fuwish</span>
                             </a>
                         </div>
+                    </div>
+                </div>
+                <div id="changelog-popover" class="actions-popover changelog-popover" style="display: none;">
+                    <div class="popover-inner">
+                        <div class="popover-title">🕐 更新记录</div>
+                        <div class="changelog-body" id="changelog-content">
+                            <p class="changelog-status">正在加载更新记录...</p>
+                        </div>
+                        <a href="https://github.com/xxiixi/NightreignMapFilter/releases" target="_blank" rel="noopener noreferrer" class="changelog-releases">GitHub Releases</a>
                     </div>
                 </div>
                 <!-- <div id="tbd-popover" class="actions-popover" style="display: none;">
@@ -393,25 +380,6 @@
         </div>
     </div>
 
-    <!-- Changelog Modal -->
-    <div id="changelog-modal" class="modal" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="changelog-title">
-        <div class="modal-content changelog-modal-content">
-            <div class="modal-header">
-                <h3 id="changelog-title">
-                    <img src="assets/icons/clock-history.svg" alt="" class="modal-title-icon">
-                    更新记录
-                </h3>
-                <button class="close-btn" id="close-changelog" aria-label="关闭更新记录">&times;</button>
-            </div>
-            <div class="modal-body changelog-body" id="changelog-content">
-                <p class="changelog-status">正在加载更新记录...</p>
-            </div>
-            <div class="changelog-footer">
-                <a href="https://github.com/xxiixi/NightreignMapFilter/releases" target="_blank" rel="noopener noreferrer" class="footer-link">查看 GitHub Releases</a>
-            </div>
-        </div>
-    </div>
-
     <!-- Context Menu for Right Click（菜单项按点位候选动态生成，见 script.js） -->
     <div id="poi-context-menu" class="context-menu" style="display: none;">
     </div>
@@ -441,11 +409,8 @@
                 var sourcesBtn = document.getElementById('action-sources');
                 var sourcesPopover = document.getElementById('sources-popover');
                 var changelogBtn = document.getElementById('action-changelog');
-                var changelogModal = document.getElementById('changelog-modal');
-                var closeChangelogBtn = document.getElementById('close-changelog');
+                var changelogPopover = document.getElementById('changelog-popover');
                 var changelogContent = document.getElementById('changelog-content');
-                var quickRefBtn = document.getElementById('action-quickref');
-                var quickRefPopover = document.getElementById('quickref-popover');
                 var tbdPopover = document.getElementById('tbd-popover');
                 var now = new Date();
                 if (yearEl) {
@@ -467,17 +432,17 @@
                         e.stopPropagation();
                         var willShow = statsPopover.style.display === 'none';
                         // 互斥：开启当前前先关闭对方
-                        if (quickRefPopover) quickRefPopover.style.display = 'none';
                         if (repoPopover) repoPopover.style.display = 'none';
                         if (sourcesPopover) sourcesPopover.style.display = 'none';
+                        if (changelogPopover) changelogPopover.style.display = 'none';
                         if (tbdPopover) tbdPopover.style.display = 'none';
                         statsPopover.style.display = willShow ? 'block' : 'none';
                     });
                     document.addEventListener('click', function () {
                         statsPopover.style.display = 'none';
-                        if (quickRefPopover) quickRefPopover.style.display = 'none';
                         if (repoPopover) repoPopover.style.display = 'none';
                         if (sourcesPopover) sourcesPopover.style.display = 'none';
+                        if (changelogPopover) changelogPopover.style.display = 'none';
                         if (tbdPopover) tbdPopover.style.display = 'none';
                     });
                     statsPopover.addEventListener('click', function (e) { e.stopPropagation(); });
@@ -490,37 +455,23 @@
                     });
                 }
 
-                // 速查手册：先弹出 Popover，再点击链接跳转
-                if (quickRefBtn && quickRefPopover) {
-                    quickRefBtn.addEventListener('click', function (e) {
-                        e.stopPropagation();
-                        var willShow = quickRefPopover.style.display === 'none';
-                        if (statsPopover) statsPopover.style.display = 'none';
-                        if (repoPopover) repoPopover.style.display = 'none';
-                        if (sourcesPopover) sourcesPopover.style.display = 'none';
-                        if (tbdPopover) tbdPopover.style.display = 'none';
-                        quickRefPopover.style.display = willShow ? 'block' : 'none';
-                    });
-                    quickRefPopover.addEventListener('click', function (e) { e.stopPropagation(); });
-                }
-
                 // 查看源码：先弹出 Popover，再点击链接跳转
                 if (repoBtn && repoPopover) {
                     repoBtn.addEventListener('click', function (e) {
                         e.stopPropagation();
                         var willShow = repoPopover.style.display === 'none';
                         // 互斥：开启当前前先关闭对方
-                        if (quickRefPopover) quickRefPopover.style.display = 'none';
                         if (statsPopover) statsPopover.style.display = 'none';
                         if (sourcesPopover) sourcesPopover.style.display = 'none';
+                        if (changelogPopover) changelogPopover.style.display = 'none';
                         if (tbdPopover) tbdPopover.style.display = 'none';
                         repoPopover.style.display = willShow ? 'block' : 'none';
                     });
                     document.addEventListener('click', function () {
                         repoPopover.style.display = 'none';
-                        if (quickRefPopover) quickRefPopover.style.display = 'none';
                         if (statsPopover) statsPopover.style.display = 'none';
                         if (sourcesPopover) sourcesPopover.style.display = 'none';
+                        if (changelogPopover) changelogPopover.style.display = 'none';
                         if (tbdPopover) tbdPopover.style.display = 'none';
                     });
                     repoPopover.addEventListener('click', function (e) { e.stopPropagation(); });
@@ -530,15 +481,15 @@
                     sourcesBtn.addEventListener('click', function (e) {
                         e.stopPropagation();
                         var willShow = sourcesPopover.style.display === 'none';
-                        if (quickRefPopover) quickRefPopover.style.display = 'none';
                         if (statsPopover) statsPopover.style.display = 'none';
                         if (repoPopover) repoPopover.style.display = 'none';
+                        if (changelogPopover) changelogPopover.style.display = 'none';
                         if (tbdPopover) tbdPopover.style.display = 'none';
                         sourcesPopover.style.display = willShow ? 'block' : 'none';
                     });
                     document.addEventListener('click', function () {
                         sourcesPopover.style.display = 'none';
-                        if (quickRefPopover) quickRefPopover.style.display = 'none';
+                        if (changelogPopover) changelogPopover.style.display = 'none';
                         if (statsPopover) statsPopover.style.display = 'none';
                         if (repoPopover) repoPopover.style.display = 'none';
                         if (tbdPopover) tbdPopover.style.display = 'none';
@@ -561,7 +512,18 @@
                             currentList = null;
                             if (heading[1].length === 1) return;
                             var headingEl = document.createElement(heading[1].length === 2 ? 'h2' : 'h3');
-                            headingEl.textContent = heading[2];
+                            var versionDate = heading[1].length === 2
+                                ? heading[2].match(/^(.+?)\s+-\s+(\d{4}-\d{2}-\d{2})$/)
+                                : null;
+                            if (versionDate) {
+                                headingEl.appendChild(document.createTextNode(versionDate[1] + ' · '));
+                                var dateEl = document.createElement('span');
+                                dateEl.className = 'changelog-date';
+                                dateEl.textContent = versionDate[2];
+                                headingEl.appendChild(dateEl);
+                            } else {
+                                headingEl.textContent = heading[2];
+                            }
                             fragment.appendChild(headingEl);
                             return;
                         }
@@ -585,34 +547,38 @@
                     changelogContent.replaceChildren(fragment);
                 }
 
-                async function openChangelog() {
-                    if (!changelogModal || !changelogContent) return;
-                    changelogModal.style.display = 'flex';
-                    if (changelogContent.dataset.loaded === 'true') return;
-                    try {
-                        var response = await fetch('CHANGELOG.md', { cache: 'no-cache' });
+                function loadChangelog() {
+                    if (!changelogContent || changelogContent.dataset.loaded === 'true' || changelogContent.dataset.loading === 'true') return;
+                    changelogContent.dataset.loading = 'true';
+                    fetch('CHANGELOG.md', { cache: 'no-cache' }).then(function (response) {
                         if (!response.ok) throw new Error('HTTP ' + response.status);
-                        renderChangelog(await response.text());
+                        return response.text();
+                    }).then(function (markdown) {
+                        renderChangelog(markdown);
                         changelogContent.dataset.loaded = 'true';
-                    } catch (error) {
+                    }).catch(function (error) {
                         changelogContent.textContent = '更新记录加载失败，请前往 GitHub Releases 查看。';
                         console.error('Failed to load changelog:', error);
-                    }
-                }
-
-                function closeChangelog() {
-                    if (changelogModal) changelogModal.style.display = 'none';
-                }
-
-                if (changelogBtn) changelogBtn.addEventListener('click', openChangelog);
-                if (closeChangelogBtn) closeChangelogBtn.addEventListener('click', closeChangelog);
-                if (changelogModal) {
-                    changelogModal.addEventListener('click', function (e) {
-                        if (e.target === changelogModal) closeChangelog();
+                    }).then(function () {
+                        delete changelogContent.dataset.loading;
                     });
                 }
+
+                if (changelogBtn && changelogPopover) {
+                    changelogBtn.addEventListener('click', function (e) {
+                        e.stopPropagation();
+                        var willShow = changelogPopover.style.display === 'none';
+                        if (statsPopover) statsPopover.style.display = 'none';
+                        if (repoPopover) repoPopover.style.display = 'none';
+                        if (sourcesPopover) sourcesPopover.style.display = 'none';
+                        if (tbdPopover) tbdPopover.style.display = 'none';
+                        if (willShow) loadChangelog();
+                        changelogPopover.style.display = willShow ? 'block' : 'none';
+                    });
+                    changelogPopover.addEventListener('click', function (e) { e.stopPropagation(); });
+                }
                 document.addEventListener('keydown', function (e) {
-                    if (e.key === 'Escape') closeChangelog();
+                    if (e.key === 'Escape' && changelogPopover) changelogPopover.style.display = 'none';
                 });
             } catch (error) {
                 console.error('Error initializing popovers:', error);
