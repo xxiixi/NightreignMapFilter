@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#1a1a2e">
-    <meta name="description" content="基于兴趣点位置识别《艾尔登法环:黑夜君临》地图种子的交互式工具">
+    <meta name="description" content="《艾尔登法环:黑夜君临》全地图种子筛选器">
     <meta name="keywords" content="艾尔登法环, 黑夜君临, 地图, 种子, 识别, 兴趣点, 工具">
     <link rel="icon" href="favicon.ico">
     <!-- Vercount PV/UV 统计脚本 -->
@@ -37,6 +37,9 @@
                 <button id="action-repo" class="action-btn" title="查看项目">
                     <img src="assets/icons/github.svg" alt="查看项目">
                 </button>
+                <button id="action-share" class="action-btn" title="分享本页" aria-label="分享本页">
+                    <img src="assets/icons/share-fill.svg" alt="" class="action-icon-share">
+                </button>
                 <!-- <button id="action-tbd" class="action-btn" title="待定">
                     <i class="fas fa-ellipsis"></i>
                 </button> -->
@@ -58,6 +61,19 @@
                             <a href="https://github.com/xxiixi/NightreignMapFilter" target="_blank" rel="noopener noreferrer" class="footer-link">点击跳转</a>
                         </div>
                         <div class="popover-meta">🙏 求个Star ⭐️ 感谢支持 🙏</div>
+                    </div>
+                </div>
+                <div id="share-popover" class="actions-popover share-popover" style="display: none;">
+                    <div class="popover-inner">
+                        <div class="popover-title">📤 分享本网页</div>
+                        <div id="share-preview" class="share-preview" role="button" tabindex="0">
+                            <div id="share-preview-text"></div>
+                            <div id="share-preview-url" class="share-preview-url"></div>
+                            <div class="share-mask" aria-hidden="true">
+                                <span>复制成功</span>
+                            </div>
+                        </div>
+                        <div id="share-status" class="share-status" role="status"></div>
                     </div>
                 </div>
                 <div id="sources-popover" class="actions-popover sources-popover" style="display: none;">
@@ -408,6 +424,8 @@
                 var repoPopover = document.getElementById('repo-popover');
                 var sourcesBtn = document.getElementById('action-sources');
                 var sourcesPopover = document.getElementById('sources-popover');
+                var shareBtn = document.getElementById('action-share');
+                var sharePopover = document.getElementById('share-popover');
                 var changelogBtn = document.getElementById('action-changelog');
                 var changelogPopover = document.getElementById('changelog-popover');
                 var changelogContent = document.getElementById('changelog-content');
@@ -435,6 +453,7 @@
                         if (repoPopover) repoPopover.style.display = 'none';
                         if (sourcesPopover) sourcesPopover.style.display = 'none';
                         if (changelogPopover) changelogPopover.style.display = 'none';
+                        if (sharePopover) sharePopover.style.display = 'none';
                         if (tbdPopover) tbdPopover.style.display = 'none';
                         statsPopover.style.display = willShow ? 'block' : 'none';
                     });
@@ -443,6 +462,7 @@
                         if (repoPopover) repoPopover.style.display = 'none';
                         if (sourcesPopover) sourcesPopover.style.display = 'none';
                         if (changelogPopover) changelogPopover.style.display = 'none';
+                        if (sharePopover) sharePopover.style.display = 'none';
                         if (tbdPopover) tbdPopover.style.display = 'none';
                     });
                     statsPopover.addEventListener('click', function (e) { e.stopPropagation(); });
@@ -464,6 +484,7 @@
                         if (statsPopover) statsPopover.style.display = 'none';
                         if (sourcesPopover) sourcesPopover.style.display = 'none';
                         if (changelogPopover) changelogPopover.style.display = 'none';
+                        if (sharePopover) sharePopover.style.display = 'none';
                         if (tbdPopover) tbdPopover.style.display = 'none';
                         repoPopover.style.display = willShow ? 'block' : 'none';
                     });
@@ -472,6 +493,7 @@
                         if (statsPopover) statsPopover.style.display = 'none';
                         if (sourcesPopover) sourcesPopover.style.display = 'none';
                         if (changelogPopover) changelogPopover.style.display = 'none';
+                        if (sharePopover) sharePopover.style.display = 'none';
                         if (tbdPopover) tbdPopover.style.display = 'none';
                     });
                     repoPopover.addEventListener('click', function (e) { e.stopPropagation(); });
@@ -484,11 +506,13 @@
                         if (statsPopover) statsPopover.style.display = 'none';
                         if (repoPopover) repoPopover.style.display = 'none';
                         if (changelogPopover) changelogPopover.style.display = 'none';
+                        if (sharePopover) sharePopover.style.display = 'none';
                         if (tbdPopover) tbdPopover.style.display = 'none';
                         sourcesPopover.style.display = willShow ? 'block' : 'none';
                     });
                     document.addEventListener('click', function () {
                         sourcesPopover.style.display = 'none';
+                        if (sharePopover) sharePopover.style.display = 'none';
                         if (changelogPopover) changelogPopover.style.display = 'none';
                         if (statsPopover) statsPopover.style.display = 'none';
                         if (repoPopover) repoPopover.style.display = 'none';
@@ -564,6 +588,103 @@
                     });
                 }
 
+                var sharePreviewText = document.getElementById('share-preview-text');
+                var sharePreviewUrl = document.getElementById('share-preview-url');
+                var shareStatus = document.getElementById('share-status');
+                var sharePreview = document.getElementById('share-preview');
+                var shareMaskTimer = null;
+                var publishedPageUrl = 'https://xxiixi.github.io/NightreignMapFilter/';
+
+                function pageShareData() {
+                    var descriptionMeta = document.querySelector('meta[name="description"]');
+                    var description = descriptionMeta ? (descriptionMeta.getAttribute('content') || '') : '';
+                    var host = location.hostname;
+                    var url = (!host || host === 'localhost' || host === '127.0.0.1' || host === '[::1]')
+                        ? publishedPageUrl
+                        : location.href;
+                    return {
+                        text: description,
+                        url: url
+                    };
+                }
+
+                function shareMessage(data) {
+                    return [data.text, data.url].filter(Boolean).join('\n');
+                }
+
+                function copyShareMessage(message) {
+                    var field = document.createElement('textarea');
+                    field.value = message;
+                    field.setAttribute('readonly', '');
+                    field.style.position = 'fixed';
+                    field.style.top = '0';
+                    field.style.left = '0';
+                    field.style.opacity = '0';
+                    document.body.appendChild(field);
+                    field.focus();
+                    field.select();
+                    var copied = false;
+                    try {
+                        copied = document.execCommand('copy');
+                    } catch (error) {
+                        copied = false;
+                    }
+                    field.remove();
+                    if (copied) return Promise.resolve();
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        return navigator.clipboard.writeText(message);
+                    }
+                    return Promise.reject(new Error('copy failed'));
+                }
+
+                if (shareBtn && sharePopover) {
+                    shareBtn.addEventListener('click', function (e) {
+                        e.stopPropagation();
+                        var willShow = sharePopover.style.display === 'none';
+                        if (statsPopover) statsPopover.style.display = 'none';
+                        if (repoPopover) repoPopover.style.display = 'none';
+                        if (sourcesPopover) sourcesPopover.style.display = 'none';
+                        if (changelogPopover) changelogPopover.style.display = 'none';
+                        if (tbdPopover) tbdPopover.style.display = 'none';
+                        if (willShow) {
+                            var data = pageShareData();
+                            if (sharePreviewText) sharePreviewText.textContent = data.text;
+                            if (sharePreviewUrl) sharePreviewUrl.textContent = data.url.replace(/\//g, '/\u200b');
+                            if (sharePreview) sharePreview.classList.remove('is-copied');
+                            if (shareMaskTimer) clearTimeout(shareMaskTimer);
+                            if (shareStatus) {
+                                shareStatus.textContent = '';
+                                shareStatus.classList.remove('is-error');
+                            }
+                        }
+                        sharePopover.style.display = willShow ? 'block' : 'none';
+                    });
+                    sharePopover.addEventListener('click', function (e) { e.stopPropagation(); });
+                }
+                function showShareSuccess() {
+                    if (!sharePreview) return;
+                    sharePreview.classList.add('is-copied');
+                    if (shareStatus) {
+                        shareStatus.textContent = '';
+                        shareStatus.classList.remove('is-error');
+                    }
+                    if (shareMaskTimer) clearTimeout(shareMaskTimer);
+                    shareMaskTimer = setTimeout(function () {
+                        sharePreview.classList.remove('is-copied');
+                    }, 2000);
+                }
+
+                function copyCurrentShare() {
+                    copyShareMessage(shareMessage(pageShareData())).then(showShareSuccess).catch(function () {
+                        if (sharePreview) sharePreview.classList.remove('is-copied');
+                        if (!shareStatus) return;
+                        shareStatus.classList.add('is-error');
+                        shareStatus.textContent = '复制失败，请手动选择文本';
+                    });
+                }
+
+                if (sharePreview) sharePreview.addEventListener('click', copyCurrentShare);
+
                 if (changelogBtn && changelogPopover) {
                     changelogBtn.addEventListener('click', function (e) {
                         e.stopPropagation();
@@ -571,6 +692,7 @@
                         if (statsPopover) statsPopover.style.display = 'none';
                         if (repoPopover) repoPopover.style.display = 'none';
                         if (sourcesPopover) sourcesPopover.style.display = 'none';
+                        if (sharePopover) sharePopover.style.display = 'none';
                         if (tbdPopover) tbdPopover.style.display = 'none';
                         if (willShow) loadChangelog();
                         changelogPopover.style.display = willShow ? 'block' : 'none';

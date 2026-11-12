@@ -95,6 +95,11 @@ body {
     transform: translateY(1px);
 }
 
+.action-btn img.action-icon-share {
+    width: 14px;
+    height: 14px;
+}
+
 .actions-popover {
     position: absolute;
     top: 48px;
@@ -1255,6 +1260,75 @@ body {
 
 .changelog-popover .popover-title {
     text-align: left;
+}
+
+.share-popover {
+    width: 340px;
+}
+
+.share-popover .popover-inner {
+    max-width: none;
+    text-align: left;
+}
+
+.share-popover .popover-title {
+    text-align: left;
+}
+
+.share-preview {
+    position: relative;
+    margin: 0;
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+    font-size: 12px;
+    line-height: 1.7;
+    text-align: left;
+    cursor: pointer;
+}
+
+.share-preview:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.share-preview-url {
+    color: #4fc3f7;
+    overflow-wrap: break-word;
+}
+
+.share-mask {
+    display: none;
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    z-index: 1;
+    background: rgba(27, 38, 64, 0.72);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    color: #5cbf8a;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.share-preview.is-copied .share-mask {
+    display: flex;
+}
+
+.share-status {
+    margin-top: 6px;
+    font-size: 12px;
+    color: #8ee6a8;
+}
+
+.share-status:empty {
+    display: none;
+}
+
+.share-status.is-error {
+    color: #ffb4b4;
 }
 
 .changelog-body {
