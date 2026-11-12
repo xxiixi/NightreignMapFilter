@@ -31,11 +31,11 @@
                 <button id="action-stats" class="action-btn" title="查看访问量">
                     <img src="assets/icons/fire.svg" alt="访问量">
                 </button>
-                <button id="action-english-web" class="action-btn" title="查看英文版原网站">
-                    <img src="assets/icons/box-arrow-in-up-right.svg" alt="查看英文版原网站">
+                <button id="action-sources" class="action-btn" title="资料来源" aria-label="资料来源">
+                    <img src="assets/icons/link-45deg.svg" alt="" class="action-icon-link">
                 </button>
-                <button id="action-map-source" class="action-btn" title="地图数据来源">
-                    <img src="assets/icons/pin-map-fill.svg" alt="地图数据来源">
+                <button id="action-changelog" class="action-btn" title="更新记录" aria-label="更新记录">
+                    <img src="assets/icons/clock-history.svg" alt="">
                 </button>
                 <button id="action-repo" class="action-btn" title="查看项目">
                     <img src="assets/icons/github.svg" alt="查看项目">
@@ -87,27 +87,17 @@
                         <div class="popover-meta" style="border-top: 1px solid #4fc3f7; padding-top: 8px;">🙏 求个Star ⭐️ 感谢支持 🙏</div>
                     </div>
                 </div>
-                <div id="english-popover" class="actions-popover" style="display: none;">
+                <div id="sources-popover" class="actions-popover sources-popover" style="display: none;">
                     <div class="popover-inner">
-                        <div class="popover-title">
-                            🔗 英文版原网站
-                        </div>
-                        <div class="popover-body">
-                            <a href="https://thanosapollo.github.io/nightreign-mapseed-recogniser/" target="_blank" rel="noopener noreferrer" class="footer-link">点击查看英文版原网站</a>
-                        </div>
-                        <div class="popover-meta" style="border-top: 1px solid #4fc3f7; padding-top: 8px;"> <i class="fab fa-github"></i> @thanosapollo</div>
-                    </div>
-                </div>
-                <div id="map-source-popover" class="actions-popover" style="display: none;">
-                    <div class="popover-inner">
-                        <div class="popover-title">
-                            📒 地图数据来源
-                        </div>
-                        <div class="popover-body">
-                            <a href="https://www.bilibili.com/video/BV1xGe1zrEED/?spm_id_from=333.337.search-card.all.click&vd_source=37640654dbdd4ab80b471a16ac6da3c0" target="_blank" rel="noopener noreferrer" class="footer-link">黑夜君临-地图筛选器</a>
-                        </div>
-                        <div class="popover-meta" style="border-top: 1px solid #4fc3f7; padding-top: 8px; display: flex; align-items: center; justify-content: center;">
-                            <img src="assets/icons/bilibili.svg" style="width: 16px; height: 16px;filter: brightness(0) invert(1);"> @Fuwish
+                        <div class="popover-body source-list">
+                            <a href="https://thanosapollo.github.io/nightreign-mapseed-recogniser/" target="_blank" rel="noopener noreferrer" class="source-item">
+                                <span class="source-name">英文版原网站</span>
+                                <span class="source-meta"><i class="fab fa-github"></i> @thanosapollo</span>
+                            </a>
+                            <a href="https://www.bilibili.com/video/BV1xGe1zrEED/?spm_id_from=333.337.search-card.all.click&vd_source=37640654dbdd4ab80b471a16ac6da3c0" target="_blank" rel="noopener noreferrer" class="source-item">
+                                <span class="source-name">地图数据来源</span>
+                                <span class="source-meta"><img src="assets/icons/bilibili.svg" alt="" class="source-meta-icon"> @Fuwish</span>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -129,7 +119,7 @@
                 黑夜君临地图种子筛选器
             </h1>
             <div class="subtitle">
-                <p class="version">Website version 1.0.3 | Nightreign version 1.03.5</p>
+                <p class="version">Website version 1.1.0 | Nightreign version 1.03.5</p>
                 <span id="cv-status" style="font-size: 12px;"></span>
             </div>
         </header>
@@ -403,6 +393,25 @@
         </div>
     </div>
 
+    <!-- Changelog Modal -->
+    <div id="changelog-modal" class="modal" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="changelog-title">
+        <div class="modal-content changelog-modal-content">
+            <div class="modal-header">
+                <h3 id="changelog-title">
+                    <img src="assets/icons/clock-history.svg" alt="" class="modal-title-icon">
+                    更新记录
+                </h3>
+                <button class="close-btn" id="close-changelog" aria-label="关闭更新记录">&times;</button>
+            </div>
+            <div class="modal-body changelog-body" id="changelog-content">
+                <p class="changelog-status">正在加载更新记录...</p>
+            </div>
+            <div class="changelog-footer">
+                <a href="https://github.com/xxiixi/NightreignMapFilter/releases" target="_blank" rel="noopener noreferrer" class="footer-link">查看 GitHub Releases</a>
+            </div>
+        </div>
+    </div>
+
     <!-- Context Menu for Right Click（菜单项按点位候选动态生成，见 script.js） -->
     <div id="poi-context-menu" class="context-menu" style="display: none;">
     </div>
@@ -429,10 +438,12 @@
                 var statsPopover = document.getElementById('stats-popover');
                 var repoBtn = document.getElementById('action-repo');
                 var repoPopover = document.getElementById('repo-popover');
-                var englishBtn = document.getElementById('action-english-web');
-                var englishPopover = document.getElementById('english-popover');
-                var mapSourceBtn = document.getElementById('action-map-source');
-                var mapSourcePopover = document.getElementById('map-source-popover');
+                var sourcesBtn = document.getElementById('action-sources');
+                var sourcesPopover = document.getElementById('sources-popover');
+                var changelogBtn = document.getElementById('action-changelog');
+                var changelogModal = document.getElementById('changelog-modal');
+                var closeChangelogBtn = document.getElementById('close-changelog');
+                var changelogContent = document.getElementById('changelog-content');
                 var quickRefBtn = document.getElementById('action-quickref');
                 var quickRefPopover = document.getElementById('quickref-popover');
                 var tbdPopover = document.getElementById('tbd-popover');
@@ -458,8 +469,7 @@
                         // 互斥：开启当前前先关闭对方
                         if (quickRefPopover) quickRefPopover.style.display = 'none';
                         if (repoPopover) repoPopover.style.display = 'none';
-                        if (englishPopover) englishPopover.style.display = 'none';
-                        if (mapSourcePopover) mapSourcePopover.style.display = 'none';
+                        if (sourcesPopover) sourcesPopover.style.display = 'none';
                         if (tbdPopover) tbdPopover.style.display = 'none';
                         statsPopover.style.display = willShow ? 'block' : 'none';
                     });
@@ -467,8 +477,7 @@
                         statsPopover.style.display = 'none';
                         if (quickRefPopover) quickRefPopover.style.display = 'none';
                         if (repoPopover) repoPopover.style.display = 'none';
-                        if (englishPopover) englishPopover.style.display = 'none';
-                        if (mapSourcePopover) mapSourcePopover.style.display = 'none';
+                        if (sourcesPopover) sourcesPopover.style.display = 'none';
                         if (tbdPopover) tbdPopover.style.display = 'none';
                     });
                     statsPopover.addEventListener('click', function (e) { e.stopPropagation(); });
@@ -488,8 +497,7 @@
                         var willShow = quickRefPopover.style.display === 'none';
                         if (statsPopover) statsPopover.style.display = 'none';
                         if (repoPopover) repoPopover.style.display = 'none';
-                        if (englishPopover) englishPopover.style.display = 'none';
-                        if (mapSourcePopover) mapSourcePopover.style.display = 'none';
+                        if (sourcesPopover) sourcesPopover.style.display = 'none';
                         if (tbdPopover) tbdPopover.style.display = 'none';
                         quickRefPopover.style.display = willShow ? 'block' : 'none';
                     });
@@ -504,8 +512,7 @@
                         // 互斥：开启当前前先关闭对方
                         if (quickRefPopover) quickRefPopover.style.display = 'none';
                         if (statsPopover) statsPopover.style.display = 'none';
-                        if (englishPopover) englishPopover.style.display = 'none';
-                        if (mapSourcePopover) mapSourcePopover.style.display = 'none';
+                        if (sourcesPopover) sourcesPopover.style.display = 'none';
                         if (tbdPopover) tbdPopover.style.display = 'none';
                         repoPopover.style.display = willShow ? 'block' : 'none';
                     });
@@ -513,60 +520,100 @@
                         repoPopover.style.display = 'none';
                         if (quickRefPopover) quickRefPopover.style.display = 'none';
                         if (statsPopover) statsPopover.style.display = 'none';
-                        if (englishPopover) englishPopover.style.display = 'none';
-                        if (mapSourcePopover) mapSourcePopover.style.display = 'none';
+                        if (sourcesPopover) sourcesPopover.style.display = 'none';
                         if (tbdPopover) tbdPopover.style.display = 'none';
                     });
                     repoPopover.addEventListener('click', function (e) { e.stopPropagation(); });
                 }
 
-                // 英文站点：弹出 Popover，互斥显示
-                if (englishBtn && englishPopover) {
-                    englishBtn.addEventListener('click', function (e) {
+                if (sourcesBtn && sourcesPopover) {
+                    sourcesBtn.addEventListener('click', function (e) {
                         e.stopPropagation();
-                        var willShow = englishPopover.style.display === 'none';
-                        // 互斥：开启当前前先关闭对方
+                        var willShow = sourcesPopover.style.display === 'none';
                         if (quickRefPopover) quickRefPopover.style.display = 'none';
                         if (statsPopover) statsPopover.style.display = 'none';
                         if (repoPopover) repoPopover.style.display = 'none';
-                        if (mapSourcePopover) mapSourcePopover.style.display = 'none';
                         if (tbdPopover) tbdPopover.style.display = 'none';
-                        englishPopover.style.display = willShow ? 'block' : 'none';
+                        sourcesPopover.style.display = willShow ? 'block' : 'none';
                     });
                     document.addEventListener('click', function () {
-                        englishPopover.style.display = 'none';
+                        sourcesPopover.style.display = 'none';
                         if (quickRefPopover) quickRefPopover.style.display = 'none';
                         if (statsPopover) statsPopover.style.display = 'none';
                         if (repoPopover) repoPopover.style.display = 'none';
-                        if (mapSourcePopover) mapSourcePopover.style.display = 'none';
                         if (tbdPopover) tbdPopover.style.display = 'none';
                     });
-                    englishPopover.addEventListener('click', function (e) { e.stopPropagation(); });
+                    sourcesPopover.addEventListener('click', function (e) { e.stopPropagation(); });
                 }
-                if (mapSourceBtn && mapSourcePopover) {
-                    mapSourceBtn.addEventListener('click', function (e) {
-                        e.stopPropagation();
-                        var willShow = mapSourcePopover.style.display === 'none';
-                        // 互斥：开启当前前先关闭对方
-                        if (quickRefPopover) quickRefPopover.style.display = 'none';
-                        if (statsPopover) statsPopover.style.display = 'none';
-                        if (repoPopover) repoPopover.style.display = 'none';
-                        if (englishPopover) englishPopover.style.display = 'none';
-                        if (tbdPopover) tbdPopover.style.display = 'none';
-                        mapSourcePopover.style.display = willShow ? 'block' : 'none';
+
+                function renderChangelog(markdown) {
+                    var fragment = document.createDocumentFragment();
+                    var currentList = null;
+                    markdown.split(/\r?\n/).forEach(function (rawLine) {
+                        var line = rawLine.trim();
+                        if (!line) {
+                            currentList = null;
+                            return;
+                        }
+
+                        var heading = line.match(/^(#{1,3})\s+(.+)$/);
+                        if (heading) {
+                            currentList = null;
+                            if (heading[1].length === 1) return;
+                            var headingEl = document.createElement(heading[1].length === 2 ? 'h2' : 'h3');
+                            headingEl.textContent = heading[2];
+                            fragment.appendChild(headingEl);
+                            return;
+                        }
+
+                        if (line.indexOf('- ') === 0) {
+                            if (!currentList) {
+                                currentList = document.createElement('ul');
+                                fragment.appendChild(currentList);
+                            }
+                            var item = document.createElement('li');
+                            item.textContent = line.slice(2);
+                            currentList.appendChild(item);
+                            return;
+                        }
+
+                        currentList = null;
+                        var paragraph = document.createElement('p');
+                        paragraph.textContent = line;
+                        fragment.appendChild(paragraph);
                     });
-                    document.addEventListener('click', function () {
-                        mapSourcePopover.style.display = 'none';
-                        if (quickRefPopover) quickRefPopover.style.display = 'none';
-                        if (statsPopover) statsPopover.style.display = 'none';
-                        if (repoPopover) repoPopover.style.display = 'none';
-                        if (englishPopover) englishPopover.style.display = 'none';
-                        if (tbdPopover) tbdPopover.style.display = 'none';
+                    changelogContent.replaceChildren(fragment);
+                }
+
+                async function openChangelog() {
+                    if (!changelogModal || !changelogContent) return;
+                    changelogModal.style.display = 'flex';
+                    if (changelogContent.dataset.loaded === 'true') return;
+                    try {
+                        var response = await fetch('CHANGELOG.md', { cache: 'no-cache' });
+                        if (!response.ok) throw new Error('HTTP ' + response.status);
+                        renderChangelog(await response.text());
+                        changelogContent.dataset.loaded = 'true';
+                    } catch (error) {
+                        changelogContent.textContent = '更新记录加载失败，请前往 GitHub Releases 查看。';
+                        console.error('Failed to load changelog:', error);
+                    }
+                }
+
+                function closeChangelog() {
+                    if (changelogModal) changelogModal.style.display = 'none';
+                }
+
+                if (changelogBtn) changelogBtn.addEventListener('click', openChangelog);
+                if (closeChangelogBtn) closeChangelogBtn.addEventListener('click', closeChangelog);
+                if (changelogModal) {
+                    changelogModal.addEventListener('click', function (e) {
+                        if (e.target === changelogModal) closeChangelog();
                     });
                 }
-                if (mapSourcePopover) {
-                    mapSourcePopover.addEventListener('click', function (e) { e.stopPropagation(); });
-                }
+                document.addEventListener('keydown', function (e) {
+                    if (e.key === 'Escape') closeChangelog();
+                });
             } catch (error) {
                 console.error('Error initializing popovers:', error);
             }

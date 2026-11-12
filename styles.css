@@ -89,6 +89,12 @@ body {
     display: block;
 }
 
+.action-btn img.action-icon-link {
+    width: 20px;
+    height: 20px;
+    transform: translateY(1px);
+}
+
 .actions-popover {
     position: absolute;
     top: 48px;
@@ -123,6 +129,58 @@ body {
     margin-top: 6px;
     font-size: 11px;
     opacity: 0.7;
+}
+
+.sources-popover {
+    width: 200px;
+}
+
+.sources-popover .popover-inner {
+    max-width: none;
+}
+
+.source-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.source-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.06);
+    color: inherit;
+    text-decoration: none;
+    text-align: center;
+}
+
+.source-item:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.source-name {
+    color: #4fc3f7;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.source-meta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-size: 11px;
+    opacity: 0.75;
+}
+
+.source-meta-icon {
+    width: 14px;
+    height: 14px;
+    filter: brightness(0) invert(1);
 }
 
 .subtitle {
@@ -1131,6 +1189,14 @@ body {
     margin-right: 10px;
 }
 
+.modal-title-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+    filter: invert(83%) sepia(95%) saturate(1132%) hue-rotate(359deg) brightness(105%);
+    vertical-align: -3px;
+}
+
 .close-btn {
     background: none;
     border: none;
@@ -1157,6 +1223,77 @@ body {
     max-height: 60vh;
     overflow-y: auto;
     color: #fff;
+}
+
+.changelog-modal-content {
+    max-width: 680px;
+}
+
+.changelog-body {
+    text-align: left;
+}
+
+.changelog-body h2 {
+    color: #ffd700;
+    font-size: 1.2rem;
+    margin: 4px 0 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.changelog-body h2:not(:first-child) {
+    margin-top: 28px;
+}
+
+.changelog-body h3 {
+    color: #4fc3f7;
+    font-size: 1rem;
+    margin: 18px 0 8px;
+}
+
+.changelog-body ul {
+    margin: 0 0 12px 20px;
+}
+
+.changelog-body li,
+.changelog-body p {
+    margin-bottom: 7px;
+    line-height: 1.7;
+    opacity: 0.9;
+}
+
+.changelog-status {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.changelog-footer {
+    padding: 14px 30px;
+    text-align: right;
+    background: rgba(255, 255, 255, 0.04);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.85rem;
+}
+
+@media (max-width: 768px) {
+    .header {
+        padding-top: 64px;
+    }
+
+    .top-actions {
+        right: 16px;
+    }
+
+    .changelog-modal-content {
+        width: calc(100% - 24px);
+        max-height: 88vh;
+    }
+
+    .changelog-modal-content .modal-header,
+    .changelog-modal-content .modal-body {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
 }
 
 .help-section h4 {
