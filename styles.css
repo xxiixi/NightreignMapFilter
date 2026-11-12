@@ -16,6 +16,9 @@ body {
 }
 
 .container {
+    /* width:100% 必须有：body 是 flex 列容器且本元素 margin:0 auto，
+       缺少它时会被当作 shrink-to-fit，内容一变宽就会把整页撑出横向滚动条 */
+    width: 100%;
     max-width: 1400px;
     margin: 0 auto;
     padding: 20px;
@@ -659,7 +662,9 @@ body {
 /* Results */
 .results-grid {
     display: grid;
-    grid-template-columns: 320px 1fr;
+    /* minmax(0, 1fr) 而不是 1fr：否则 1fr 的最小尺寸是 auto（内容最小宽度），
+       大图/画布会把这一列顶宽 */
+    grid-template-columns: 320px minmax(0, 1fr);
     gap: 30px;
     align-items: start;
 }
@@ -668,6 +673,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    min-width: 0;
     /* align-items: center; */
     /* justify-content: center; */
 }
@@ -753,6 +759,8 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 400px;
+    min-width: 0;
+    max-width: 100%;
 }
 
 .selection-overlay {
@@ -830,6 +838,36 @@ body {
     text-align: center;
 }
 
+/* 点位候选较多时（大教堂/遗迹/湖沼/锻造村同一点位最多 24 种）改成多列 + 可滚动 */
+.context-menu--wide {
+    max-height: 60vh;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(150px, 1fr));
+    min-width: 480px;
+}
+
+.context-menu--wide .context-menu-item {
+    padding: 8px 10px;
+    font-size: 13px;
+}
+
+.context-menu-icon {
+    width: 26px;
+    height: 26px;
+    object-fit: contain;
+    flex: 0 0 auto;
+}
+
+.context-menu-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #808080;
+    margin: 0 7px;
+    flex: 0 0 auto;
+}
+
 #map-canvas {
     border: 2px solid rgba(255, 255, 255, 0.2);
     border-radius: 15px;
@@ -843,7 +881,11 @@ body {
 
 #seed-image-container {
     text-align: center;
-    min-width: 900px;
+    /* 原来这里是 min-width: 900px：一旦显示种子大图，就会把 results-grid 的 1fr 列
+       顶到 ≥900px，进而把 .container 撑出视口（手机上是必然横向溢出）。改为可收缩 */
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
 }
 
 
@@ -1309,7 +1351,17 @@ body {
     margin-top: 20px;
     display: grid;
     gap: 30px;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    /* 默认单列（手机/窄窗口）。宽屏才切两列，且**最多两列**：
+       实测单栏 < 572px（约 1280px 视口以下）时，标签最多的行
+       （三狼事件/新型黑夜威胁 各 8 个）会折成两行，观感差；三列更是只剩 413px。
+       所以两列断点取 1280px，宁可单列也不折行。 */
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 1280px) {
+    .boss-table-container {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 }
 
 .boss-table-section {
@@ -1387,10 +1439,11 @@ body {
     padding: 2px 6px;
     margin: 1px 2px;
     border-radius: 8px;
-    font-size: 0.85em;
+    font-size: 0.82em;
     font-weight: 600;
     text-align: center;
-    min-width: 32px;
+    min-width: 30px;
+    white-space: nowrap;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
     transition: all 0.2s ease;
 }
@@ -1439,6 +1492,16 @@ body {
 .nightlord-bdqm {
     background: #6c5ce7;
     color: white;
+}
+
+.nightlord-qxn {
+    background: #fab1a0;
+    color: #4d5051;
+}
+
+.nightlord-ljw {
+    background: #d63031;
+    color: #4d5051;
 }
 
 /* Responsive adjustments for boss tables */

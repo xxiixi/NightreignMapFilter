@@ -1,0 +1,34 @@
+# ---------------------------------------------------------------------------
+# NightreignMapFilter
+# ---------------------------------------------------------------------------
+
+# --- 编辑器 / IDE ---
+.idea/
+.vscode/
+*.iml
+*.swp
+*.swo
+*~
+\#*\#
+
+# --- 操作系统 ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- 临时文件 / 日志 / 备份 ---
+*.log
+*.tmp
+*.bak
+*.orig
+*.rej
+# 本地分析草稿
+.dsh-scratch/
+
+# --- Python---
+__pycache__/
+*.py[cod]
+
+# --- Node ---
+node_modules/
+npm-debug.log*
