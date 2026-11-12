@@ -25,7 +25,7 @@
             </div>
             <!-- ======================= -->
             <div class="top-actions">
-                <button id="action-quickref" class="action-btn" title="点击跳转【黑夜君临速查手册】">
+                <button id="action-quickref" class="action-btn" title="黑夜君临速查手册">
                     <img src="assets/icons/window-stack.svg" alt="速查手册">
                 </button>
                 <button id="action-stats" class="action-btn" title="查看访问量">
@@ -43,6 +43,19 @@
                 <!-- <button id="action-tbd" class="action-btn" title="待定">
                     <i class="fas fa-ellipsis"></i>
                 </button> -->
+                <div id="quickref-popover" class="actions-popover" style="display: none;">
+                    <div class="popover-inner">
+                        <div class="popover-title">
+                            📘 黑夜君临速查手册
+                        </div>
+                        <div class="popover-body">
+                            <a href="https://xxiixi.github.io/NightreignQuickRef/" target="_blank" rel="noopener noreferrer" class="footer-link">点击跳转</a>
+                        </div>
+                        <div class="popover-meta" style="border-top: 1px solid #4fc3f7; padding-top: 8px; display: flex; align-items: center; justify-content: center;">
+                            <i class="fab fa-github" style="margin-right: 4px;"></i> @xxiixi
+                        </div>
+                    </div>
+                </div>
                 <div id="stats-popover" class="actions-popover" style="display: none;">
                     <div class="popover-title">
                         🔥 访问量统计
@@ -61,7 +74,7 @@
                         </div>
                         <div class="popover-body">
                             <i class="fab fa-github"></i>
-                             NightreignMapFilter
+                             NightreignMapFilter<br>
                             <a
                             href="https://github.com/xxiixi/NightreignMapFilter"
                             target="_blank"
@@ -397,7 +410,7 @@
     <footer class="footer">
         <p class="footer-text">
             <i class="fa-regular fa-heart" style="margin-right: 4px; color: #ff4d4f;"></i>
-            Modified & Localized by <a class="footer-link" href="https://github.com/xxiixi" target="_blank">Cecilia</a> ｜
+            Modified & Localized by <a class="footer-link" href="https://github.com/xxiixi" target="_blank">xxiixi</a> ｜
             <i class="fab fa-github" style="margin: 0 4px 0 8px;"></i>
             Forked from <a class="footer-link" href="https://github.com/thanosapollo/nightreign-mapseed-recogniser" target="_blank">thanosapollo/nightreign-mapseed-recogniser</a>
         </p>
@@ -421,6 +434,7 @@
                 var mapSourceBtn = document.getElementById('action-map-source');
                 var mapSourcePopover = document.getElementById('map-source-popover');
                 var quickRefBtn = document.getElementById('action-quickref');
+                var quickRefPopover = document.getElementById('quickref-popover');
                 var tbdPopover = document.getElementById('tbd-popover');
                 var now = new Date();
                 if (yearEl) {
@@ -442,6 +456,7 @@
                         e.stopPropagation();
                         var willShow = statsPopover.style.display === 'none';
                         // 互斥：开启当前前先关闭对方
+                        if (quickRefPopover) quickRefPopover.style.display = 'none';
                         if (repoPopover) repoPopover.style.display = 'none';
                         if (englishPopover) englishPopover.style.display = 'none';
                         if (mapSourcePopover) mapSourcePopover.style.display = 'none';
@@ -450,6 +465,7 @@
                     });
                     document.addEventListener('click', function () {
                         statsPopover.style.display = 'none';
+                        if (quickRefPopover) quickRefPopover.style.display = 'none';
                         if (repoPopover) repoPopover.style.display = 'none';
                         if (englishPopover) englishPopover.style.display = 'none';
                         if (mapSourcePopover) mapSourcePopover.style.display = 'none';
@@ -465,12 +481,19 @@
                     });
                 }
 
-                // 速查手册：新标签页打开
-                if (quickRefBtn) {
+                // 速查手册：先弹出 Popover，再点击链接跳转
+                if (quickRefBtn && quickRefPopover) {
                     quickRefBtn.addEventListener('click', function (e) {
                         e.stopPropagation();
-                        window.open('https://xxiixi.github.io/NightreignQuickRef/', '_blank', 'noopener,noreferrer');
+                        var willShow = quickRefPopover.style.display === 'none';
+                        if (statsPopover) statsPopover.style.display = 'none';
+                        if (repoPopover) repoPopover.style.display = 'none';
+                        if (englishPopover) englishPopover.style.display = 'none';
+                        if (mapSourcePopover) mapSourcePopover.style.display = 'none';
+                        if (tbdPopover) tbdPopover.style.display = 'none';
+                        quickRefPopover.style.display = willShow ? 'block' : 'none';
                     });
+                    quickRefPopover.addEventListener('click', function (e) { e.stopPropagation(); });
                 }
 
                 // 查看源码：先弹出 Popover，再点击链接跳转
@@ -479,6 +502,7 @@
                         e.stopPropagation();
                         var willShow = repoPopover.style.display === 'none';
                         // 互斥：开启当前前先关闭对方
+                        if (quickRefPopover) quickRefPopover.style.display = 'none';
                         if (statsPopover) statsPopover.style.display = 'none';
                         if (englishPopover) englishPopover.style.display = 'none';
                         if (mapSourcePopover) mapSourcePopover.style.display = 'none';
@@ -487,6 +511,7 @@
                     });
                     document.addEventListener('click', function () {
                         repoPopover.style.display = 'none';
+                        if (quickRefPopover) quickRefPopover.style.display = 'none';
                         if (statsPopover) statsPopover.style.display = 'none';
                         if (englishPopover) englishPopover.style.display = 'none';
                         if (mapSourcePopover) mapSourcePopover.style.display = 'none';
@@ -501,6 +526,7 @@
                         e.stopPropagation();
                         var willShow = englishPopover.style.display === 'none';
                         // 互斥：开启当前前先关闭对方
+                        if (quickRefPopover) quickRefPopover.style.display = 'none';
                         if (statsPopover) statsPopover.style.display = 'none';
                         if (repoPopover) repoPopover.style.display = 'none';
                         if (mapSourcePopover) mapSourcePopover.style.display = 'none';
@@ -509,6 +535,7 @@
                     });
                     document.addEventListener('click', function () {
                         englishPopover.style.display = 'none';
+                        if (quickRefPopover) quickRefPopover.style.display = 'none';
                         if (statsPopover) statsPopover.style.display = 'none';
                         if (repoPopover) repoPopover.style.display = 'none';
                         if (mapSourcePopover) mapSourcePopover.style.display = 'none';
@@ -521,6 +548,7 @@
                         e.stopPropagation();
                         var willShow = mapSourcePopover.style.display === 'none';
                         // 互斥：开启当前前先关闭对方
+                        if (quickRefPopover) quickRefPopover.style.display = 'none';
                         if (statsPopover) statsPopover.style.display = 'none';
                         if (repoPopover) repoPopover.style.display = 'none';
                         if (englishPopover) englishPopover.style.display = 'none';
@@ -529,6 +557,7 @@
                     });
                     document.addEventListener('click', function () {
                         mapSourcePopover.style.display = 'none';
+                        if (quickRefPopover) quickRefPopover.style.display = 'none';
                         if (statsPopover) statsPopover.style.display = 'none';
                         if (repoPopover) repoPopover.style.display = 'none';
                         if (englishPopover) englishPopover.style.display = 'none';
