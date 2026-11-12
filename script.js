@@ -31,16 +31,20 @@ const NIGHTLORD_NAME_ZH = {
     Fulghor: '"黑夜光骑士"弗格尔',
     Caligo: '"黑夜雾霾"卡莉果',
     Heolstor: '"黑夜王"布德奇冥',
+    Harmonia: '"继承英雄武器的众女孩"哈尔莫妮亚',
+    Straghess: '"废弃物之王"史柴格斯',
     Unknown: '未知'
 };
 
-const MAP_NAME_ZH = {
-    Default: '默认',
-    Mountaintop: '山顶',
-    Crater: '火山口',
-    'Rotted Woods': '腐败森林',
-    Noklateo: '隐城'
-};
+// MAP_NAME_ZH 由 assets/data/slots.js 提供（随地图列表一起生成）
+
+// 点位状态含义：
+//   'dot'   未标记（默认）
+//   'empty' 该点位没有候选列表里的建筑
+//   'other' 有建筑但不属于候选列表（兼容旧数据）
+//   其余为 TYPE_INFO 里的类型 key
+const POI_EMPTY = 'empty';
+const POI_OTHER = 'other';
 
 
 class NightreignMapRecogniser {
@@ -575,28 +579,58 @@ class NightreignMapRecogniser {
 
     setupContextMenu() {
         this.contextMenu = document.getElementById('poi-context-menu');
-        
-        // Handle context menu item clicks
-        document.querySelectorAll('.context-menu-item').forEach(item => {
-            item.addEventListener('click', (e) => {
-                const type = e.currentTarget.dataset.type;
-                if (this.currentRightClickedPOI) {
-                    this.poiStates[this.currentRightClickedPOI.id] = type;
-                    this.drawMap(this.images.maps[this.chosenMap]);
-                    this.updateSeedFiltering();
-                    this.hideContextMenu();
-                    this.currentRightClickedPOI = null;
-                }
-            });
+
+        // 菜单项是每次打开时按点位候选动态生成的，因此用事件委托
+        this.contextMenu.addEventListener('click', (e) => {
+            const item = e.target.closest('.context-menu-item');
+            if (!item) return;
+            const type = item.dataset.type;
+            if (this.currentRightClickedPOI) {
+                this.poiStates[this.currentRightClickedPOI.id] = type;
+                this.drawMap(this.images.maps[this.chosenMap]);
+                this.updateSeedFiltering();
+            }
+            this.hideContextMenu();
         });
     }
 
-    showContextMenu(x, y) {
-        if (this.contextMenu) {
-            this.contextMenu.style.display = 'block';
-            this.contextMenu.style.left = `${x}px`;
-            this.contextMenu.style.top = `${y}px`;
+    // 单个菜单项的 HTML
+    contextMenuItemHTML(type) {
+        if (type === POI_EMPTY) {
+            return `<div class="context-menu-item" data-type="${POI_EMPTY}">
+                        <span class="context-menu-dot"></span>该点位没有建筑
+                    </div>`;
         }
+        if (type === POI_OTHER) {
+            return `<div class="context-menu-item" data-type="${POI_OTHER}">
+                        <i class="fas fa-question-circle"></i>其他兴趣点
+                    </div>`;
+        }
+        const info = (typeof TYPE_INFO !== 'undefined' && TYPE_INFO[type]) || null;
+        const label = info ? info.label : type;
+        const icon = info ? info.icon : 'assets/images/church.png';
+        return `<div class="context-menu-item" data-type="${type}" title="${label}">
+                    <img src="${icon}" alt="${label}" class="context-menu-icon">${label}
+                </div>`;
+    }
+
+    showContextMenu(x, y) {
+        if (!this.contextMenu) return;
+        const poi = this.currentRightClickedPOI;
+        const options = (poi && Array.isArray(poi.options) && poi.options.length)
+            ? poi.options
+            : ['church', 'mage', 'village'];
+        this.contextMenu.innerHTML = options.map(t => this.contextMenuItemHTML(t)).join('')
+            + this.contextMenuItemHTML(POI_EMPTY);
+        this.contextMenu.classList.toggle('context-menu--wide', options.length > 8);
+        this.contextMenu.style.display = 'block';
+
+        // 位置：避免超出视口
+        const rect = this.contextMenu.getBoundingClientRect();
+        const left = Math.max(4, Math.min(x, window.innerWidth - rect.width - 8));
+        const top = Math.max(4, Math.min(y, window.innerHeight - rect.height - 8));
+        this.contextMenu.style.left = `${left}px`;
+        this.contextMenu.style.top = `${top}px`;
     }
 
     hideContextMenu() {
@@ -729,32 +763,44 @@ class NightreignMapRecogniser {
         const DRAW_SCALE = CANVAS_SIZE / COORD_BASE_SIZE;
         const x = poi.x * DRAW_SCALE;
         const y = poi.y * DRAW_SCALE;
-        
-        switch (state) {
-            case 'dot':
-                this.drawDot(x, y, '', '#ff8c00');
-                break;
-            case 'church':
-                // Use favicon if available, otherwise fallback to church icon
-                if (this.images.favicon.complete && this.images.favicon.naturalWidth > 0) {
-                    this.drawIcon(this.images.favicon, x, y);
-                } else {
-                    this.drawIcon(this.images.church, x, y);
-                }
-                break;
-            case 'mage':
-                this.drawIcon(this.images.mage, x, y);
-                break;
-            case 'village':
-                this.drawIcon(this.images.village, x, y);
-                break;
-            case 'other':
-                this.drawDot(x, y, '', '#808080');
-                break;
-            case 'unknown':
-                this.drawDot(x, y, '?', '#808080');
-                break;
+
+        if (state === 'dot') {
+            this.drawDot(x, y, '', '#ff8c00');
+            return;
         }
+        if (state === POI_EMPTY) {
+            this.drawDot(x, y, '×', '#808080');
+            return;
+        }
+        if (state === POI_OTHER || state === 'unknown') {
+            this.drawDot(x, y, '?', '#808080');
+            return;
+        }
+        // 其余都是具体建筑类型：优先用生成好的建造物图标，老三类回退到通用图标
+        const info = (typeof TYPE_INFO !== 'undefined' && TYPE_INFO[state]) || null;
+        if (info && this.getTypeIcon(state)) {
+            this.drawIcon(this.getTypeIcon(state), x, y);
+        } else if (state === 'church' && this.images.favicon.complete && this.images.favicon.naturalWidth > 0) {
+            this.drawIcon(this.images.favicon, x, y);
+        } else if (this.images[state] && this.images[state].complete) {
+            this.drawIcon(this.images[state], x, y);
+        } else {
+            this.drawDot(x, y, '', '#ff8c00');
+        }
+    }
+
+    // 懒加载类型图标
+    getTypeIcon(type) {
+        const info = (typeof TYPE_INFO !== 'undefined' && TYPE_INFO[type]) || null;
+        if (!info) return null;
+        if (!this.typeIcons) this.typeIcons = {};
+        if (!this.typeIcons[type]) {
+            const img = new Image();
+            img.src = info.icon;
+            this.typeIcons[type] = img;
+        }
+        const img = this.typeIcons[type];
+        return (img.complete && img.naturalWidth > 0) ? img : null;
     }
 
     drawDot(x, y, label, color) {
@@ -987,66 +1033,8 @@ class NightreignMapRecogniser {
         const possibleSeeds = getFilteredSeeds(this.chosenNightlord, this.chosenMap);
         console.log(`Found ${possibleSeeds.length} seeds for ${this.chosenNightlord} + ${this.chosenMap}`);
 
-        // Filter by POI states using coordinate-based matching
-        const filteredSeeds = possibleSeeds.filter(seed => {
-            const seedNum = seed.seedNumber;
-            console.log(`\n🔍 Checking Seed ${seedNum}:`);
-            
-            for (const poi of this.currentPOIs) {
-                const userState = this.poiStates[poi.id];
-                
-                // If user hasn't marked this POI yet, skip it
-                if (userState === 'dot') {
-                    console.log(`  POI ${poi.id} at (${poi.x}, ${poi.y}): User hasn't marked - SKIPPING`);
-                    continue;
-                }
-                
-                console.log(`  POI ${poi.id} at (${poi.x}, ${poi.y}): User marked as ${userState.toUpperCase()}`);
-                
-                // Find what POI type exists at this coordinate in the real seed data
-                const realPOIType = getPOITypeAtCoordinate(seedNum, poi.x, poi.y);
-                console.log(`    Real data shows: ${realPOIType || 'NOTHING'} at this location`);
-                
-                // If user marked as unknown (?), reject if seed has Church/Mage/Village here
-                if (userState === 'unknown') {
-                    if (realPOIType === 'church' || realPOIType === 'mage' || realPOIType === 'village') {
-                        console.log(`    ❌ REJECTED: User said unknown but real data has ${realPOIType}`);
-                        return false;
-                    }
-                    console.log(`    ✅ OK: User said unknown and real data has ${realPOIType || 'nothing'}`);
-                    continue;
-                }
-
-                // User has marked as church, mage, or other - seed MUST match exactly
-                if (userState === 'church') {
-                    if (realPOIType !== 'church') {
-                        console.log(`    ❌ REJECTED: User said church but real data has ${realPOIType || 'nothing'}`);
-                        return false;
-                    }
-                    console.log(`    ✅ MATCH: User said church and real data has church`);
-                } else if (userState === 'mage') {
-                    if (realPOIType !== 'mage') {
-                        console.log(`    ❌ REJECTED: User said mage but real data has ${realPOIType || 'nothing'}`);
-                        return false;
-                    }
-                    console.log(`    ✅ MATCH: User said mage and real data has mage`);
-                } else if (userState === 'village') {
-                    if (realPOIType !== 'village') {
-                        console.log(`    ❌ REJECTED: User said village but real data has ${realPOIType || 'nothing'}`);
-                        return false;
-                    }
-                    console.log(`    ✅ MATCH: User said village and real data has village`);
-                } else if (userState === 'other') {
-                    if (realPOIType === 'church' || realPOIType === 'mage' || realPOIType === 'village' || !realPOIType) {
-                        console.log(`    ❌ REJECTED: User said other POI but real data has ${realPOIType || 'nothing'}`);
-                        return false;
-                    }
-                    console.log(`    ✅ MATCH: User said other POI and real data has ${realPOIType}`);
-                }
-            }
-            console.log(`  ✅ Seed ${seedNum} PASSED all POI checks`);
-            return true;
-        });
+        // Filter by POI states（按点位 id 精确匹配种子数据）
+        const filteredSeeds = this.filterSeedsByPOIState(possibleSeeds);
 
         console.log(`After POI filtering: ${filteredSeeds.length} seeds remaining`);
 
@@ -1153,51 +1141,42 @@ class NightreignMapRecogniser {
         document.body.style.overflow = '';
     }
 
+    // 判断某个种子是否满足用户在该点位上的标记
+    matchesPOIState(seedNum, poi, userState) {
+        if (userState === 'dot' || userState === undefined) {
+            return true; // 未标记，不参与筛选
+        }
+        const realType = getPOITypeById(seedNum, poi.id);
+        if (userState === POI_EMPTY) {
+            return realType === null;
+        }
+        if (userState === POI_OTHER || userState === 'unknown') {
+            // “有其他建筑 / 不确定”：该点位不是候选列表里的建筑就算通过
+            if (realType === null) return true;
+            const opts = poi.options || [];
+            return !opts.includes(realType);
+        }
+        return realType === userState;
+    }
+
+    // 按当前所有点位标记筛选种子
+    filterSeedsByPOIState(seeds) {
+        return seeds.filter(seed => {
+            for (const poi of this.currentPOIs) {
+                if (!this.matchesPOIState(seed.seedNumber, poi, this.poiStates[poi.id])) {
+                    return false;
+                }
+            }
+            return true;
+        });
+    }
+
     handleUnknownNightlord() {
         // When Unknown nightlord is selected, filter seeds by POI states only
         const allSeeds = getFilteredSeeds(null, this.chosenMap); // Get all seeds for this map type
         console.log(`Unknown nightlord selected. Checking ${allSeeds.length} seeds for ${this.chosenMap}`);
 
-        // Filter by POI states using coordinate-based matching
-        const filteredSeeds = allSeeds.filter(seed => {
-            const seedNum = seed.seedNumber;
-            
-            for (const poi of this.currentPOIs) {
-                const userState = this.poiStates[poi.id];
-                
-                // If user hasn't marked this POI yet, skip it
-                if (userState === 'dot') {
-                    continue;
-                }
-                
-                // Find what POI type exists at this coordinate in the real seed data
-                const realPOIType = getPOITypeAtCoordinate(seedNum, poi.x, poi.y);
-                
-                // Apply the same filtering logic as before
-                if (userState === 'unknown') {
-                    if (realPOIType === 'church' || realPOIType === 'mage' || realPOIType === 'village') {
-                        return false;
-                    }
-                } else if (userState === 'church') {
-                    if (realPOIType !== 'church') {
-                        return false;
-                    }
-                } else if (userState === 'mage') {
-                    if (realPOIType !== 'mage') {
-                        return false;
-                    }
-                } else if (userState === 'village') {
-                    if (realPOIType !== 'village') {
-                        return false;
-                    }
-                } else if (userState === 'other') {
-                    if (realPOIType === 'church' || realPOIType === 'mage' || realPOIType === 'village' || !realPOIType) {
-                        return false;
-                    }
-                }
-            }
-            return true;
-        });
+        const filteredSeeds = this.filterSeedsByPOIState(allSeeds);
 
         console.log(`After POI filtering for Unknown nightlord: ${filteredSeeds.length} seeds remaining`);
         

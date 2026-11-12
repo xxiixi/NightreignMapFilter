@@ -1,0 +1,75 @@
+{
+  "_说明": [
+    "类型表：结构ID -> 界面类型。tools/build_seed_data.py 读取本文件；重跑生成不会覆盖这里的改动。",
+    "label: 右键菜单/提示文案；order: 同类别内的排列顺序（菜单按 categoryOrder + order 排序）；",
+    "ids: 归属该类型的结构ID（想把某个ID拆出来单独成类，就把它从原来的 ids 里挪到新条目）；",
+    "icon: 可选，指定图标来源结构ID（默认取 ids 里最小的那个）；生成的图标若与源图不同则视为自定义图标，不覆盖。"
+  ],
+  "categoryOrder": ["church", "mage", "village", "cathedral", "ruin", "marsh", "forge", "city", "elite", "cart"],
+  "categoryZH": {
+    "church": "教堂",
+    "mage": "法师塔",
+    "village": "村庄",
+    "cathedral": "大教堂",
+    "ruin": "遗迹",
+    "marsh": "湖沼",
+    "forge": "锻造村",
+    "city": "主城",
+    "elite": "精英",
+    "cart": "马车"
+  },
+  "types": {
+    "church": { "label": "教堂", "order": 1, "ids": [41000, 41001, 41002, 41010, 41011, 51000, 51050, 51051] },
+    "mage": { "label": "法师塔", "order": 2, "ids": [40000, 40001, 40002, 40003, 40004, 40005, 40006, 40007, 40008, 40009, 40900, 40901, 40902, 40903, 40904, 40905, 40906, 40907, 40908, 40909, 51100, 51101, 51102, 51103, 51104, 51105, 51106, 51107, 51108, 51109] },
+    "village": { "label": "村庄", "order": 3, "ids": [37900, 37901, 37902] },
+
+    "cathedral_38000": { "label": "大教堂·使者", "order": 1, "ids": [38000] },
+    "cathedral_38001": { "label": "大教堂·守卫", "order": 2, "ids": [38001, 38101] },
+    "cathedral_38100": { "label": "大教堂·火焰", "order": 3, "ids": [38100] },
+    "cathedral_52400": { "label": "大教堂·圣", "order": 4, "ids": [52400] },
+    "cathedral_52420": { "label": "大教堂·寒冷", "order": 5, "ids": [52420] },
+    "cathedral_52450": { "label": "大教堂·催眠", "order": 6, "ids": [52450] },
+    "cathedral_52460": { "label": "大教堂·雷", "order": 7, "ids": [52460] },
+
+    "ruin_34000": { "label": "遗迹·看门犬", "order": 1, "ids": [34000] },
+    "ruin_34001": { "label": "遗迹·鲜血", "order": 2, "ids": [34001, 52500] },
+    "ruin_34002": { "label": "遗迹·萨米尔", "order": 3, "ids": [34002, 34103] },
+    "ruin_34003": { "label": "遗迹·白金", "order": 4, "ids": [34003] },
+    "ruin_34100": { "label": "遗迹·调香师", "order": 5, "ids": [34100, 34101, 52520] },
+    "ruin_34102": { "label": "遗迹·法师", "order": 6, "ids": [34102, 52550] },
+    "ruin_34104": { "label": "遗迹·卢恩熊", "order": 7, "ids": [34104, 52570] },
+    "ruin_34200": { "label": "遗迹·咒死", "order": 8, "ids": [34200] },
+    "ruin_34300": { "label": "遗迹·兽人", "order": 9, "ids": [34300] },
+
+    "marsh_50001": { "label": "湖沼·腐败眷属", "order": 1, "ids": [50001] },
+    "marsh_50011": { "label": "湖沼·蜘蛛蝎", "order": 2, "ids": [50011] },
+    "marsh_50020": { "label": "湖沼·冰鳌虾", "order": 3, "ids": [50020] },
+    "marsh_50030": { "label": "湖沼·杜鹃骑士", "order": 4, "ids": [50030] },
+    "marsh_50040": { "label": "湖沼·尊腐骑士", "order": 5, "ids": [50040] },
+    "marsh_50050": { "label": "湖沼·癫火花", "order": 6, "ids": [50050] },
+
+    "forge_50100": { "label": "锻造村·噩兆之子", "order": 1, "ids": [50100, 50112] },
+    "forge_50102": { "label": "锻造村·血怪", "order": 2, "ids": [50102] },
+    "forge_50103": { "label": "锻造村·死骑士", "order": 3, "ids": [50103] },
+    "forge_50116": { "label": "锻造村·祖民", "order": 4, "ids": [50116] },
+    "forge_50104": { "label": "锻造村·神鸟", "order": 5, "ids": [50104] },
+    "forge_50113": { "label": "锻造村·黑焰修士", "order": 6, "ids": [50113] },
+    "forge_50114": { "label": "锻造村·恶兆猎人", "order": 7, "ids": [50114] },
+
+    "city_49410": { "label": "主城·失乡", "order": 1, "ids": [49410] },
+    "city_49420": { "label": "主城·山妖", "order": 2, "ids": [49420] },
+    "city_49430": { "label": "主城·熔炉", "order": 3, "ids": [49430] },
+    "city_53580": { "label": "左上主城·火", "order": 4, "ids": [53580] },
+    "city_53590": { "label": "左上主城·魔", "order": 5, "ids": [53590] },
+    "city_53670": { "label": "右下主城·腐败", "order": 6, "ids": [53670] },
+    "city_53680": { "label": "右下主城·圣", "order": 7, "ids": [53680] },
+
+    "elite_53600": { "label": "精英·恶兆猎人", "order": 1, "ids": [53600] },
+    "elite_53610": { "label": "精英·猎犬骑士", "order": 2, "ids": [53610] },
+    "elite_53700": { "label": "精英·失乡", "order": 3, "ids": [53700] },
+    "elite_53710": { "label": "精英·咒剑士", "order": 4, "ids": [53710] },
+    "elite_53720": { "label": "精英·噩兆", "order": 5, "ids": [53720] },
+
+    "cart_51150": { "label": "马车", "order": 1, "ids": [51150] }
+  }
+}
