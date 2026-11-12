@@ -22,6 +22,10 @@
   <img src="/assets/images/screenshot.png" alt="Screenshot" width="600"/>
 </p>
 
+## 更新记录
+
+完整版本历史请查看 [CHANGELOG.md](./CHANGELOG.md)。
+
 ## Local Development
 1. **Clone the repository**
    ```bash

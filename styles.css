@@ -89,6 +89,17 @@ body {
     display: block;
 }
 
+.action-btn img.action-icon-link {
+    width: 20px;
+    height: 20px;
+    transform: translateY(1px);
+}
+
+.action-btn img.action-icon-share {
+    width: 14px;
+    height: 14px;
+}
+
 .actions-popover {
     position: absolute;
     top: 48px;
@@ -104,13 +115,17 @@ body {
 }
 
 .popover-inner {
-    padding: 8px 0px;
+    padding: 0;
     max-width: 220px;
     width: 100%;
 }
 
 .popover-title {
-    font-size: 14px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: #ffd700;
+    text-align: left;
     margin-bottom: 8px;
 }
 
@@ -120,9 +135,74 @@ body {
 }
 
 .popover-meta {
-    margin-top: 6px;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(79, 195, 247, 0.45);
     font-size: 11px;
     opacity: 0.7;
+}
+
+.popover-center,
+.popover-center .popover-title,
+.popover-center .popover-inner,
+.popover-center .popover-meta {
+    text-align: center;
+}
+
+.popover-meta i {
+    margin-right: 4px;
+}
+
+.sources-popover {
+    width: 200px;
+}
+
+.sources-popover .popover-inner {
+    max-width: none;
+}
+
+.source-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.source-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.06);
+    color: inherit;
+    text-decoration: none;
+    text-align: center;
+}
+
+.source-item:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.source-name {
+    color: #4fc3f7;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.source-meta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-size: 11px;
+    opacity: 0.75;
+}
+
+.source-meta-icon {
+    width: 14px;
+    height: 14px;
+    filter: brightness(0) invert(1);
 }
 
 .subtitle {
@@ -1131,6 +1211,14 @@ body {
     margin-right: 10px;
 }
 
+.modal-title-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+    filter: invert(83%) sepia(95%) saturate(1132%) hue-rotate(359deg) brightness(105%);
+    vertical-align: -3px;
+}
+
 .close-btn {
     background: none;
     border: none;
@@ -1157,6 +1245,183 @@ body {
     max-height: 60vh;
     overflow-y: auto;
     color: #fff;
+}
+
+.changelog-popover {
+    width: 320px;
+    background: rgba(16, 22, 40, 0.94);
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+.changelog-popover .popover-inner {
+    max-width: none;
+    text-align: left;
+}
+
+.changelog-popover .popover-title {
+    text-align: left;
+}
+
+.share-popover {
+    width: 340px;
+}
+
+.share-popover .popover-inner {
+    max-width: none;
+    text-align: left;
+}
+
+.share-popover .popover-title {
+    text-align: left;
+}
+
+.share-preview {
+    position: relative;
+    margin: 0;
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+    font-size: 12px;
+    line-height: 1.7;
+    text-align: left;
+    cursor: pointer;
+}
+
+.share-preview:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.share-preview-url {
+    color: #4fc3f7;
+    overflow-wrap: break-word;
+}
+
+.share-mask {
+    display: none;
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    z-index: 1;
+    background: rgba(27, 38, 64, 0.72);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    color: #5cbf8a;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.share-preview.is-copied .share-mask {
+    display: flex;
+}
+
+.share-status {
+    margin-top: 6px;
+    font-size: 12px;
+    color: #8ee6a8;
+}
+
+.share-status:empty {
+    display: none;
+}
+
+.share-status.is-error {
+    color: #ffb4b4;
+}
+
+.changelog-body {
+    max-height: 320px;
+    overflow-y: auto;
+    text-align: left;
+    font-size: 12px;
+}
+
+.changelog-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.changelog-body::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+.changelog-body::-webkit-scrollbar-thumb {
+    background: rgba(79, 195, 247, 0.5);
+    border-radius: 4px;
+}
+
+.changelog-body::-webkit-scrollbar-thumb:hover {
+    background: rgba(79, 195, 247, 0.7);
+}
+
+.changelog-body h2 {
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    margin: 2px 0 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.changelog-body h2:not(:first-child) {
+    margin-top: 14px;
+}
+
+.changelog-body h3 {
+    color: #4fc3f7;
+    font-size: 12px;
+    font-weight: 600;
+    margin: 10px 0 4px;
+}
+
+.changelog-body ul {
+    margin: 0 0 8px 16px;
+    padding: 0;
+}
+
+.changelog-body li,
+.changelog-body p {
+    margin-bottom: 4px;
+    line-height: 1.55;
+    opacity: 0.9;
+}
+
+.changelog-status {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.changelog-releases {
+    display: block;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(79, 195, 247, 0.45);
+    color: #4fc3f7;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+}
+
+.changelog-releases:hover {
+    color: #29b6f6;
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .header {
+        padding-top: 64px;
+    }
+
+    .top-actions {
+        right: 16px;
+    }
+
+    .changelog-popover {
+        width: min(320px, calc(100vw - 32px));
+    }
 }
 
 .help-section h4 {

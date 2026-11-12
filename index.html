@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#1a1a2e">
-    <meta name="description" content="基于兴趣点位置识别《艾尔登法环:黑夜君临》地图种子的交互式工具">
+    <meta name="description" content="《艾尔登法环:黑夜君临》全地图种子筛选器">
     <meta name="keywords" content="艾尔登法环, 黑夜君临, 地图, 种子, 识别, 兴趣点, 工具">
     <link rel="icon" href="favicon.ico">
     <!-- Vercount PV/UV 统计脚本 -->
@@ -25,90 +25,83 @@
             </div>
             <!-- ======================= -->
             <div class="top-actions">
-                <button id="action-quickref" class="action-btn" title="黑夜君临速查手册">
-                    <img src="assets/icons/window-stack.svg" alt="速查手册">
+                <button id="action-sources" class="action-btn" title="相关网页" aria-label="相关网页">
+                    <img src="assets/icons/link-45deg.svg" alt="" class="action-icon-link">
                 </button>
                 <button id="action-stats" class="action-btn" title="查看访问量">
                     <img src="assets/icons/fire.svg" alt="访问量">
                 </button>
-                <button id="action-english-web" class="action-btn" title="查看英文版原网站">
-                    <img src="assets/icons/box-arrow-in-up-right.svg" alt="查看英文版原网站">
-                </button>
-                <button id="action-map-source" class="action-btn" title="地图数据来源">
-                    <img src="assets/icons/pin-map-fill.svg" alt="地图数据来源">
+                <button id="action-changelog" class="action-btn" title="更新记录" aria-label="更新记录">
+                    <img src="assets/icons/clock-history.svg" alt="">
                 </button>
                 <button id="action-repo" class="action-btn" title="查看项目">
                     <img src="assets/icons/github.svg" alt="查看项目">
                 </button>
+                <button id="action-share" class="action-btn" title="分享本页" aria-label="分享本页">
+                    <img src="assets/icons/share-fill.svg" alt="" class="action-icon-share">
+                </button>
                 <!-- <button id="action-tbd" class="action-btn" title="待定">
                     <i class="fas fa-ellipsis"></i>
                 </button> -->
-                <div id="quickref-popover" class="actions-popover" style="display: none;">
-                    <div class="popover-inner">
-                        <div class="popover-title">
-                            📘 黑夜君临速查手册
-                        </div>
-                        <div class="popover-body">
-                            <a href="https://xxiixi.github.io/NightreignQuickRef/" target="_blank" rel="noopener noreferrer" class="footer-link">点击跳转</a>
-                        </div>
-                        <div class="popover-meta" style="border-top: 1px solid #4fc3f7; padding-top: 8px; display: flex; align-items: center; justify-content: center;">
-                            <i class="fab fa-github" style="margin-right: 4px;"></i> @xxiixi
-                        </div>
-                    </div>
-                </div>
-                <div id="stats-popover" class="actions-popover" style="display: none;">
-                    <div class="popover-title">
-                        🔥 访问量统计
-                    </div>
+                <div id="stats-popover" class="actions-popover popover-center" style="display: none;">
+                    <div class="popover-title">🔥 访问量统计</div>
                     <div class="popover-body">
                         本站总访客数: <span id="vercount_value_site_uv">Loading</span> 人<br>
                         本站总访问量: <span id="vercount_value_site_pv">Loading</span> 次<br>
-                        地图筛选页访问量: <span id="vercount_value_page_pv">Loading</span> 次<br>
-                        <div class="popover-meta" style="border-top: 1px solid #4fc3f7; padding-top: 8px;">统计服务：Vercount</div>
+                        地图筛选页访问量: <span id="vercount_value_page_pv">Loading</span> 次
+                        <div class="popover-meta">统计服务：Vercount</div>
                     </div>
                 </div>
-                <div id="repo-popover" class="actions-popover" style="display: none;">
+                <div id="repo-popover" class="actions-popover popover-center" style="display: none;">
                     <div class="popover-inner">
-                        <div class="popover-title">
-                            🌟本项目GitHub仓库
-                        </div>
+                        <div class="popover-title">🌟 本项目GitHub仓库</div>
                         <div class="popover-body">
                             <i class="fab fa-github"></i>
-                             NightreignMapFilter<br>
-                            <a
-                            href="https://github.com/xxiixi/NightreignMapFilter"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="footer-link"
-                        >
-                            点击跳转
-                        </a>
+                            NightreignMapFilter<br>
+                            <a href="https://github.com/xxiixi/NightreignMapFilter" target="_blank" rel="noopener noreferrer" class="footer-link">点击跳转</a>
                         </div>
-                        <div class="popover-meta" style="border-top: 1px solid #4fc3f7; padding-top: 8px;">🙏 求个Star ⭐️ 感谢支持 🙏</div>
+                        <div class="popover-meta">🙏 求个Star ⭐️ 感谢支持 🙏</div>
                     </div>
                 </div>
-                <div id="english-popover" class="actions-popover" style="display: none;">
+                <div id="share-popover" class="actions-popover share-popover" style="display: none;">
                     <div class="popover-inner">
-                        <div class="popover-title">
-                            🔗 英文版原网站
+                        <div class="popover-title">📤 分享本网页</div>
+                        <div id="share-preview" class="share-preview" role="button" tabindex="0">
+                            <div id="share-preview-text"></div>
+                            <div id="share-preview-url" class="share-preview-url"></div>
+                            <div class="share-mask" aria-hidden="true">
+                                <span>复制成功</span>
+                            </div>
                         </div>
-                        <div class="popover-body">
-                            <a href="https://thanosapollo.github.io/nightreign-mapseed-recogniser/" target="_blank" rel="noopener noreferrer" class="footer-link">点击查看英文版原网站</a>
-                        </div>
-                        <div class="popover-meta" style="border-top: 1px solid #4fc3f7; padding-top: 8px;"> <i class="fab fa-github"></i> @thanosapollo</div>
+                        <div id="share-status" class="share-status" role="status"></div>
                     </div>
                 </div>
-                <div id="map-source-popover" class="actions-popover" style="display: none;">
+                <div id="sources-popover" class="actions-popover sources-popover" style="display: none;">
                     <div class="popover-inner">
-                        <div class="popover-title">
-                            📒 地图数据来源
+                        <div class="popover-title">🔗 相关网页</div>
+                        <div class="popover-body source-list">
+                            <a href="https://xxiixi.github.io/NightreignQuickRef/" target="_blank" rel="noopener noreferrer" class="source-item">
+                                <span class="source-name">黑夜君临速查手册</span>
+                                <span class="source-meta"><i class="fab fa-github"></i> @xxiixi</span>
+                            </a>
+                            <a href="https://thanosapollo.github.io/nightreign-mapseed-recogniser/" target="_blank" rel="noopener noreferrer" class="source-item">
+                                <span class="source-name">英文版原网站</span>
+                                <span class="source-meta"><i class="fab fa-github"></i> @thanosapollo</span>
+                            </a>
+                            <a href="https://www.bilibili.com/video/BV1xGe1zrEED/?spm_id_from=333.337.search-card.all.click&vd_source=37640654dbdd4ab80b471a16ac6da3c0" target="_blank" rel="noopener noreferrer" class="source-item">
+                                <span class="source-name">地图数据来源</span>
+                                <span class="source-meta"><img src="assets/icons/bilibili.svg" alt="" class="source-meta-icon"> @Fuwish</span>
+                            </a>
                         </div>
-                        <div class="popover-body">
-                            <a href="https://www.bilibili.com/video/BV1xGe1zrEED/?spm_id_from=333.337.search-card.all.click&vd_source=37640654dbdd4ab80b471a16ac6da3c0" target="_blank" rel="noopener noreferrer" class="footer-link">黑夜君临-地图筛选器</a>
+                    </div>
+                </div>
+                <div id="changelog-popover" class="actions-popover changelog-popover" style="display: none;">
+                    <div class="popover-inner">
+                        <div class="popover-title">🕐 更新记录</div>
+                        <div class="changelog-body" id="changelog-content">
+                            <p class="changelog-status">正在加载更新记录...</p>
                         </div>
-                        <div class="popover-meta" style="border-top: 1px solid #4fc3f7; padding-top: 8px; display: flex; align-items: center; justify-content: center;">
-                            <img src="assets/icons/bilibili.svg" style="width: 16px; height: 16px;filter: brightness(0) invert(1);"> @Fuwish
-                        </div>
+                        <a href="https://github.com/xxiixi/NightreignMapFilter/releases" target="_blank" rel="noopener noreferrer" class="changelog-releases">GitHub Releases</a>
                     </div>
                 </div>
                 <!-- <div id="tbd-popover" class="actions-popover" style="display: none;">
@@ -129,7 +122,7 @@
                 黑夜君临地图种子筛选器
             </h1>
             <div class="subtitle">
-                <p class="version">Website version 1.0.3 | Nightreign version 1.03.5</p>
+                <p class="version">Website version 1.1.0 | Nightreign version 1.03.5</p>
                 <span id="cv-status" style="font-size: 12px;"></span>
             </div>
         </header>
@@ -429,12 +422,13 @@
                 var statsPopover = document.getElementById('stats-popover');
                 var repoBtn = document.getElementById('action-repo');
                 var repoPopover = document.getElementById('repo-popover');
-                var englishBtn = document.getElementById('action-english-web');
-                var englishPopover = document.getElementById('english-popover');
-                var mapSourceBtn = document.getElementById('action-map-source');
-                var mapSourcePopover = document.getElementById('map-source-popover');
-                var quickRefBtn = document.getElementById('action-quickref');
-                var quickRefPopover = document.getElementById('quickref-popover');
+                var sourcesBtn = document.getElementById('action-sources');
+                var sourcesPopover = document.getElementById('sources-popover');
+                var shareBtn = document.getElementById('action-share');
+                var sharePopover = document.getElementById('share-popover');
+                var changelogBtn = document.getElementById('action-changelog');
+                var changelogPopover = document.getElementById('changelog-popover');
+                var changelogContent = document.getElementById('changelog-content');
                 var tbdPopover = document.getElementById('tbd-popover');
                 var now = new Date();
                 if (yearEl) {
@@ -456,19 +450,19 @@
                         e.stopPropagation();
                         var willShow = statsPopover.style.display === 'none';
                         // 互斥：开启当前前先关闭对方
-                        if (quickRefPopover) quickRefPopover.style.display = 'none';
                         if (repoPopover) repoPopover.style.display = 'none';
-                        if (englishPopover) englishPopover.style.display = 'none';
-                        if (mapSourcePopover) mapSourcePopover.style.display = 'none';
+                        if (sourcesPopover) sourcesPopover.style.display = 'none';
+                        if (changelogPopover) changelogPopover.style.display = 'none';
+                        if (sharePopover) sharePopover.style.display = 'none';
                         if (tbdPopover) tbdPopover.style.display = 'none';
                         statsPopover.style.display = willShow ? 'block' : 'none';
                     });
                     document.addEventListener('click', function () {
                         statsPopover.style.display = 'none';
-                        if (quickRefPopover) quickRefPopover.style.display = 'none';
                         if (repoPopover) repoPopover.style.display = 'none';
-                        if (englishPopover) englishPopover.style.display = 'none';
-                        if (mapSourcePopover) mapSourcePopover.style.display = 'none';
+                        if (sourcesPopover) sourcesPopover.style.display = 'none';
+                        if (changelogPopover) changelogPopover.style.display = 'none';
+                        if (sharePopover) sharePopover.style.display = 'none';
                         if (tbdPopover) tbdPopover.style.display = 'none';
                     });
                     statsPopover.addEventListener('click', function (e) { e.stopPropagation(); });
@@ -481,92 +475,233 @@
                     });
                 }
 
-                // 速查手册：先弹出 Popover，再点击链接跳转
-                if (quickRefBtn && quickRefPopover) {
-                    quickRefBtn.addEventListener('click', function (e) {
-                        e.stopPropagation();
-                        var willShow = quickRefPopover.style.display === 'none';
-                        if (statsPopover) statsPopover.style.display = 'none';
-                        if (repoPopover) repoPopover.style.display = 'none';
-                        if (englishPopover) englishPopover.style.display = 'none';
-                        if (mapSourcePopover) mapSourcePopover.style.display = 'none';
-                        if (tbdPopover) tbdPopover.style.display = 'none';
-                        quickRefPopover.style.display = willShow ? 'block' : 'none';
-                    });
-                    quickRefPopover.addEventListener('click', function (e) { e.stopPropagation(); });
-                }
-
                 // 查看源码：先弹出 Popover，再点击链接跳转
                 if (repoBtn && repoPopover) {
                     repoBtn.addEventListener('click', function (e) {
                         e.stopPropagation();
                         var willShow = repoPopover.style.display === 'none';
                         // 互斥：开启当前前先关闭对方
-                        if (quickRefPopover) quickRefPopover.style.display = 'none';
                         if (statsPopover) statsPopover.style.display = 'none';
-                        if (englishPopover) englishPopover.style.display = 'none';
-                        if (mapSourcePopover) mapSourcePopover.style.display = 'none';
+                        if (sourcesPopover) sourcesPopover.style.display = 'none';
+                        if (changelogPopover) changelogPopover.style.display = 'none';
+                        if (sharePopover) sharePopover.style.display = 'none';
                         if (tbdPopover) tbdPopover.style.display = 'none';
                         repoPopover.style.display = willShow ? 'block' : 'none';
                     });
                     document.addEventListener('click', function () {
                         repoPopover.style.display = 'none';
-                        if (quickRefPopover) quickRefPopover.style.display = 'none';
                         if (statsPopover) statsPopover.style.display = 'none';
-                        if (englishPopover) englishPopover.style.display = 'none';
-                        if (mapSourcePopover) mapSourcePopover.style.display = 'none';
+                        if (sourcesPopover) sourcesPopover.style.display = 'none';
+                        if (changelogPopover) changelogPopover.style.display = 'none';
+                        if (sharePopover) sharePopover.style.display = 'none';
                         if (tbdPopover) tbdPopover.style.display = 'none';
                     });
                     repoPopover.addEventListener('click', function (e) { e.stopPropagation(); });
                 }
 
-                // 英文站点：弹出 Popover，互斥显示
-                if (englishBtn && englishPopover) {
-                    englishBtn.addEventListener('click', function (e) {
+                if (sourcesBtn && sourcesPopover) {
+                    sourcesBtn.addEventListener('click', function (e) {
                         e.stopPropagation();
-                        var willShow = englishPopover.style.display === 'none';
-                        // 互斥：开启当前前先关闭对方
-                        if (quickRefPopover) quickRefPopover.style.display = 'none';
+                        var willShow = sourcesPopover.style.display === 'none';
                         if (statsPopover) statsPopover.style.display = 'none';
                         if (repoPopover) repoPopover.style.display = 'none';
-                        if (mapSourcePopover) mapSourcePopover.style.display = 'none';
+                        if (changelogPopover) changelogPopover.style.display = 'none';
+                        if (sharePopover) sharePopover.style.display = 'none';
                         if (tbdPopover) tbdPopover.style.display = 'none';
-                        englishPopover.style.display = willShow ? 'block' : 'none';
+                        sourcesPopover.style.display = willShow ? 'block' : 'none';
                     });
                     document.addEventListener('click', function () {
-                        englishPopover.style.display = 'none';
-                        if (quickRefPopover) quickRefPopover.style.display = 'none';
+                        sourcesPopover.style.display = 'none';
+                        if (sharePopover) sharePopover.style.display = 'none';
+                        if (changelogPopover) changelogPopover.style.display = 'none';
                         if (statsPopover) statsPopover.style.display = 'none';
                         if (repoPopover) repoPopover.style.display = 'none';
-                        if (mapSourcePopover) mapSourcePopover.style.display = 'none';
                         if (tbdPopover) tbdPopover.style.display = 'none';
                     });
-                    englishPopover.addEventListener('click', function (e) { e.stopPropagation(); });
+                    sourcesPopover.addEventListener('click', function (e) { e.stopPropagation(); });
                 }
-                if (mapSourceBtn && mapSourcePopover) {
-                    mapSourceBtn.addEventListener('click', function (e) {
+
+                function renderChangelog(markdown) {
+                    var fragment = document.createDocumentFragment();
+                    var currentList = null;
+                    markdown.split(/\r?\n/).forEach(function (rawLine) {
+                        var line = rawLine.trim();
+                        if (!line) {
+                            currentList = null;
+                            return;
+                        }
+
+                        var heading = line.match(/^(#{1,3})\s+(.+)$/);
+                        if (heading) {
+                            currentList = null;
+                            if (heading[1].length === 1) return;
+                            var headingEl = document.createElement(heading[1].length === 2 ? 'h2' : 'h3');
+                            var versionDate = heading[1].length === 2
+                                ? heading[2].match(/^(.+?)\s+-\s+(\d{4}-\d{2}-\d{2})$/)
+                                : null;
+                            if (versionDate) {
+                                headingEl.appendChild(document.createTextNode(versionDate[1] + ' · '));
+                                var dateEl = document.createElement('span');
+                                dateEl.className = 'changelog-date';
+                                dateEl.textContent = versionDate[2];
+                                headingEl.appendChild(dateEl);
+                            } else {
+                                headingEl.textContent = heading[2];
+                            }
+                            fragment.appendChild(headingEl);
+                            return;
+                        }
+
+                        if (line.indexOf('- ') === 0) {
+                            if (!currentList) {
+                                currentList = document.createElement('ul');
+                                fragment.appendChild(currentList);
+                            }
+                            var item = document.createElement('li');
+                            item.textContent = line.slice(2);
+                            currentList.appendChild(item);
+                            return;
+                        }
+
+                        currentList = null;
+                        var paragraph = document.createElement('p');
+                        paragraph.textContent = line;
+                        fragment.appendChild(paragraph);
+                    });
+                    changelogContent.replaceChildren(fragment);
+                }
+
+                function loadChangelog() {
+                    if (!changelogContent || changelogContent.dataset.loaded === 'true' || changelogContent.dataset.loading === 'true') return;
+                    changelogContent.dataset.loading = 'true';
+                    fetch('CHANGELOG.md', { cache: 'no-cache' }).then(function (response) {
+                        if (!response.ok) throw new Error('HTTP ' + response.status);
+                        return response.text();
+                    }).then(function (markdown) {
+                        renderChangelog(markdown);
+                        changelogContent.dataset.loaded = 'true';
+                    }).catch(function (error) {
+                        changelogContent.textContent = '更新记录加载失败，请前往 GitHub Releases 查看。';
+                        console.error('Failed to load changelog:', error);
+                    }).then(function () {
+                        delete changelogContent.dataset.loading;
+                    });
+                }
+
+                var sharePreviewText = document.getElementById('share-preview-text');
+                var sharePreviewUrl = document.getElementById('share-preview-url');
+                var shareStatus = document.getElementById('share-status');
+                var sharePreview = document.getElementById('share-preview');
+                var shareMaskTimer = null;
+                var publishedPageUrl = 'https://xxiixi.github.io/NightreignMapFilter/';
+
+                function pageShareData() {
+                    var descriptionMeta = document.querySelector('meta[name="description"]');
+                    var description = descriptionMeta ? (descriptionMeta.getAttribute('content') || '') : '';
+                    var host = location.hostname;
+                    var url = (!host || host === 'localhost' || host === '127.0.0.1' || host === '[::1]')
+                        ? publishedPageUrl
+                        : location.href;
+                    return {
+                        text: description,
+                        url: url
+                    };
+                }
+
+                function shareMessage(data) {
+                    return [data.text, data.url].filter(Boolean).join('\n');
+                }
+
+                function copyShareMessage(message) {
+                    var field = document.createElement('textarea');
+                    field.value = message;
+                    field.setAttribute('readonly', '');
+                    field.style.position = 'fixed';
+                    field.style.top = '0';
+                    field.style.left = '0';
+                    field.style.opacity = '0';
+                    document.body.appendChild(field);
+                    field.focus();
+                    field.select();
+                    var copied = false;
+                    try {
+                        copied = document.execCommand('copy');
+                    } catch (error) {
+                        copied = false;
+                    }
+                    field.remove();
+                    if (copied) return Promise.resolve();
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        return navigator.clipboard.writeText(message);
+                    }
+                    return Promise.reject(new Error('copy failed'));
+                }
+
+                if (shareBtn && sharePopover) {
+                    shareBtn.addEventListener('click', function (e) {
                         e.stopPropagation();
-                        var willShow = mapSourcePopover.style.display === 'none';
-                        // 互斥：开启当前前先关闭对方
-                        if (quickRefPopover) quickRefPopover.style.display = 'none';
+                        var willShow = sharePopover.style.display === 'none';
                         if (statsPopover) statsPopover.style.display = 'none';
                         if (repoPopover) repoPopover.style.display = 'none';
-                        if (englishPopover) englishPopover.style.display = 'none';
+                        if (sourcesPopover) sourcesPopover.style.display = 'none';
+                        if (changelogPopover) changelogPopover.style.display = 'none';
                         if (tbdPopover) tbdPopover.style.display = 'none';
-                        mapSourcePopover.style.display = willShow ? 'block' : 'none';
+                        if (willShow) {
+                            var data = pageShareData();
+                            if (sharePreviewText) sharePreviewText.textContent = data.text;
+                            if (sharePreviewUrl) sharePreviewUrl.textContent = data.url.replace(/\//g, '/\u200b');
+                            if (sharePreview) sharePreview.classList.remove('is-copied');
+                            if (shareMaskTimer) clearTimeout(shareMaskTimer);
+                            if (shareStatus) {
+                                shareStatus.textContent = '';
+                                shareStatus.classList.remove('is-error');
+                            }
+                        }
+                        sharePopover.style.display = willShow ? 'block' : 'none';
                     });
-                    document.addEventListener('click', function () {
-                        mapSourcePopover.style.display = 'none';
-                        if (quickRefPopover) quickRefPopover.style.display = 'none';
+                    sharePopover.addEventListener('click', function (e) { e.stopPropagation(); });
+                }
+                function showShareSuccess() {
+                    if (!sharePreview) return;
+                    sharePreview.classList.add('is-copied');
+                    if (shareStatus) {
+                        shareStatus.textContent = '';
+                        shareStatus.classList.remove('is-error');
+                    }
+                    if (shareMaskTimer) clearTimeout(shareMaskTimer);
+                    shareMaskTimer = setTimeout(function () {
+                        sharePreview.classList.remove('is-copied');
+                    }, 2000);
+                }
+
+                function copyCurrentShare() {
+                    copyShareMessage(shareMessage(pageShareData())).then(showShareSuccess).catch(function () {
+                        if (sharePreview) sharePreview.classList.remove('is-copied');
+                        if (!shareStatus) return;
+                        shareStatus.classList.add('is-error');
+                        shareStatus.textContent = '复制失败，请手动选择文本';
+                    });
+                }
+
+                if (sharePreview) sharePreview.addEventListener('click', copyCurrentShare);
+
+                if (changelogBtn && changelogPopover) {
+                    changelogBtn.addEventListener('click', function (e) {
+                        e.stopPropagation();
+                        var willShow = changelogPopover.style.display === 'none';
                         if (statsPopover) statsPopover.style.display = 'none';
                         if (repoPopover) repoPopover.style.display = 'none';
-                        if (englishPopover) englishPopover.style.display = 'none';
+                        if (sourcesPopover) sourcesPopover.style.display = 'none';
+                        if (sharePopover) sharePopover.style.display = 'none';
                         if (tbdPopover) tbdPopover.style.display = 'none';
+                        if (willShow) loadChangelog();
+                        changelogPopover.style.display = willShow ? 'block' : 'none';
                     });
+                    changelogPopover.addEventListener('click', function (e) { e.stopPropagation(); });
                 }
-                if (mapSourcePopover) {
-                    mapSourcePopover.addEventListener('click', function (e) { e.stopPropagation(); });
-                }
+                document.addEventListener('keydown', function (e) {
+                    if (e.key === 'Escape' && changelogPopover) changelogPopover.style.display = 'none';
+                });
             } catch (error) {
                 console.error('Error initializing popovers:', error);
             }
